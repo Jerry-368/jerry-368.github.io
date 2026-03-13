@@ -44,41 +44,15 @@ transition:0.3s;
 color:#4aa3ff;
 }
 
-/* HERO SECTION */
+/* HERO BANNER */
 
 .hero{
 height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
 background:url("banner.png") center/cover no-repeat;
-position:relative;
-}
-
-.hero::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.65);
-}
-
-.hero *{
-position:relative;
-z-index:2;
-}
-
-h1{
-font-size:60px;
-margin-bottom:10px;
-}
-
-h2{
-color:#4aa3ff;
-margin-bottom:10px;
+display:flex;
+justify-content:center;
+align-items:flex-end;
+padding-bottom:80px;
 }
 
 /* BUTTONS */
@@ -86,13 +60,10 @@ margin-bottom:10px;
 .buttons{
 display:flex;
 gap:20px;
-margin-top:20px;
 flex-wrap:wrap;
-justify-content:center;
 }
 
 .btn{
-display:inline-block;
 padding:15px 35px;
 border:1px solid #4aa3ff;
 border-radius:8px;
@@ -193,16 +164,9 @@ text-decoration:underline;
 <a href="#contact">Contact</a>
 </nav>
 
-
-<!-- HERO -->
+<!-- HERO BANNER -->
 
 <div class="hero">
-
-<h1>Jerin Johnson</h1>
-
-<h2>Unity Gameplay Developer</h2>
-
-<p>Gameplay Systems • AI Mechanics • Interactive Design</p>
 
 <div class="buttons">
 
@@ -215,7 +179,6 @@ text-decoration:underline;
 </div>
 
 </div>
-
 
 <!-- PROJECTS -->
 
@@ -247,7 +210,6 @@ text-decoration:underline;
 
 </section>
 
-
 <!-- SKILLS -->
 
 <section id="skills">
@@ -257,19 +219,14 @@ text-decoration:underline;
 <div class="skills">
 
 <div class="skill">Unity Engine</div>
-
 <div class="skill">C# Programming</div>
-
 <div class="skill">Gameplay Systems</div>
-
 <div class="skill">Enemy AI</div>
-
 <div class="skill">Game UI</div>
 
 </div>
 
 </section>
-
 
 <!-- CONTACT -->
 
@@ -280,9 +237,7 @@ text-decoration:underline;
 <div class="contact">
 
 <a href="https://github.com/jerry-368">GitHub</a>
-
 <a href="#">LinkedIn</a>
-
 <a href="#">Email</a>
 
 </div>
