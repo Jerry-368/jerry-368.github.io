@@ -45,7 +45,7 @@ transition:0.3s;
 color:#4aa3ff;
 }
 
-/* HERO BANNER */
+/* HERO */
 
 .hero{
 height:100vh;
@@ -152,6 +152,30 @@ font-size:18px;
 text-decoration:underline;
 }
 
+/* RESUME SECTION */
+
+.resume-section{
+margin-top:30px;
+}
+
+.resume-btn{
+display:inline-block;
+padding:18px 40px;
+border:2px solid #4aa3ff;
+border-radius:10px;
+text-decoration:none;
+color:white;
+font-size:18px;
+background:#111827;
+transition:0.3s;
+}
+
+.resume-btn:hover{
+background:#4aa3ff;
+color:black;
+transform:scale(1.05);
+}
+
 </style>
 
 </head>
@@ -164,6 +188,7 @@ text-decoration:underline;
 <a href="#">Home</a>
 <a href="#projects">Projects</a>
 <a href="#skills">Skills</a>
+<a href="#resume">Resume</a>
 <a href="#contact">Contact</a>
 </nav>
 
@@ -178,7 +203,7 @@ text-decoration:underline;
 
 <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn" target="_blank">LinkedIn</a>
 
-<a href="#" class="btn">Resume</a>
+<a href="Jerin_Johnson_Resume.pdf" class="btn" target="_blank">Resume</a>
 
 </div>
 
@@ -196,19 +221,19 @@ text-decoration:underline;
 <div class="card">
 <h3>FreeCell Card Game</h3>
 <p>Unity • C#</p>
-<a href="#" class="btn" target="_blank">Play Demo</a>
+<a href="#" class="btn">Play Demo</a>
 </div>
 
 <div class="card">
 <h3>Endless Runner</h3>
 <p>Unity • C#</p>
-<a href="#" class="btn" target="_blank">Play Demo</a>
+<a href="#" class="btn">Play Demo</a>
 </div>
 
 <div class="card">
 <h3>2D Platformer</h3>
 <p>Unity • C#</p>
-<a href="#" class="btn" target="_blank">Play Demo</a>
+<a href="#" class="btn">Play Demo</a>
 </div>
 
 </div>
@@ -227,8 +252,27 @@ text-decoration:underline;
 <div class="skill">Unity Engine</div>
 <div class="skill">C# Programming</div>
 <div class="skill">Gameplay Systems</div>
-<div class="skill">Enemy AI</div>
+<div class="skill">Enemy AI (FSM)</div>
 <div class="skill">Game UI</div>
+
+</div>
+
+</section>
+
+
+<!-- RESUME -->
+
+<section id="resume">
+
+<h2>Resume</h2>
+
+<div class="resume-section">
+
+<p>You can view or download my full resume below.</p>
+
+<a href="Jerin_Johnson_Resume.pdf" target="_blank" class="resume-btn">
+View / Download Resume
+</a>
 
 </div>
 
