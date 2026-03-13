@@ -90,6 +90,16 @@ section{
 padding:120px 20px;
 }
 
+/* ABOUT */
+
+.about{
+max-width:800px;
+margin:auto;
+font-size:18px;
+line-height:1.6;
+color:#d0d0d0;
+}
+
 /* PROJECTS */
 
 .projects{
@@ -134,29 +144,7 @@ transition:0.3s;
 background:#4aa3ff;
 }
 
-/* CONTACT */
-
-.contact{
-margin-top:30px;
-}
-
-.contact a{
-display:block;
-margin:10px;
-color:#4aa3ff;
-text-decoration:none;
-font-size:18px;
-}
-
-.contact a:hover{
-text-decoration:underline;
-}
-
-/* RESUME SECTION */
-
-.resume-section{
-margin-top:30px;
-}
+/* RESUME */
 
 .resume-btn{
 display:inline-block;
@@ -176,6 +164,20 @@ color:black;
 transform:scale(1.05);
 }
 
+/* CONTACT */
+
+.contact a{
+display:block;
+margin:10px;
+color:#4aa3ff;
+text-decoration:none;
+font-size:18px;
+}
+
+.contact a:hover{
+text-decoration:underline;
+}
+
 </style>
 
 </head>
@@ -186,12 +188,12 @@ transform:scale(1.05);
 
 <nav class="navbar">
 <a href="#">Home</a>
+<a href="#about">About</a>
 <a href="#projects">Projects</a>
 <a href="#skills">Skills</a>
 <a href="#resume">Resume</a>
 <a href="#contact">Contact</a>
 </nav>
-
 
 <!-- HERO -->
 
@@ -209,6 +211,25 @@ transform:scale(1.05);
 
 </div>
 
+<!-- ABOUT ME -->
+
+<section id="about">
+
+<h2>About Me</h2>
+
+<p class="about">
+
+I am a Unity Gameplay Developer passionate about building engaging gameplay systems and interactive mechanics using C# and Unity.
+
+I specialize in creating player controllers, enemy AI using finite state machines, shooting systems, and physics-based gameplay mechanics.
+
+I have developed several gameplay prototypes including FPS shooters, endless runner games, and platformers. During my internship at Bigboy School of Gaming, I developed a FreeCell Solitaire card game implementing gameplay logic and UI interactions.
+
+Currently I am focused on improving my gameplay programming skills and building advanced gameplay systems and AI mechanics.
+
+</p>
+
+</section>
 
 <!-- PROJECTS -->
 
@@ -240,7 +261,6 @@ transform:scale(1.05);
 
 </section>
 
-
 <!-- SKILLS -->
 
 <section id="skills">
@@ -259,25 +279,19 @@ transform:scale(1.05);
 
 </section>
 
-
 <!-- RESUME -->
 
 <section id="resume">
 
 <h2>Resume</h2>
 
-<div class="resume-section">
-
-<p>You can view or download my full resume below.</p>
+<p>You can view or download my resume below.</p>
 
 <a href="Jerin_Johnson_Resume.pdf" target="_blank" class="resume-btn">
 View / Download Resume
 </a>
 
-</div>
-
 </section>
-
 
 <!-- CONTACT -->
 
