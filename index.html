@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <title>Jerin Johnson | Unity Developer</title>
 
 <style>
+
+html{
+scroll-behavior:smooth;
+}
 
 body{
 margin:0;
@@ -12,6 +18,33 @@ background:#0b0f1a;
 color:white;
 text-align:center;
 }
+
+/* NAVBAR */
+
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+background:#0b0f1a;
+padding:15px;
+display:flex;
+justify-content:center;
+gap:40px;
+z-index:1000;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+font-size:18px;
+transition:0.3s;
+}
+
+.navbar a:hover{
+color:#4aa3ff;
+}
+
+/* HERO */
 
 .hero{
 height:100vh;
@@ -45,11 +78,74 @@ background:#4aa3ff;
 transform:scale(1.1);
 }
 
+/* SECTIONS */
+
+section{
+padding:100px 20px;
+}
+
+/* PROJECT CARDS */
+
+.projects{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+}
+
+.card{
+background:#111827;
+padding:25px;
+border-radius:10px;
+width:250px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #4aa3ff;
+}
+
+/* SKILLS */
+
+.skills{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.skill{
+background:#111827;
+padding:20px 30px;
+border-radius:8px;
+}
+
+/* CONTACT */
+
+.contact a{
+display:block;
+margin:10px;
+color:#4aa3ff;
+text-decoration:none;
+}
+
 </style>
 
 </head>
 
 <body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+<a href="#">Home</a>
+<a href="#projects">Projects</a>
+<a href="#skills">Skills</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
 
 <div class="hero">
 
@@ -66,6 +162,70 @@ transform:scale(1.1);
 <a href="#" class="btn">Resume</a>
 
 </div>
+
+<!-- PROJECTS -->
+
+<section id="projects">
+
+<h2>Featured Projects</h2>
+
+<div class="projects">
+
+<div class="card">
+<h3>FreeCell Card Game</h3>
+<p>Unity • C#</p>
+<a href="#" class="btn">Play Demo</a>
+</div>
+
+<div class="card">
+<h3>Endless Runner</h3>
+<p>Unity • C#</p>
+<a href="#" class="btn">Play Demo</a>
+</div>
+
+<div class="card">
+<h3>2D Platformer</h3>
+<p>Unity • C#</p>
+<a href="#" class="btn">Play Demo</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section id="skills">
+
+<h2>Skills</h2>
+
+<div class="skills">
+
+<div class="skill">Unity Engine</div>
+<div class="skill">C# Programming</div>
+<div class="skill">Gameplay Systems</div>
+<div class="skill">Enemy AI</div>
+<div class="skill">Game UI</div>
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2>Contact</h2>
+
+<div class="contact">
+
+<a href="https://github.com/jerry-368">GitHub</a>
+<a href="#">LinkedIn</a>
+<a href="#">Email</a>
+
+</div>
+
+</section>
 
 </body>
 </html>
