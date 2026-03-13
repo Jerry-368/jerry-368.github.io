@@ -52,29 +52,37 @@ background:url("banner.png") center/cover no-repeat;
 display:flex;
 justify-content:center;
 align-items:flex-end;
-padding-bottom:80px;
+padding-bottom:120px;
 }
 
-/* BUTTONS */
+/* BUTTON CONTAINER */
 
 .buttons{
 display:flex;
 gap:20px;
 flex-wrap:wrap;
+justify-content:center;
 }
+
+/* BUTTON STYLE */
 
 .btn{
 padding:15px 35px;
-border:1px solid #4aa3ff;
+border:2px solid #4aa3ff;
 border-radius:8px;
 text-decoration:none;
 color:white;
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(6px);
+font-weight:bold;
 transition:0.3s;
 }
 
 .btn:hover{
 background:#4aa3ff;
-transform:scale(1.1);
+color:black;
+transform:scale(1.08);
+box-shadow:0 0 20px #4aa3ff;
 }
 
 /* SECTIONS */
@@ -164,6 +172,7 @@ text-decoration:underline;
 <a href="#contact">Contact</a>
 </nav>
 
+
 <!-- HERO BANNER -->
 
 <div class="hero">
@@ -179,6 +188,7 @@ text-decoration:underline;
 </div>
 
 </div>
+
 
 <!-- PROJECTS -->
 
@@ -210,6 +220,7 @@ text-decoration:underline;
 
 </section>
 
+
 <!-- SKILLS -->
 
 <section id="skills">
@@ -227,6 +238,7 @@ text-decoration:underline;
 </div>
 
 </section>
+
 
 <!-- CONTACT -->
 
