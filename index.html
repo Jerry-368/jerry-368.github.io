@@ -66,7 +66,7 @@ justify-content:center;
 }
 
 .btn{
-padding:15px 35px;
+padding:12px 25px;
 border:2px solid #4aa3ff;
 border-radius:8px;
 text-decoration:none;
@@ -75,13 +75,15 @@ background:rgba(0,0,0,0.65);
 backdrop-filter:blur(6px);
 font-weight:bold;
 transition:0.3s;
+display:inline-block;
+margin-top:10px;
 }
 
 .btn:hover{
 background:#4aa3ff;
 color:black;
-transform:scale(1.08);
-box-shadow:0 0 20px #4aa3ff;
+transform:scale(1.05);
+box-shadow:0 0 15px #4aa3ff;
 }
 
 /* SECTIONS */
@@ -112,7 +114,7 @@ margin-top:40px;
 
 .card{
 background:#111827;
-padding:25px;
+padding:20px;
 border-radius:10px;
 width:260px;
 transition:0.3s;
@@ -125,6 +127,8 @@ box-shadow:0 0 20px #4aa3ff;
 
 .card img{
 width:100%;
+height:180px;
+object-fit:cover;
 border-radius:8px;
 margin-bottom:10px;
 }
@@ -217,7 +221,7 @@ text-decoration:underline;
 
 </div>
 
-<!-- ABOUT ME -->
+<!-- ABOUT -->
 
 <section id="about">
 
@@ -225,13 +229,13 @@ text-decoration:underline;
 
 <p class="about">
 
-I am a Unity Gameplay Developer passionate about building engaging gameplay systems and interactive mechanics using C# and Unity.
+Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
 
-I specialize in creating player controllers, enemy AI using finite state machines, shooting systems, and physics-based gameplay mechanics.
+Experienced in player controllers, enemy AI (FSM), shooting systems, and physics-based gameplay.
 
-I have developed several gameplay prototypes including FPS shooters, endless runner games, and platformers. During my internship at Bigboy School of Gaming, I developed a FreeCell Solitaire card game implementing gameplay logic and UI interactions.
+Built multiple prototypes including FPS, endless runner, and platformer games.
 
-Currently I am focused on improving my gameplay programming skills and building advanced gameplay systems and AI mechanics.
+Currently focused on improving gameplay architecture and advanced mechanics.
 
 </p>
 
@@ -247,7 +251,7 @@ Currently I am focused on improving my gameplay programming skills and building 
 
 <div class="projects">
 
-<!-- TOWER STACK (NEW FIRST PROJECT) -->
+<!-- TOWER STACK -->
 
 <div class="card">
 
@@ -257,33 +261,61 @@ Currently I am focused on improving my gameplay programming skills and building 
 <p>Unity • C#</p>
 
 <p style="font-size:14px; color:#ccc;">
-A timing-based stacking game where players stack moving blocks with precision to build the tallest tower.
+Precision-based stacking game with increasing difficulty and score tracking system.
 </p>
 
 <a href="https://github.com/Jerry-368/Tower_Stack" class="btn" target="_blank">
-View Project
+View Code
 </a>
 
 </div>
 
-<!-- EXISTING PROJECTS -->
+<!-- FREECELL -->
 
 <div class="card">
 <h3>FreeCell Card Game</h3>
 <p>Unity • C#</p>
-<a href="#" class="btn">Play Demo</a>
+
+<p style="font-size:14px; color:#ccc;">
+Classic card game built with custom logic and UI interactions.
+</p>
+
+<a href="https://github.com/jerry-368" class="btn" target="_blank">
+View Code
+</a>
+
 </div>
+
+<!-- RUNNER -->
 
 <div class="card">
 <h3>Endless Runner</h3>
 <p>Unity • C#</p>
-<a href="#" class="btn">Play Demo</a>
+
+<p style="font-size:14px; color:#ccc;">
+Endless runner with obstacle spawning and increasing speed difficulty.
+</p>
+
+<a href="https://github.com/jerry-368" class="btn" target="_blank">
+View Code
+</a>
+
 </div>
+
+<!-- PLATFORMER -->
 
 <div class="card">
 <h3>2D Platformer</h3>
 <p>Unity • C#</p>
-<a href="#" class="btn">Play Demo</a>
+
+<p style="font-size:14px; color:#ccc;">
+2D platformer with player movement, jumping, and level interaction.
+</p>
+
+<a href="https://github.com/jerry-368" class="btn" target="_blank">
+View Code
+</a>
+
 </div>
 
 </div>
