@@ -48,59 +48,8 @@ height:100vh;
 background:url("banner.png") center/cover no-repeat;
 display:flex;
 justify-content:center;
-align-items:center; /* FIXED CENTER */
-position:relative;
-overflow:hidden;
-}
-
-/* DARK OVERLAY */
-.hero::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
-z-index:1;
-}
-
-/* ANIMATION (VISIBLE NOW) */
-.hero::after{
-content:"";
-position:absolute;
-top:0;
-left:-50%;
-width:200%;
-height:100%;
-background:linear-gradient(
-120deg,
-transparent,
-rgba(74,163,255,0.25),
-transparent
-);
-animation:sweep 4s linear infinite;
-z-index:1;
-}
-
-/* LIGHT BLOBS */
-.light{
-position:absolute;
-width:250px;
-height:250px;
-background:radial-gradient(circle, rgba(74,163,255,0.35), transparent);
-filter:blur(60px);
-animation:float 8s ease-in-out infinite;
-z-index:1;
-}
-
-.light1{ top:10%; left:15%; }
-.light2{ bottom:10%; right:15%; animation-delay:3s; }
-
-/* KEEP CONTENT ABOVE */
-.hero *{
-position:relative;
-z-index:2;
+align-items:flex-end;
+padding-bottom:120px;
 }
 
 /* BUTTONS */
@@ -109,7 +58,6 @@ display:flex;
 gap:20px;
 flex-wrap:wrap;
 justify-content:center;
-width:100%; /* FIXED */
 }
 
 .btn{
@@ -237,17 +185,6 @@ font-size:18px;
 text-decoration:underline;
 }
 
-/* ANIMATIONS */
-@keyframes sweep{
-0%{ transform:translateX(0); }
-100%{ transform:translateX(50%); }
-}
-
-@keyframes float{
-0%,100%{ transform:translateY(0); }
-50%{ transform:translateY(-40px); }
-}
-
 </style>
 </head>
 
@@ -265,16 +202,11 @@ text-decoration:underline;
 
 <!-- HERO -->
 <div class="hero">
-
-<div class="light light1"></div>
-<div class="light light2"></div>
-
 <div class="buttons">
 <a href="https://github.com/jerry-368" class="btn" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn" target="_blank">LinkedIn</a>
 <a href="Jerin_Johnson_Resume.pdf" class="btn" target="_blank">Resume</a>
 </div>
-
 </div>
 
 <!-- ABOUT -->
@@ -282,15 +214,64 @@ text-decoration:underline;
 <h2>About Me</h2>
 <p class="about">
 Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
+Experienced in player controllers, enemy AI (FSM), shooting systems, and physics-based gameplay.
+Built multiple prototypes including FPS, endless runner, and platformer games.
+Currently focused on improving gameplay architecture and advanced mechanics.
+
+Built and published playable games with complete gameplay systems and deployment.
 </p>
 </section>
 
 <!-- PROJECTS -->
 <section id="projects">
 <h2>Featured Projects</h2>
+
 <div class="projects">
-<div class="card">Project 1</div>
-<div class="card">Project 2</div>
+
+<!-- TOWER STACK -->
+<div class="card">
+<img src="Screenshots/Menu.png">
+<h3>Stack Tower</h3>
+<p>Unity • C#</p>
+<p style="font-size:14px; color:#ccc;">
+Precision-based stacking game with increasing difficulty and score tracking system.
+</p>
+
+<div class="project-buttons">
+<a href="https://github.com/Jerry-368/Tower_Stack" class="btn" target="_blank">View Code</a>
+<a href="https://jerininteractive.itch.io/stack-tower" class="btn" target="_blank">Play Game</a>
+</div>
+
+</div>
+
+
+<!-- SWITCH RIFT -->
+<div class="card">
+<img src="Screenshots/switchrift.png">
+<h3>Switch Rift</h3>
+<p>Unity • C#</p>
+<p style="font-size:14px; color:#ccc;">
+Dual-mode endless runner featuring Runner/Ghost switching, energy-based mechanics,
+procedural obstacle spawning, and dynamic difficulty scaling.
+</p>
+
+<div class="project-buttons">
+<a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn" target="_blank">View Code</a>
+<a href="https://jerininteractive.itch.io/switch-rift" class="btn" target="_blank">Play Game</a>
+</div>
+
+</div>
+
+<!-- PLATFORMER -->
+<div class="card">
+<h3>2D Platformer</h3>
+<p>Unity • C#</p>
+<p style="font-size:14px; color:#ccc;">
+2D platformer with player movement, jumping, and level interaction.
+</p>
+<a href="https://github.com/jerry-368" class="btn" target="_blank">View Code</a>
+</div>
+
 </div>
 </section>
 
@@ -298,8 +279,31 @@ Unity Gameplay Developer focused on building engaging mechanics and systems usin
 <section id="skills">
 <h2>Skills</h2>
 <div class="skills">
-<div class="skill">Unity</div>
-<div class="skill">C#</div>
+<div class="skill">Unity Engine</div>
+<div class="skill">C# Programming</div>
+<div class="skill">Gameplay Systems</div>
+<div class="skill">Enemy AI (FSM)</div>
+<div class="skill">Game UI</div>
+</div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+<h2>Resume</h2>
+<p>You can view or download my resume below.</p>
+<a href="Jerin_Johnson_Resume.pdf" target="_blank" class="resume-btn">
+View / Download Resume
+</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h2>Contact</h2>
+<div class="contact">
+<a href="https://github.com/jerry-368" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank">LinkedIn</a>
+<a href="mailto:jerinj368@gmail.com">Email: jerinj368@gmail.com</a>
+<a href="tel:+919633857368">Phone: +91 9633857368</a>
 </div>
 </section>
 
