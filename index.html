@@ -13,9 +13,20 @@ scroll-behavior:smooth;
 body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
-background:#020617;
+background:#0b0f1a;
 color:white;
 text-align:center;
+}
+
+/* PARTICLES BACKGROUND */
+#particles-js{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+background:#0b0f1a;
 }
 
 /* NAVBAR */
@@ -23,7 +34,7 @@ text-align:center;
 position:fixed;
 top:0;
 width:100%;
-background:#020617;
+background:#0b0f1a;
 padding:15px;
 display:flex;
 justify-content:center;
@@ -42,7 +53,7 @@ transition:0.3s;
 color:#4aa3ff;
 }
 
-/* HERO (UNCHANGED) */
+/* HERO (FIXED - BANNER ADDED BACK) */
 .hero{
 height:100vh;
 background:url("banner.png") center/cover no-repeat;
@@ -50,100 +61,8 @@ display:flex;
 justify-content:center;
 align-items:flex-end;
 padding-bottom:120px;
-}
-
-/* ===== FULL PAGE STAR ANIMATION BELOW HERO ===== */
-section{
-padding:120px 20px;
-background:#020617;
 position:relative;
-overflow:hidden;
-}
-
-/* FAR STARS (WHITE) */
-section::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:200%;
-height:200%;
-
-background-image:
-radial-gradient(2px 2px rgba(255,255,255,0.9) 1px, transparent 1px);
-
-background-size:40px 40px;
-animation:starsSlow 30s linear infinite;
-}
-
-/* NEAR STARS (BLUE GLOW) */
-section::after{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:200%;
-height:200%;
-
-background-image:
-radial-gradient(3px 3px rgba(74,163,255,1) 1px, transparent 1px);
-
-background-size:80px 80px;
-animation:starsFast 15s linear infinite;
-}
-
-/* PARALLAX MOVEMENT */
-@keyframes starsSlow{
-0%{transform:translateY(0);}
-100%{transform:translateY(-300px);}
-}
-
-@keyframes starsFast{
-0%{transform:translateY(0);}
-100%{transform:translateY(-600px);}
-}
-
-/* SHOOTING STARS */
-.shooting-star{
-position:absolute;
-top:10%;
-left:-200px;
-width:200px;
-height:2px;
-background:linear-gradient(90deg, white, transparent);
-opacity:0;
-transform:rotate(25deg);
-animation:shoot 8s linear infinite;
-pointer-events:none;
-}
-
-.shooting-star::after{
-content:"";
-position:absolute;
-right:0;
-top:-3px;
-width:6px;
-height:6px;
-background:white;
-border-radius:50%;
-box-shadow:0 0 10px white;
-}
-
-.shooting-star:nth-child(1){animation-delay:2s;}
-.shooting-star:nth-child(2){animation-delay:5s;}
-.shooting-star:nth-child(3){animation-delay:8s;}
-
-@keyframes shoot{
-0%{transform:translateX(0) translateY(0) rotate(25deg);opacity:0;}
-10%{opacity:1;}
-70%{transform:translateX(1400px) translateY(400px) rotate(25deg);opacity:0;}
-100%{opacity:0;}
-}
-
-/* KEEP CONTENT ABOVE */
-section *{
-position:relative;
-z-index:2;
+z-index:1;
 }
 
 /* BUTTONS */
@@ -173,6 +92,11 @@ background:#4aa3ff;
 color:black;
 transform:scale(1.05);
 box-shadow:0 0 15px #4aa3ff;
+}
+
+/* SECTIONS */
+section{
+padding:120px 20px;
 }
 
 /* ABOUT */
@@ -279,6 +203,10 @@ text-decoration:underline;
 
 <body>
 
+<!-- PARTICLES BACKGROUND -->
+<div id="particles-js"></div>
+
+<!-- NAVBAR -->
 <nav class="navbar">
 <a href="#">Home</a>
 <a href="#about">About</a>
@@ -299,9 +227,6 @@ text-decoration:underline;
 
 <!-- ABOUT -->
 <section id="about">
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-
 <h2>About Me</h2>
 <p class="about">
 Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
@@ -315,27 +240,46 @@ Built and published playable games with complete gameplay systems and deployment
 
 <!-- PROJECTS -->
 <section id="projects">
-<div class="shooting-star"></div>
-
 <h2>Featured Projects</h2>
 
 <div class="projects">
+
 <div class="card">
 <img src="Screenshots/Menu.png">
 <h3>Stack Tower</h3>
 <p>Unity • C#</p>
+<p style="font-size:14px; color:#ccc;">
+Precision-based stacking game with increasing difficulty and score tracking system.
+</p>
+<div class="project-buttons">
+<a href="https://github.com/Jerry-368/Tower_Stack" class="btn" target="_blank">View Code</a>
+<a href="https://jerininteractive.itch.io/stack-tower" class="btn" target="_blank">Play Game</a>
+</div>
 </div>
 
 <div class="card">
 <img src="Screenshots/switchrift.png">
 <h3>Switch Rift</h3>
 <p>Unity • C#</p>
+<p style="font-size:14px; color:#ccc;">
+Dual-mode endless runner featuring Runner/Ghost switching, energy-based mechanics,
+procedural obstacle spawning, and dynamic difficulty scaling.
+</p>
+<div class="project-buttons">
+<a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn" target="_blank">View Code</a>
+<a href="https://jerininteractive.itch.io/switch-rift" class="btn" target="_blank">Play Game</a>
+</div>
 </div>
 
 <div class="card">
 <h3>2D Platformer</h3>
 <p>Unity • C#</p>
+<p style="font-size:14px; color:#ccc;">
+2D platformer with player movement, jumping, and level interaction.
+</p>
+<a href="https://github.com/jerry-368" class="btn" target="_blank">View Code</a>
 </div>
+
 </div>
 </section>
 
@@ -364,11 +308,40 @@ View / Download Resume
 <section id="contact">
 <h2>Contact</h2>
 <div class="contact">
-<a href="https://github.com/jerry-368">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev">LinkedIn</a>
-<a href="mailto:jerinj368@gmail.com">Email</a>
+<a href="https://github.com/jerry-368" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank">LinkedIn</a>
+<a href="mailto:jerinj368@gmail.com">Email: jerinj368@gmail.com</a>
+<a href="tel:+919633857368">Phone: +91 9633857368</a>
 </div>
 </section>
+
+<!-- PARTICLES SCRIPT -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 90 },
+    color: { value: "#4aa3ff" },
+    shape: { type: "circle" },
+    opacity: { value: 0.4 },
+    size: { value: 3 },
+    move: { enable: true, speed: 1.5 },
+    line_linked: {
+      enable: true,
+      distance: 140,
+      color: "#4aa3ff",
+      opacity: 0.3,
+      width: 1
+    }
+  },
+  interactivity: {
+    events: {
+      onhover: { enable: true, mode: "repulse" }
+    }
+  }
+});
+</script>
 
 </body>
 </html>
