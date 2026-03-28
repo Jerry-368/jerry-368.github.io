@@ -17,23 +17,46 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* ⭐ STAR BACKGROUND */
-#stars{
+/* 🔥 MANY STAR LAYERS (REAL DENSITY) */
+#stars, #stars2, #stars3{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:200%;
 z-index:-2;
+}
+
+/* SMALL STARS */
+#stars{
 background:
 radial-gradient(2px 2px at 20% 30%, #4aa3ff, transparent),
 radial-gradient(2px 2px at 70% 80%, #4aa3ff, transparent),
 radial-gradient(2px 2px at 40% 60%, #4aa3ff, transparent),
 radial-gradient(2px 2px at 80% 20%, #4aa3ff, transparent),
 radial-gradient(2px 2px at 10% 90%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 90% 10%, #4aa3ff, transparent);
-
+radial-gradient(2px 2px at 90% 10%, #4aa3ff, transparent),
+radial-gradient(2px 2px at 50% 50%, #4aa3ff, transparent),
+radial-gradient(2px 2px at 30% 70%, #4aa3ff, transparent);
 animation:moveStars 25s linear infinite;
+}
+
+/* MEDIUM STARS */
+#stars2{
+background:
+radial-gradient(3px 3px at 25% 40%, #60a5fa, transparent),
+radial-gradient(3px 3px at 60% 75%, #60a5fa, transparent),
+radial-gradient(3px 3px at 80% 30%, #60a5fa, transparent),
+radial-gradient(3px 3px at 40% 20%, #60a5fa, transparent);
+animation:moveStars 40s linear infinite;
+}
+
+/* BIG STARS */
+#stars3{
+background:
+radial-gradient(4px 4px at 15% 50%, #93c5fd, transparent),
+radial-gradient(4px 4px at 85% 60%, #93c5fd, transparent);
+animation:moveStars 60s linear infinite;
 }
 
 @keyframes moveStars{
@@ -67,7 +90,7 @@ color:#4aa3ff;
 /* HERO (BANNER SAFE) */
 .hero{
 height:100vh;
-background:url("banner.png") center center / cover no-repeat;
+background:url("banner.png") center/cover no-repeat;
 display:flex;
 justify-content:center;
 align-items:flex-end;
@@ -101,7 +124,7 @@ color:black;
 transform:scale(1.05);
 }
 
-/* SECTIONS (FIXED SPACING) */
+/* SECTIONS */
 section{
 padding:70px 20px;
 }
@@ -110,7 +133,6 @@ padding:70px 20px;
 .about{
 max-width:800px;
 margin:auto;
-font-size:18px;
 line-height:1.6;
 color:#d0d0d0;
 }
@@ -125,15 +147,17 @@ margin-top:30px;
 }
 
 .card{
+position:relative;
 background:#111827;
 padding:20px;
 border-radius:10px;
 width:280px;
+overflow:hidden;
 transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-8px);
 box-shadow:0 10px 25px rgba(74,163,255,0.3);
 }
 
@@ -142,7 +166,24 @@ width:100%;
 height:180px;
 object-fit:cover;
 border-radius:8px;
-margin-bottom:10px;
+display:block;
+}
+
+/* VIDEO PREVIEW */
+.preview{
+position:absolute;
+top:20px;
+left:20px;
+width:calc(100% - 40px);
+height:180px;
+object-fit:cover;
+border-radius:8px;
+opacity:0;
+transition:0.3s;
+}
+
+.card:hover .preview{
+opacity:1;
 }
 
 /* BUTTON GROUP */
@@ -151,6 +192,7 @@ display:flex;
 gap:10px;
 justify-content:center;
 flex-wrap:wrap;
+margin-top:10px;
 }
 
 /* SKILLS */
@@ -178,11 +220,6 @@ color:white;
 text-decoration:none;
 }
 
-.resume-btn:hover{
-background:#4aa3ff;
-color:black;
-}
-
 /* CONTACT */
 .contact a{
 display:block;
@@ -196,7 +233,10 @@ text-decoration:none;
 
 <body>
 
+<!-- STAR LAYERS -->
 <div id="stars"></div>
+<div id="stars2"></div>
+<div id="stars3"></div>
 
 <!-- NAVBAR -->
 <nav class="navbar">
@@ -211,13 +251,13 @@ text-decoration:none;
 <!-- HERO -->
 <div class="hero">
 <div class="buttons">
-<a href="https://github.com/jerry-368" class="btn" target="_blank">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn" target="_blank">LinkedIn</a>
-<a href="Jerin_Johnson_Resume.pdf" class="btn" target="_blank">Resume</a>
+<a href="https://github.com/jerry-368" class="btn">GitHub</a>
+<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn">LinkedIn</a>
+<a href="Jerin_Johnson_Resume.pdf" class="btn">Resume</a>
 </div>
 </div>
 
-<!-- ABOUT (UNCHANGED) -->
+<!-- ABOUT -->
 <section id="about">
 <h2>About Me</h2>
 <p class="about">
@@ -238,30 +278,33 @@ Built and published playable games with complete gameplay systems and deployment
 
 <div class="card">
 <img src="Screenshots/Menu.png">
+
+<video class="preview" muted loop>
+<source src="videos/stacktower.mp4" type="video/mp4">
+</video>
+
 <h3>Stack Tower</h3>
 <p>Unity • C#</p>
-<p style="font-size:14px;color:#ccc;">
-Precision-based stacking game with increasing difficulty and score tracking system.
-</p>
 
 <div class="project-buttons">
-<a href="https://github.com/Jerry-368/Tower_Stack" class="btn" target="_blank">View Code</a>
-<a href="https://jerininteractive.itch.io/stack-tower" class="btn" target="_blank">Play Game</a>
+<a href="https://github.com/Jerry-368/Tower_Stack" class="btn">Code</a>
+<a href="https://jerininteractive.itch.io/stack-tower" class="btn">Play</a>
 </div>
 </div>
 
 <div class="card">
 <img src="Screenshots/switchrift.png">
+
+<video class="preview" muted loop>
+<source src="videos/switchrift.mp4" type="video/mp4">
+</video>
+
 <h3>Switch Rift</h3>
 <p>Unity • C#</p>
-<p style="font-size:14px;color:#ccc;">
-Dual-mode endless runner featuring Runner/Ghost switching, energy-based mechanics,
-procedural obstacle spawning, and dynamic difficulty scaling.
-</p>
 
 <div class="project-buttons">
-<a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn" target="_blank">View Code</a>
-<a href="https://jerininteractive.itch.io/switch-rift" class="btn" target="_blank">Play Game</a>
+<a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn">Code</a>
+<a href="https://jerininteractive.itch.io/switch-rift" class="btn">Play</a>
 </div>
 </div>
 
@@ -284,21 +327,34 @@ procedural obstacle spawning, and dynamic difficulty scaling.
 <!-- RESUME -->
 <section id="resume">
 <h2>Resume</h2>
-<a href="Jerin_Johnson_Resume.pdf" class="resume-btn" target="_blank">
-View Resume
-</a>
+<a href="Jerin_Johnson_Resume.pdf" class="resume-btn">View Resume</a>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
 <h2>Contact</h2>
 <div class="contact">
-<a href="mailto:jerinj368@gmail.com">Email: jerinj368@gmail.com</a>
-<a href="tel:+919633857368">Phone: +91 9633857368</a>
-<a href="https://github.com/jerry-368" target="_blank">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank">LinkedIn</a>
+<a href="mailto:jerinj368@gmail.com">Email</a>
+<a href="tel:+919633857368">Phone</a>
+<a href="https://github.com/jerry-368">GitHub</a>
+<a href="https://www.linkedin.com/in/jerinjohnson-gamedev">LinkedIn</a>
 </div>
 </section>
+
+<script>
+document.querySelectorAll(".card").forEach(card=>{
+const video = card.querySelector(".preview");
+
+card.addEventListener("mouseenter", ()=>{
+video.play();
+});
+
+card.addEventListener("mouseleave", ()=>{
+video.pause();
+video.currentTime = 0;
+});
+});
+</script>
 
 </body>
 </html>
