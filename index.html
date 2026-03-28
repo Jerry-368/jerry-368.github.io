@@ -8,6 +8,7 @@
 
 html{
 scroll-behavior:smooth;
+cursor:crosshair;
 }
 
 body{
@@ -16,9 +17,11 @@ font-family:Arial, Helvetica, sans-serif;
 background:#0b0f1a;
 color:white;
 text-align:center;
+cursor:crosshair;
+overflow-x:hidden;
 }
 
-/* PARTICLES BACKGROUND */
+/* PARTICLES */
 #particles-js{
 position:fixed;
 top:0;
@@ -27,6 +30,41 @@ width:100%;
 height:100%;
 z-index:0;
 pointer-events:none;
+}
+
+/* SCORE */
+.score{
+position:fixed;
+top:20px;
+right:20px;
+font-size:20px;
+z-index:1001;
+color:#4aa3ff;
+}
+
+/* ENEMY */
+.enemy{
+position:fixed;
+width:35px;
+height:35px;
+background:red;
+border-radius:50%;
+z-index:900;
+will-change:transform;
+}
+
+/* SHOOT EFFECT */
+.shoot-effect{
+position:fixed;
+width:25px;
+height:25px;
+border-radius:50%;
+background:rgba(74,163,255,0.6);
+pointer-events:none;
+transform:translate(-50%, -50%) scale(0);
+opacity:0;
+z-index:1000;
+transition:transform 0.1s, opacity 0.1s;
 }
 
 /* NAVBAR */
@@ -42,17 +80,6 @@ gap:40px;
 z-index:1000;
 }
 
-.navbar a{
-color:white;
-text-decoration:none;
-font-size:18px;
-transition:0.3s;
-}
-
-.navbar a:hover{
-color:#4aa3ff;
-}
-
 /* HERO */
 .hero{
 position:relative;
@@ -62,209 +89,32 @@ display:flex;
 justify-content:center;
 align-items:flex-end;
 padding-bottom:120px;
-transition:transform 0.1s ease-out;
 z-index:1;
 }
 
-/* DARK OVERLAY (important for readability) */
 .hero::before{
 content:"";
 position:absolute;
-top:0;
-left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.55);
-z-index:1;
-}
-
-/* ENSURE CONTENT ABOVE OVERLAY */
-.hero *{
-position:relative;
-z-index:2;
-}
-
-/* CROSSHAIR */
-.crosshair{
-position:fixed;
-top:50%;
-left:50%;
-width:20px;
-height:20px;
-border:2px solid #4aa3ff;
-border-radius:50%;
-transform:translate(-50%, -50%);
-pointer-events:none;
-z-index:999;
-}
-
-.crosshair::before,
-.crosshair::after{
-content:"";
-position:absolute;
-background:#4aa3ff;
-}
-
-.crosshair::before{
-width:2px;
-height:30px;
-top:-6px;
-left:50%;
-transform:translateX(-50%);
-}
-
-.crosshair::after{
-height:2px;
-width:30px;
-left:-6px;
-top:50%;
-transform:translateY(-50%);
-}
-
-/* SHOOT EFFECT */
-.shoot-effect{
-position:fixed;
-width:40px;
-height:40px;
-border-radius:50%;
-background:rgba(74,163,255,0.5);
-pointer-events:none;
-transform:translate(-50%, -50%);
-opacity:0;
-z-index:998;
+background:rgba(0,0,0,0.5);
 }
 
 /* BUTTONS */
 .buttons{
+position:relative;
+z-index:2;
 display:flex;
 gap:20px;
-flex-wrap:wrap;
-justify-content:center;
 }
 
 .btn{
 padding:12px 25px;
 border:2px solid #4aa3ff;
 border-radius:8px;
-text-decoration:none;
 color:white;
-background:rgba(0,0,0,0.65);
-backdrop-filter:blur(6px);
-font-weight:bold;
-transition:0.3s;
-display:inline-block;
-margin-top:10px;
-}
-
-.btn:hover{
-background:#4aa3ff;
-color:black;
-transform:scale(1.05);
-box-shadow:0 0 15px #4aa3ff;
-}
-
-/* SECTIONS */
-section{
-padding:120px 20px;
-}
-
-/* ABOUT */
-.about{
-max-width:800px;
-margin:auto;
-font-size:18px;
-line-height:1.6;
-color:#d0d0d0;
-}
-
-/* PROJECTS */
-.projects{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:30px;
-margin-top:40px;
-}
-
-.card{
-background:#111827;
-padding:20px;
-border-radius:10px;
-width:280px;
-transition:0.3s;
-}
-
-.card:hover{
-transform:scale(1.05);
-box-shadow:0 0 20px #4aa3ff;
-}
-
-.card img{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:8px;
-margin-bottom:10px;
-}
-
-/* BUTTON GROUP */
-.project-buttons{
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap;
-}
-
-/* SKILLS */
-.skills{
-display:flex;
-justify-content:center;
-gap:25px;
-flex-wrap:wrap;
-margin-top:30px;
-}
-
-.skill{
-background:#111827;
-padding:15px 25px;
-border-radius:8px;
-transition:0.3s;
-}
-
-.skill:hover{
-background:#4aa3ff;
-}
-
-/* RESUME */
-.resume-btn{
-display:inline-block;
-padding:18px 40px;
-border:2px solid #4aa3ff;
-border-radius:10px;
+background:rgba(0,0,0,0.6);
 text-decoration:none;
-color:white;
-font-size:18px;
-background:#111827;
-transition:0.3s;
-}
-
-.resume-btn:hover{
-background:#4aa3ff;
-color:black;
-transform:scale(1.05);
-}
-
-/* CONTACT */
-.contact a{
-display:block;
-margin:10px;
-color:#4aa3ff;
-text-decoration:none;
-font-size:18px;
-}
-
-.contact a:hover{
-text-decoration:underline;
 }
 
 </style>
@@ -272,172 +122,108 @@ text-decoration:underline;
 
 <body>
 
-<!-- PARTICLES -->
 <div id="particles-js"></div>
+<div class="score">Score: 0</div>
 
-<!-- NAVBAR -->
 <nav class="navbar">
 <a href="#">Home</a>
 <a href="#about">About</a>
 <a href="#projects">Projects</a>
-<a href="#skills">Skills</a>
-<a href="#resume">Resume</a>
-<a href="#contact">Contact</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
-
-<div class="crosshair"></div>
 <div class="shoot-effect"></div>
 
 <div class="buttons">
-<a href="https://github.com/jerry-368" class="btn" target="_blank">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn" target="_blank">LinkedIn</a>
-<a href="Jerin_Johnson_Resume.pdf" class="btn" target="_blank">Resume</a>
-</div>
-
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-<h2>About Me</h2>
-<p class="about">
-Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
-Experienced in player controllers, enemy AI (FSM), shooting systems, and physics-based gameplay.
-Built multiple prototypes including FPS, endless runner, and platformer games.
-Currently focused on improving gameplay architecture and advanced mechanics.
-
-Built and published playable games with complete gameplay systems and deployment.
-</p>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-<h2>Featured Projects</h2>
-
-<div class="projects">
-
-<div class="card">
-<img src="Screenshots/Menu.png">
-<h3>Stack Tower</h3>
-<p>Unity • C#</p>
-<p style="font-size:14px; color:#ccc;">
-Precision-based stacking game with increasing difficulty and score tracking system.
-</p>
-<div class="project-buttons">
-<a href="https://github.com/Jerry-368/Tower_Stack" class="btn">View Code</a>
-<a href="https://jerininteractive.itch.io/stack-tower" class="btn">Play Game</a>
+<a href="#" class="btn">GitHub</a>
+<a href="#" class="btn">LinkedIn</a>
 </div>
 </div>
 
-<div class="card">
-<img src="Screenshots/switchrift.png">
-<h3>Switch Rift</h3>
-<p>Unity • C#</p>
-<p style="font-size:14px; color:#ccc;">
-Dual-mode endless runner featuring Runner/Ghost switching, energy-based mechanics,
-procedural obstacle spawning, and dynamic difficulty scaling.
-</p>
-<div class="project-buttons">
-<a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn">View Code</a>
-<a href="https://jerininteractive.itch.io/switch-rift" class="btn">Play Game</a>
-</div>
-</div>
-
-<div class="card">
-<h3>2D Platformer</h3>
-<p>Unity • C#</p>
-<p style="font-size:14px; color:#ccc;">
-2D platformer with player movement, jumping, and level interaction.
-</p>
-<a href="https://github.com/jerry-368" class="btn">View Code</a>
-</div>
-
-</div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-<h2>Skills</h2>
-<div class="skills">
-<div class="skill">Unity Engine</div>
-<div class="skill">C# Programming</div>
-<div class="skill">Gameplay Systems</div>
-<div class="skill">Enemy AI (FSM)</div>
-<div class="skill">Game UI</div>
-</div>
-</section>
-
-<!-- RESUME -->
-<section id="resume">
-<h2>Resume</h2>
-<p>You can view or download my resume below.</p>
-<a href="Jerin_Johnson_Resume.pdf" class="resume-btn">
-View / Download Resume
-</a>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-<h2>Contact</h2>
-<div class="contact">
-<a href="https://github.com/jerry-368">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev">LinkedIn</a>
-<a href="mailto:jerinj368@gmail.com">Email</a>
-<a href="tel:+919633857368">Phone</a>
-</div>
-</section>
-
-<!-- PARTICLES SCRIPT -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <script>
+// PARTICLES (reduced load)
 particlesJS("particles-js", {
   particles: {
-    number: { value: 90 },
+    number: { value: 50 }, // reduced for performance
     color: { value: "#4aa3ff" },
-    opacity: { value: 0.3 },
     size: { value: 3 },
-    move: { enable: true, speed: 1.5 },
-    line_linked: {
-      enable: true,
-      distance: 140,
-      color: "#4aa3ff",
-      opacity: 0.2
-    }
+    move: { speed: 1 }
   }
 });
 
-// INTERACTION SYSTEM
-const crosshair = document.querySelector(".crosshair");
+// GAME SYSTEM
 const shoot = document.querySelector(".shoot-effect");
-const hero = document.querySelector(".hero");
+const scoreEl = document.querySelector(".score");
 
-document.addEventListener("mousemove", (e) => {
-  const x = e.clientX;
-  const y = e.clientY;
+let score = 0;
+let enemies = [];
+const MAX_ENEMIES = 6;
 
-  crosshair.style.left = x + "px";
-  crosshair.style.top = y + "px";
+// SPAWN ENEMY (optimized)
+function spawnEnemy(){
+  if(enemies.length >= MAX_ENEMIES) return;
 
-  const moveX = (x - window.innerWidth / 2) / 40;
-  const moveY = (y - window.innerHeight / 2) / 40;
-  hero.style.transform = `translate(${moveX}px, ${moveY}px)`;
-});
+  const enemy = document.createElement("div");
+  enemy.className = "enemy";
 
+  const x = Math.random() * (window.innerWidth - 40);
+  const y = Math.random() * (window.innerHeight - 40);
+
+  enemy.style.transform = `translate(${x}px, ${y}px)`;
+
+  document.body.appendChild(enemy);
+  enemies.push(enemy);
+
+  // remove safely
+  setTimeout(() => removeEnemy(enemy), 2500);
+}
+
+function removeEnemy(enemy){
+  const index = enemies.indexOf(enemy);
+  if(index > -1){
+    enemies.splice(index,1);
+    enemy.remove();
+  }
+}
+
+// CLICK SHOOT (optimized hit detection)
 document.addEventListener("click", (e) => {
+
+  // shoot flash
   shoot.style.left = e.clientX + "px";
   shoot.style.top = e.clientY + "px";
-
   shoot.style.opacity = 1;
-  shoot.style.transform = "translate(-50%, -50%) scale(1.5)";
+  shoot.style.transform = "translate(-50%, -50%) scale(1)";
 
   setTimeout(() => {
     shoot.style.opacity = 0;
     shoot.style.transform = "translate(-50%, -50%) scale(0)";
-  }, 200);
+  }, 100);
+
+  // check hit (small array, fast)
+  for(let i = enemies.length - 1; i >= 0; i--){
+    const rect = enemies[i].getBoundingClientRect();
+
+    if(
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom
+    ){
+      removeEnemy(enemies[i]);
+      score += 10;
+      scoreEl.innerText = "Score: " + score;
+      break; // stop after first hit
+    }
+  }
+
 });
+
+// SPAWN LOOP (controlled)
+setInterval(spawnEnemy, 800);
+
 </script>
 
 </body>
