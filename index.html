@@ -8,7 +8,6 @@
 
 html{
 scroll-behavior:smooth;
-cursor:crosshair;
 }
 
 body{
@@ -17,55 +16,6 @@ font-family:Arial, Helvetica, sans-serif;
 background:#0b0f1a;
 color:white;
 text-align:center;
-cursor:crosshair;
-overflow-x:hidden;
-}
-
-/* PARTICLES */
-#particles-js{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:0;
-pointer-events:none;
-}
-
-/* SCORE HUD */
-.score{
-position:fixed;
-top:20px;
-right:20px;
-font-size:18px;
-z-index:2000;
-color:#4aa3ff;
-font-weight:bold;
-}
-
-/* ENEMY */
-.enemy{
-position:fixed;
-width:35px;
-height:35px;
-background:red;
-border-radius:50%;
-z-index:1500;
-will-change:transform;
-}
-
-/* SHOOT EFFECT */
-.shoot-effect{
-position:fixed;
-width:25px;
-height:25px;
-border-radius:50%;
-background:rgba(74,163,255,0.6);
-pointer-events:none;
-transform:translate(-50%, -50%) scale(0);
-opacity:0;
-z-index:1800;
-transition:transform 0.1s, opacity 0.1s;
 }
 
 /* NAVBAR */
@@ -85,13 +35,14 @@ z-index:1000;
 color:white;
 text-decoration:none;
 font-size:18px;
+transition:0.3s;
 }
 
 .navbar a:hover{
 color:#4aa3ff;
 }
 
-/* HERO */
+/* HERO (KEEP BANNER) */
 .hero{
 position:relative;
 height:100vh;
@@ -100,23 +51,60 @@ display:flex;
 justify-content:center;
 align-items:flex-end;
 padding-bottom:120px;
+overflow:hidden;
+}
+
+/* DARK OVERLAY */
+.hero::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+top:0;
+left:0;
 z-index:1;
 }
 
-.hero::before{
+/* ANIMATED GRADIENT LAYER */
+.hero::after{
 content:"";
 position:absolute;
 top:0;
 left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
+width:200%;
+height:200%;
+background:linear-gradient(
+120deg,
+rgba(74,163,255,0.15),
+transparent,
+rgba(74,163,255,0.1)
+);
+animation:moveGradient 12s linear infinite;
+z-index:1;
+}
+
+/* FLOATING LIGHT BLOBS */
+.blob{
+position:absolute;
+width:300px;
+height:300px;
+background:radial-gradient(circle, rgba(74,163,255,0.25), transparent);
+filter:blur(80px);
+animation:float 10s infinite ease-in-out;
+}
+
+.blob1{ top:10%; left:20%; }
+.blob2{ bottom:10%; right:20%; animation-delay:3s; }
+
+/* KEEP CONTENT ABOVE */
+.hero *{
+position:relative;
+z-index:2;
 }
 
 /* BUTTONS */
 .buttons{
-position:relative;
-z-index:2;
 display:flex;
 gap:20px;
 flex-wrap:wrap;
@@ -130,6 +118,7 @@ border-radius:8px;
 text-decoration:none;
 color:white;
 background:rgba(0,0,0,0.65);
+backdrop-filter:blur(6px);
 font-weight:bold;
 transition:0.3s;
 }
@@ -137,6 +126,8 @@ transition:0.3s;
 .btn:hover{
 background:#4aa3ff;
 color:black;
+transform:scale(1.05);
+box-shadow:0 0 15px #4aa3ff;
 }
 
 /* SECTIONS */
@@ -150,7 +141,6 @@ display:flex;
 flex-wrap:wrap;
 justify-content:center;
 gap:30px;
-margin-top:40px;
 }
 
 .card{
@@ -166,7 +156,6 @@ display:flex;
 justify-content:center;
 gap:25px;
 flex-wrap:wrap;
-margin-top:30px;
 }
 
 .skill{
@@ -175,16 +164,21 @@ padding:15px 25px;
 border-radius:8px;
 }
 
+/* ANIMATIONS */
+@keyframes moveGradient{
+0%{ transform:translate(0,0); }
+100%{ transform:translate(-25%, -25%); }
+}
+
+@keyframes float{
+0%,100%{ transform:translateY(0); }
+50%{ transform:translateY(-40px); }
+}
+
 </style>
 </head>
 
 <body>
-
-<!-- PARTICLES -->
-<div id="particles-js"></div>
-
-<!-- SCORE -->
-<div class="score">Score: 0</div>
 
 <!-- NAVBAR -->
 <nav class="navbar">
@@ -192,26 +186,27 @@ border-radius:8px;
 <a href="#about">About</a>
 <a href="#projects">Projects</a>
 <a href="#skills">Skills</a>
-<a href="#resume">Resume</a>
-<a href="#contact">Contact</a>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-<div class="shoot-effect"></div>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 
 <div class="buttons">
 <a href="https://github.com/jerry-368" class="btn" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn" target="_blank">LinkedIn</a>
 <a href="Jerin_Johnson_Resume.pdf" class="btn" target="_blank">Resume</a>
 </div>
+
 </div>
 
 <!-- ABOUT -->
 <section id="about">
 <h2>About Me</h2>
 <p style="max-width:800px;margin:auto;color:#d0d0d0;">
-Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
+Unity Gameplay Developer focused on building engaging mechanics and systems.
 </p>
 </section>
 
@@ -230,101 +225,8 @@ Unity Gameplay Developer focused on building engaging mechanics and systems usin
 <div class="skills">
 <div class="skill">Unity</div>
 <div class="skill">C#</div>
-<div class="skill">Gameplay Systems</div>
 </div>
 </section>
-
-<!-- CONTACT -->
-<section id="contact">
-<h2>Contact</h2>
-<p>Email: jerinj368@gmail.com</p>
-</section>
-
-<!-- PARTICLES -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-<script>
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 50 },
-    color: { value: "#4aa3ff" },
-    size: { value: 3 },
-    move: { speed: 1 }
-  }
-});
-
-// GAME SYSTEM
-const shoot = document.querySelector(".shoot-effect");
-const scoreEl = document.querySelector(".score");
-
-let score = 0;
-let enemies = [];
-const MAX_ENEMIES = 6;
-
-// SPAWN ENEMY
-function spawnEnemy(){
-  if(enemies.length >= MAX_ENEMIES) return;
-
-  const enemy = document.createElement("div");
-  enemy.className = "enemy";
-
-  const x = Math.random() * (window.innerWidth - 40);
-  const y = Math.random() * (window.innerHeight - 40);
-
-  enemy.style.transform = `translate(${x}px, ${y}px)`;
-
-  document.body.appendChild(enemy);
-  enemies.push(enemy);
-
-  setTimeout(() => removeEnemy(enemy), 2500);
-}
-
-// REMOVE
-function removeEnemy(enemy){
-  const i = enemies.indexOf(enemy);
-  if(i > -1){
-    enemies.splice(i,1);
-    enemy.remove();
-  }
-}
-
-// SHOOT
-document.addEventListener("click", (e) => {
-
-  // flash
-  shoot.style.left = e.clientX + "px";
-  shoot.style.top = e.clientY + "px";
-  shoot.style.opacity = 1;
-  shoot.style.transform = "translate(-50%, -50%) scale(1)";
-
-  setTimeout(() => {
-    shoot.style.opacity = 0;
-    shoot.style.transform = "translate(-50%, -50%) scale(0)";
-  }, 100);
-
-  // hit detection
-  for(let i = enemies.length - 1; i >= 0; i--){
-    const rect = enemies[i].getBoundingClientRect();
-
-    if(
-      e.clientX >= rect.left &&
-      e.clientX <= rect.right &&
-      e.clientY >= rect.top &&
-      e.clientY <= rect.bottom
-    ){
-      removeEnemy(enemies[i]);
-      score += 10;
-      scoreEl.innerText = "Score: " + score;
-      break;
-    }
-  }
-
-});
-
-// LOOP
-setInterval(spawnEnemy, 800);
-
-</script>
 
 </body>
 </html>
