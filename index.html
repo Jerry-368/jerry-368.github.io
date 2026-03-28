@@ -146,23 +146,13 @@ justify-content:center;
 flex-wrap:wrap;
 }
 
-/* ===== SKILLS FIXED ===== */
+/* ===== SKILLS (3x2 GRID) ===== */
 .skills{
 display:grid;
 grid-template-columns: repeat(3, auto);
 justify-content:center;
 gap:25px;
 margin-top:30px;
-}
-
-.skills .skill:nth-child(4){
-grid-column: 1 / 2;
-justify-self: end;
-}
-
-.skills .skill:nth-child(5){
-grid-column: 2 / 3;
-justify-self: start;
 }
 
 .skill{
@@ -302,6 +292,7 @@ procedural obstacle spawning, and dynamic difficulty scaling.
 <div class="skill">Gameplay Systems</div>
 <div class="skill">Enemy AI (FSM)</div>
 <div class="skill">Game UI</div>
+<div class="skill">Physics Systems</div>
 </div>
 </section>
 
