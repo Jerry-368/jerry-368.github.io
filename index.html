@@ -18,6 +18,17 @@ color:white;
 text-align:center;
 }
 
+/* PARTICLES BACKGROUND */
+#particles-js{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+background:#0b0f1a;
+}
+
 /* NAVBAR */
 .navbar{
 position:fixed;
@@ -45,7 +56,7 @@ color:#4aa3ff;
 /* HERO */
 .hero{
 height:100vh;
-background:url("banner.png") center/cover no-repeat;
+background:transparent;
 display:flex;
 justify-content:center;
 align-items:flex-end;
@@ -190,6 +201,9 @@ text-decoration:underline;
 
 <body>
 
+<!-- PARTICLES BACKGROUND -->
+<div id="particles-js"></div>
+
 <!-- NAVBAR -->
 <nav class="navbar">
 <a href="#">Home</a>
@@ -228,7 +242,6 @@ Built and published playable games with complete gameplay systems and deployment
 
 <div class="projects">
 
-<!-- TOWER STACK -->
 <div class="card">
 <img src="Screenshots/Menu.png">
 <h3>Stack Tower</h3>
@@ -236,16 +249,12 @@ Built and published playable games with complete gameplay systems and deployment
 <p style="font-size:14px; color:#ccc;">
 Precision-based stacking game with increasing difficulty and score tracking system.
 </p>
-
 <div class="project-buttons">
 <a href="https://github.com/Jerry-368/Tower_Stack" class="btn" target="_blank">View Code</a>
 <a href="https://jerininteractive.itch.io/stack-tower" class="btn" target="_blank">Play Game</a>
 </div>
-
 </div>
 
-
-<!-- SWITCH RIFT -->
 <div class="card">
 <img src="Screenshots/switchrift.png">
 <h3>Switch Rift</h3>
@@ -254,15 +263,12 @@ Precision-based stacking game with increasing difficulty and score tracking syst
 Dual-mode endless runner featuring Runner/Ghost switching, energy-based mechanics,
 procedural obstacle spawning, and dynamic difficulty scaling.
 </p>
-
 <div class="project-buttons">
 <a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn" target="_blank">View Code</a>
 <a href="https://jerininteractive.itch.io/switch-rift" class="btn" target="_blank">Play Game</a>
 </div>
-
 </div>
 
-<!-- PLATFORMER -->
 <div class="card">
 <h3>2D Platformer</h3>
 <p>Unity • C#</p>
@@ -306,6 +312,34 @@ View / Download Resume
 <a href="tel:+919633857368">Phone: +91 9633857368</a>
 </div>
 </section>
+
+<!-- PARTICLES SCRIPT -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 90 },
+    color: { value: "#4aa3ff" },
+    shape: { type: "circle" },
+    opacity: { value: 0.4 },
+    size: { value: 3 },
+    move: { enable: true, speed: 1.5 },
+    line_linked: {
+      enable: true,
+      distance: 140,
+      color: "#4aa3ff",
+      opacity: 0.3,
+      width: 1
+    }
+  },
+  interactivity: {
+    events: {
+      onhover: { enable: true, mode: "repulse" }
+    }
+  }
+});
+</script>
 
 </body>
 </html>
