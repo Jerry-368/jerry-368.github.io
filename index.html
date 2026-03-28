@@ -11,21 +11,29 @@ html{scroll-behavior:smooth;}
 body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
+background:#020617;
 color:white;
 text-align:center;
 overflow-x:hidden;
-background:#020617;
 }
 
-/* 🔥 PARALLAX BACKGROUND */
-#bg{
+/* 🔥 STAR BACKGROUND */
+#stars{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 z-index:-1;
-background: radial-gradient(circle at 50% 50%, #0f172a, #020617);
+background:
+radial-gradient(2px 2px at 20% 30%, #4aa3ff, transparent),
+radial-gradient(2px 2px at 70% 80%, #4aa3ff, transparent),
+radial-gradient(2px 2px at 40% 60%, #4aa3ff, transparent),
+radial-gradient(2px 2px at 80% 20%, #4aa3ff, transparent);
+animation: moveStars 20s linear infinite;
+}
+
+@keyframes moveStars{
+from{transform:translateY(0);}
+to{transform:translateY(-200px);}
 }
 
 /* NAVBAR */
@@ -33,18 +41,12 @@ background: radial-gradient(circle at 50% 50%, #0f172a, #020617);
 position:fixed;
 top:0;
 width:100%;
-background:rgba(2,6,23,0.9);
-backdrop-filter:blur(10px);
+background:#020617;
 padding:15px;
 display:flex;
 justify-content:center;
 gap:40px;
 z-index:1000;
-}
-
-.navbar a{
-color:white;
-text-decoration:none;
 }
 
 /* HERO */
@@ -62,69 +64,52 @@ padding-bottom:120px;
 padding:12px 25px;
 border:2px solid #4aa3ff;
 border-radius:8px;
-background:rgba(0,0,0,0.5);
 color:white;
-transition:0.3s;
+background:rgba(0,0,0,0.6);
 text-decoration:none;
 }
 
-.btn:hover{
-background:#4aa3ff;
-color:black;
-transform:scale(1.05);
+/* SECTIONS (FIXED SPACING) */
+section{
+padding:70px 20px;
 }
 
-/* SECTIONS */
-section{padding:70px 20px;}
+/* ABOUT */
+.about{
+max-width:800px;
+margin:auto;
+line-height:1.6;
+color:#d0d0d0;
+}
 
-/* PROJECT GRID */
+/* PROJECTS */
 .projects{
 display:flex;
-gap:30px;
-justify-content:center;
 flex-wrap:wrap;
+justify-content:center;
+gap:25px;
 }
 
-/* 🔥 ELITE CARD */
 .card{
-position:relative;
-width:280px;
-border-radius:12px;
-overflow:hidden;
 background:#111827;
-transition:0.4s;
+padding:20px;
+border-radius:10px;
+width:280px;
 }
 
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 15px 40px rgba(74,163,255,0.3);
-}
-
-/* IMAGE */
-.card img, .card video{
+.card img{
 width:100%;
 height:180px;
 object-fit:cover;
-display:block;
+border-radius:8px;
 }
 
-/* VIDEO hidden */
-.card video{
-position:absolute;
-top:0;
-left:0;
-opacity:0;
-transition:0.4s;
-}
-
-/* SHOW VIDEO ON HOVER */
-.card:hover video{
-opacity:1;
-}
-
-/* CONTENT */
-.card-content{
-padding:15px;
+/* BUTTON GROUP */
+.project-buttons{
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
 }
 
 /* SKILLS */
@@ -137,13 +122,8 @@ gap:20px;
 
 .skill{
 background:#111827;
-padding:14px 22px;
+padding:15px 25px;
 border-radius:8px;
-transition:0.3s;
-}
-
-.skill:hover{
-background:#4aa3ff;
 }
 
 /* CONTACT */
@@ -151,6 +131,7 @@ background:#4aa3ff;
 display:block;
 margin:10px;
 color:#4aa3ff;
+text-decoration:none;
 }
 
 </style>
@@ -158,8 +139,9 @@ color:#4aa3ff;
 
 <body>
 
-<div id="bg"></div>
+<div id="stars"></div>
 
+<!-- NAVBAR -->
 <nav class="navbar">
 <a href="#">Home</a>
 <a href="#about">About</a>
@@ -173,15 +155,21 @@ color:#4aa3ff;
 <div class="hero">
 <div>
 <a href="https://github.com/jerry-368" class="btn">GitHub</a>
-<a href="https://linkedin.com" class="btn">LinkedIn</a>
+<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn">LinkedIn</a>
+<a href="Jerin_Johnson_Resume.pdf" class="btn">Resume</a>
 </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ABOUT (UNCHANGED) -->
 <section id="about">
 <h2>About Me</h2>
-<p style="max-width:800px;margin:auto;">
-Unity Gameplay Developer focused on building engaging mechanics and systems.
+<p class="about">
+Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
+Experienced in player controllers, enemy AI (FSM), shooting systems, and physics-based gameplay.
+Built multiple prototypes including FPS, endless runner, and platformer games.
+Currently focused on improving gameplay architecture and advanced mechanics.
+
+Built and published playable games with complete gameplay systems and deployment.
 </p>
 </section>
 
@@ -191,31 +179,29 @@ Unity Gameplay Developer focused on building engaging mechanics and systems.
 
 <div class="projects">
 
-<!-- CARD 1 -->
 <div class="card">
 <img src="Screenshots/Menu.png">
-
-<!-- ADD VIDEO (optional) -->
-<video src="video1.mp4" muted loop></video>
-
-<div class="card-content">
 <h3>Stack Tower</h3>
 <p>Unity • C#</p>
+<p style="font-size:14px;color:#ccc;">
+Precision-based stacking game with increasing difficulty.
+</p>
 
+<div class="project-buttons">
 <a href="https://github.com/Jerry-368/Tower_Stack" class="btn">Code</a>
 <a href="https://jerininteractive.itch.io/stack-tower" class="btn">Play</a>
 </div>
 </div>
 
-<!-- CARD 2 -->
 <div class="card">
 <img src="Screenshots/switchrift.png">
-<video src="video2.mp4" muted loop></video>
-
-<div class="card-content">
 <h3>Switch Rift</h3>
 <p>Unity • C#</p>
+<p style="font-size:14px;color:#ccc;">
+Dual-mode endless runner with dynamic difficulty.
+</p>
 
+<div class="project-buttons">
 <a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn">Code</a>
 <a href="https://jerininteractive.itch.io/switch-rift" class="btn">Play</a>
 </div>
@@ -247,29 +233,12 @@ Unity Gameplay Developer focused on building engaging mechanics and systems.
 <section id="contact">
 <h2>Contact</h2>
 <div class="contact">
-<a href="mailto:jerinj368@gmail.com">Email</a>
-<a href="tel:+919633857368">Phone</a>
+<a href="mailto:jerinj368@gmail.com">Email: jerinj368@gmail.com</a>
+<a href="tel:+919633857368">Phone: +91 9633857368</a>
 <a href="https://github.com/jerry-368">GitHub</a>
+<a href="https://www.linkedin.com/in/jerinjohnson-gamedev">LinkedIn</a>
 </div>
 </section>
-
-<!-- 🔥 PARALLAX SCRIPT -->
-<script>
-document.addEventListener("mousemove", (e)=>{
-const x = e.clientX / window.innerWidth;
-const y = e.clientY / window.innerHeight;
-
-document.getElementById("bg").style.background =
-`radial-gradient(circle at ${x*100}% ${y*100}%, #0f172a, #020617)`;
-});
-
-/* autoplay video on hover */
-document.querySelectorAll(".card").forEach(card=>{
-const vid = card.querySelector("video");
-card.addEventListener("mouseenter", ()=> vid.play());
-card.addEventListener("mouseleave", ()=> vid.pause());
-});
-</script>
 
 </body>
 </html>
