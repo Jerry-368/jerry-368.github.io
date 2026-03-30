@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jerin Johnson | Unity Game Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #00f5ff; 
@@ -76,28 +77,35 @@
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
         
-        /* PROJECTS */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; max-width: 1000px; margin-inline: auto; }
-        .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; transition: 0.3s; text-decoration: none; color: white; display: block; text-align: left; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: var(--glow); }
-        .card h3 { color: var(--primary); margin: 0; }
-        .tag { font-size: 0.7rem; background: var(--accent); padding: 3px 10px; border-radius: 4px; float: right; font-weight: bold; }
+        /* SKILLS GRID (SONIYA STYLE) */
+        .skills-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 25px; 
+            max-width: 900px; 
+            margin: 50px auto; 
+        }
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px 15px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .skill-card i { font-size: 2.5rem; color: var(--primary); }
+        .skill-card:hover { 
+            background: rgba(0, 245, 255, 0.05); 
+            border-color: var(--primary); 
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+        .skill-card span { font-weight: bold; letter-spacing: 1px; font-size: 0.9rem; }
 
-        /* ABOUT ME */
-        .intel-wrap { max-width: 800px; margin: 0 auto; text-align: left; }
-        .intel-photo-frame { width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
-        .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-
-        /* COMM-LINK / FORM */
-        .comm-link-container { max-width: 700px; margin: 0 auto; text-align: center; }
-        .info-pill { background: rgba(255,255,255,0.02); border: 1px solid var(--primary); padding: 15px 25px; border-radius: 10px; margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-        .social-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0 30px; flex-wrap: wrap; }
-        .contact-form { text-align: left; background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; color: var(--primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; }
-        .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 245, 255, 0.2); padding: 12px; color: white; border-radius: 5px; font-family: inherit; box-sizing: border-box; }
-
-        /* TARGETS */
+        /* TARGETS & PARTICLES */
         .target { position: absolute; width: 45px; height: 45px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: pointer; }
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
         .recoil-active { animation: recoil 0.12s ease-out; }
@@ -118,6 +126,7 @@
 
 <div id="home">
     <div class="nav">
+        <div class="btn" onclick="openOverlay('arsenal')">⚔️ Arsenal</div>
         <div class="btn" onclick="openOverlay('missions')">🎯 Missions</div>
         <div class="btn" onclick="openOverlay('intel')">💾 Intel</div>
         <div class="btn" onclick="openOverlay('comm-link')">📡 Comm-Link</div>
@@ -133,45 +142,57 @@
     </div>
 </div>
 
+<div id="arsenal" class="overlay">
+    <div class="close-btn" onclick="closeOverlays()">×</div>
+    <div class="section-header">
+        <h1 style="font-size: 3.5rem;">Technical Arsenal</h1>
+        <p style="color: var(--primary); letter-spacing: 3px;">Proficiency in game technologies</p>
+    </div>
+    
+    <div class="skills-grid">
+        <div class="skill-card"><i class="fab fa-unity"></i><span>Unity 3D/2D</span></div>
+        <div class="skill-card"><i class="fas fa-code"></i><span>C# Scripting</span></div>
+        <div class="skill-card"><i class="fas fa-layer-group"></i><span>Unity UI</span></div>
+        <div class="skill-card"><i class="fas fa-cube"></i><span>Physics</span></div>
+        <div class="skill-card"><i class="fab fa-git-alt"></i><span>Git / Version Control</span></div>
+        <div class="skill-card"><i class="fas fa-bug"></i><span>Debugging</span></div>
+        <div class="skill-card"><i class="fas fa-project-diagram"></i><span>Algorithms</span></div>
+        <div class="skill-card"><i class="fas fa-bolt"></i><span>VFX Graph</span></div>
+    </div>
+</div>
+
 <div id="missions" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1 style="font-size: 3.5rem;">Mission Logs</h1>
-    <p style="color: var(--primary); letter-spacing: 3px; text-transform: uppercase;">Projects</p>
-    <div class="project-grid">
-        <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
-            <span class="tag">PERSONAL</span>
-            <h3>Stack Tower</h3>
-            <p>Physics-driven precision game. Built in Unity.</p>
+    <h1>Mission Logs</h1>
+    <div class="project-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 900px; margin: 40px auto; text-align: left;">
+        <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card" style="border: 1px solid var(--primary); padding: 20px; border-radius: 12px; text-decoration: none; color: white;">
+            <h3>Stack Tower</h3><p>Physics-driven precision game.</p>
         </a>
-        <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
-            <span class="tag">PERSONAL</span>
-            <h3>Switch Rift</h3>
-            <p>Endless runner with dimension-shifting logic.</p>
+        <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card" style="border: 1px solid var(--primary); padding: 20px; border-radius: 12px; text-decoration: none; color: white;">
+            <h3>Switch Rift</h3><p>Endless runner dimension logic.</p>
         </a>
     </div>
 </div>
 
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1 style="font-size: 3.5rem;">System Intel</h1>
-    <p style="color: var(--primary); letter-spacing: 3px; text-transform: uppercase;">About Me</p>
+    <h1>System Intel</h1>
     <div class="intel-wrap">
-        <div class="intel-photo-frame">
+        <div class="intel-photo-frame" style="width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative;">
             <div class="animated-ring" style="width: 105%; height: 105%; top: -2.5%; left: -2.5%;"></div>
-            <img src="intel-bio.png" alt="Jerin Johnson">
+            <img src="intel-bio.png" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
         </div>
-        <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left;">
+        <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left; max-width: 800px; margin: 0 auto;">
             <h3 style="color: var(--primary); margin-top: 0;">Junior Unity Developer</h3>
             <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
             <p>My journey is driven by solving architectural challenges, prioritizing clean, maintainable code optimized for performance across all platforms.</p>
-            <p>I am constantly exploring new ways to enhance "Game Juice"—the perfect blend of visual feedback and physics that makes games feel alive.</p>
         </div>
     </div>
 </div>
 
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header"><h1>Comm-Link</h1><p>Contact Details</p></div>
+    <h1>Comm-Link</h1>
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
         <a href="https://www.google.com/maps/search/Thiruvananthapuram,+Kerala" target="_blank" style="text-decoration: none; color: white;">
@@ -224,18 +245,15 @@ init(); animate();
 function burst(x, y) {
     for (let i = 0; i < 15; i++) {
         const p = document.createElement('div'); p.className = 'p-shard';
-        p.style.width = Math.random()*10+'px'; p.style.height = '2px';
-        p.style.left = x+'px'; p.style.top = y+'px';
-        p.style.opacity = '1';
+        p.style.width = Math.random()*10+'px'; p.style.left = x+'px'; p.style.top = y+'px'; p.style.opacity = '1';
         document.body.appendChild(p);
         const angle = Math.random()*Math.PI*2; const speed = Math.random()*8+4;
         let px = x, py = y;
         const intr = setInterval(() => {
             px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
             p.style.left = px+'px'; p.style.top = py+'px';
-            let op = parseFloat(p.style.opacity) - 0.05;
-            p.style.opacity = op;
-            if (op <= 0) { clearInterval(intr); p.remove(); }
+            p.style.opacity = parseFloat(p.style.opacity) - 0.05;
+            if (parseFloat(p.style.opacity) <= 0) { clearInterval(intr); p.remove(); }
         }, 16);
     }
 }
@@ -256,24 +274,14 @@ function spawn() {
     do { x = Math.random()*80+10; y = Math.random()*70+15; } while (x > 35 && x < 65 && y > 30 && y < 55); 
     t.style.left = x + 'vw'; t.style.top = y + 'vh';
     document.body.appendChild(t);
-    t.onmousedown = (e) => {
-        e.stopPropagation();
-        score++; document.getElementById('score').innerText = score;
-        burst(e.clientX, e.clientY); t.remove();
-        if (score >= 5) transition();
-    };
-    setTimeout(() => { if(t) t.remove(); }, 2000);
+    t.onmousedown = (e) => { e.stopPropagation(); score++; document.getElementById('score').innerText = score; burst(e.clientX, e.clientY); t.remove(); if (score >= 5) transition(); };
 }
 setInterval(spawn, 1000);
 
 function transition() {
     const scan = document.getElementById('scan-transition');
     scan.style.clipPath = "circle(150% at 50% 50%)";
-    setTimeout(() => { 
-        document.getElementById('ui-start').style.display='none'; 
-        document.getElementById('home').style.display='block';
-        setTimeout(() => document.getElementById('home').classList.add('active'), 10);
-    }, 400);
+    setTimeout(() => { document.getElementById('ui-start').style.display='none'; document.getElementById('home').style.display='block'; setTimeout(() => document.getElementById('home').classList.add('active'), 10); }, 400);
     setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; glitch(); }, 800);
 }
 
@@ -284,10 +292,8 @@ function glitch() {
         const txt = roles[rIdx];
         const intr = setInterval(() => {
             el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
-            if (iter >= txt.length) { 
-                clearInterval(intr); iter = 0;
-                setTimeout(() => { rIdx = (rIdx + 1) % roles.length; run(); }, 3000); 
-            } else { iter += 0.2; }
+            if (iter >= txt.length) { clearInterval(intr); iter = 0; setTimeout(() => { rIdx = (rIdx + 1) % roles.length; run(); }, 3000); } 
+            else { iter += 0.2; }
         }, 60);
     }
     run();
@@ -299,12 +305,8 @@ function openOverlay(id) {
     target.style.display = 'block';
     setTimeout(() => target.classList.add('active'), 10);
 }
-
 function closeOverlays() {
-    document.querySelectorAll('.overlay').forEach(o => { 
-        o.classList.remove('active'); 
-        setTimeout(() => { if(!o.classList.contains('active')) o.style.display = 'none'; }, 400); 
-    });
+    document.querySelectorAll('.overlay').forEach(o => { o.classList.remove('active'); setTimeout(() => { if(!o.classList.contains('active')) o.style.display = 'none'; }, 400); });
 }
 window.onresize = init;
 </script>
