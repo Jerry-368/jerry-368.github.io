@@ -119,7 +119,6 @@
 
 <div id="home">
     <div class="nav">
-        <div class="btn" onclick="closeOverlays()">🏠 Base</div>
         <div class="btn" onclick="openOverlay('missions')">🎯 Missions</div>
         <div class="btn" onclick="openOverlay('intel')">💾 Intel</div>
         <div class="btn" onclick="openOverlay('comm-link')">📡 Comm-Link</div>
@@ -240,11 +239,14 @@ function burst(x, y) {
     }
 }
 
-window.addEventListener('mousedown', () => {
-    const activeUI = score < 5 ? document.getElementById('ui-start') : (document.querySelector('.overlay.active') || document.getElementById('home'));
-    if(activeUI) { activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active'); }
-    document.getElementById('main-body').classList.add('muzzle-flash');
-    setTimeout(() => document.getElementById('main-body').classList.remove('muzzle-flash'), 80);
+window.addEventListener('mousedown', (e) => {
+    // Only trigger recoil if not clicking a button or target
+    if (e.target.tagName === 'CANVAS' || e.target.id === 'ui-start' || e.target.id === 'home') {
+        const activeUI = score < 5 ? document.getElementById('ui-start') : (document.querySelector('.overlay.active') || document.getElementById('home'));
+        if(activeUI) { activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active'); }
+        document.getElementById('main-body').classList.add('muzzle-flash');
+        setTimeout(() => document.getElementById('main-body').classList.remove('muzzle-flash'), 80);
+    }
 });
 
 function spawn() {
@@ -255,6 +257,7 @@ function spawn() {
     t.style.left = x + 'vw'; t.style.top = y + 'vh';
     document.body.appendChild(t);
     t.onmousedown = (e) => {
+        e.stopPropagation();
         score++; document.getElementById('score').innerText = score;
         burst(e.clientX, e.clientY); t.remove();
         if (score >= 5) transition();
@@ -291,13 +294,17 @@ function glitch() {
 }
 
 function openOverlay(id) {
-    document.querySelectorAll('.overlay').forEach(o => { o.classList.remove('active'); setTimeout(() => o.style.display = 'none', 400); });
+    document.querySelectorAll('.overlay').forEach(o => { o.classList.remove('active'); o.style.display = 'none'; });
     const target = document.getElementById(id);
     target.style.display = 'block';
     setTimeout(() => target.classList.add('active'), 10);
 }
+
 function closeOverlays() {
-    document.querySelectorAll('.overlay').forEach(o => { o.classList.remove('active'); setTimeout(() => o.style.display = 'none', 400); });
+    document.querySelectorAll('.overlay').forEach(o => { 
+        o.classList.remove('active'); 
+        setTimeout(() => { if(!o.classList.contains('active')) o.style.display = 'none'; }, 400); 
+    });
 }
 window.onresize = init;
 </script>
