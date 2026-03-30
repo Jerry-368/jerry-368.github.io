@@ -20,11 +20,10 @@
             overflow: hidden;
             font-family: 'Segoe UI', sans-serif;
             color: white;
-            /* Default cursor is normal */
             cursor: default; 
         }
 
-        /* Start Page specific cursor */
+        /* Gaming Mode specific cursor only for start screen */
         body.gaming-mode { cursor: crosshair; }
 
         canvas#bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
@@ -35,16 +34,8 @@
             clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none;
         }
 
-        /* START UI */
-        #ui-start { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
-        .score-board { font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
-        .hint { letter-spacing: 5px; opacity: 0.7; text-align: center; margin-top: 10px; text-transform: uppercase; font-size: 0.8rem; }
-
-        /* HOME PAGE */
-        #home { display: none; position: relative; z-index: 5; height: 100vh; padding: 150px 60px 60px; box-sizing: border-box; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; transform: scale(0.95); }
-        #home.active { display: block; opacity: 1; transform: scale(1); }
+        /* NAVIGATION */
         .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
-        
         .btn {
             padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
             color: var(--primary); text-transform: uppercase; font-weight: bold; font-size: 0.85rem;
@@ -53,12 +44,21 @@
         }
         .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
 
+        /* START UI */
+        #ui-start { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
+        .score-board { font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
+        .hint { letter-spacing: 5px; opacity: 0.7; text-align: center; margin-top: 10px; text-transform: uppercase; font-size: 0.8rem; }
+
+        /* HOME PAGE */
+        #home { display: none; position: relative; z-index: 5; height: 100vh; padding: 150px 60px 60px; box-sizing: border-box; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; transform: scale(0.95); }
+        #home.active { display: block; opacity: 1; transform: scale(1); }
+        
         .name { font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 0.9; margin: 0; }
         .highlight { color: var(--primary); text-shadow: var(--glow); }
         #role { font-family: 'Courier New', monospace; font-size: clamp(1.2rem, 3vw, 2.2rem); color: var(--accent); margin-top: 15px; min-height: 1.5em; }
         #statement { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 20px; border-left: 2px solid var(--primary); padding-left: 15px; max-width: 600px; }
 
-        /* HERO PHOTO */
+        /* HERO PHOTO (PIC 1) */
         .photo-container {
             position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
             width: clamp(250px, 30vw, 400px); height: clamp(250px, 30vw, 400px);
@@ -80,42 +80,42 @@
         }
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
-
-        /* SKILLS SECTION HOVER */
+        
+        /* SKILLS GRID (SONIYA STYLE) */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 25px; max-width: 900px; margin: 50px auto; }
-        .skill-card { 
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.1); 
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.1);
             border-radius: 15px; padding: 30px 15px; transition: 0.3s;
-            display: flex; flex-direction: column; align-items: center; gap: 15px; 
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
-        .skill-card i { font-size: 2.5rem; color: var(--primary); transition: 0.3s; }
-        .skill-card:hover { 
-            background: rgba(0, 245, 255, 0.1); 
-            border-color: var(--primary); 
-            box-shadow: var(--glow);
-            transform: translateY(-5px);
-        }
-        .skill-card:hover i { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--primary)); }
+        .skill-card:hover { background: rgba(0, 245, 255, 0.1); border-color: var(--primary); transform: translateY(-5px); box-shadow: var(--glow); }
+        .skill-card i { font-size: 2.5rem; color: var(--primary); }
 
-        /* MISSIONS */
+        /* MISSION LOGS / PROJECT */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1000px; margin: 40px auto; }
         .card { border: 1px solid var(--primary); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; text-decoration: none; color: white; text-align: left; transition: 0.3s; }
         .card:hover { transform: translateY(-5px); box-shadow: var(--glow); }
         .personal-tag { background: #ff0000; color: white; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
 
-        /* INTEL PHOTO */
+        /* INTEL / ABOUT ME (PIC 2) */
         .intel-wrap { max-width: 700px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
-        .intel-photo-frame { width: 150px; height: 150px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 25px; padding: 5px; position: relative; overflow: hidden; }
+        .intel-photo-frame { width: 150px; height: 150px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 25px; padding: 5px; position: relative; }
         .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        /* COMM-LINK */
+        /* COMM-LINK / CONTACT ME */
+        .comm-link-container { max-width: 600px; margin: 0 auto; text-align: center; }
         .info-pill { 
             background: rgba(255,255,255,0.02); border: 1px solid var(--primary); 
-            padding: 15px 25px; border-radius: 10px; margin-bottom: 12px; font-size: 1rem; 
-            display: flex; align-items: center; justify-content: center; 
-            text-decoration: none; color: white; transition: 0.3s;
+            padding: 12px 25px; border-radius: 10px; margin-bottom: 10px; font-size: 1rem; 
+            display: inline-flex; align-items: center; justify-content: center; 
+            text-decoration: none; color: white; min-width: 280px; transition: 0.3s;
         }
         .info-pill:hover { background: rgba(0, 245, 255, 0.1); box-shadow: var(--glow); }
+        .social-row { display: flex; justify-content: center; gap: 12px; margin: 15px 0 25px; }
+        
+        .contact-form { text-align: left; background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
+        .form-group label { display: block; color: var(--primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; }
+        .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 245, 255, 0.2); padding: 12px; color: white; border-radius: 5px; font-family: inherit; box-sizing: border-box; margin-bottom: 15px; }
 
         /* TARGETS & PARTICLES */
         .target { position: absolute; width: 45px; height: 45px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: crosshair; }
@@ -150,7 +150,7 @@
 
     <div class="photo-container">
         <div class="animated-ring"></div>
-        <div class="photo-circle"><img src="your-photo.png" alt="Jerin Johnson"></div>
+        <div class="photo-circle"><img src="hero-profile.png" alt="Jerin Johnson"></div>
     </div>
 </div>
 
@@ -174,12 +174,12 @@
         <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
             <h3>Stack Tower</h3>
             <div class="personal-tag">Personal Game</div>
-            <p>Physics-driven precision game. Click to visit itch.io.</p>
+            <p>A physics-driven precision stacking game. Click to visit itch.io.</p>
         </a>
         <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
             <h3>Switch Rift</h3>
             <div class="personal-tag">Personal Game</div>
-            <p>Endless runner dimension logic. Click to visit itch.io.</p>
+            <p>Fast-paced endless runner with dimension-shifting spawning logic.</p>
         </a>
     </div>
 </div>
@@ -190,7 +190,8 @@
     <p style="color: var(--primary); letter-spacing: 3px;">About Me</p>
     <div class="intel-wrap">
         <div class="intel-photo-frame">
-            <img src="your-photo.png" alt="Jerin Johnson">
+            <div class="animated-ring" style="width: 105%; height: 105%; top: -2.5%; left: -2.5%;"></div>
+            <img src="intel-bio.png" alt="Jerin Johnson">
         </div>
         <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
     </div>
@@ -204,17 +205,17 @@
         <div class="info-pill">📧 jerinj368@gmail.com</div>
         <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala" target="_blank" class="info-pill">📍 Thiruvananthapuram, Kerala</a>
         <div class="info-pill">📞 +91-9633857368</div>
+        
         <div class="social-row">
             <a href="https://jerininteractive.itch.io" target="_blank" class="btn">🎮 Itch.io</a>
             <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
             <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
         </div>
-        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left; margin-top: 20px;">
+
+        <div class="contact-form">
             <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
-                <label style="color:var(--primary); font-size: 0.7rem;">EMAIL ADDRESS</label>
-                <input type="email" name="email" required style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(0,245,255,0.2); padding:12px; color:white; margin-bottom:15px; border-radius:5px;">
-                <label style="color:var(--primary); font-size: 0.7rem;">TRANSMISSION MESSAGE</label>
-                <textarea name="message" rows="4" required style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(0,245,255,0.2); padding:12px; color:white; margin-bottom:15px; border-radius:5px;"></textarea>
+                <div class="form-group"><label>Email Address</label><input type="email" name="email" required></div>
+                <div class="form-group"><label>Transmission Message</label><textarea name="message" rows="4" required></textarea></div>
                 <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
             </form>
         </div>
@@ -222,6 +223,7 @@
 </div>
 
 <script>
+/** ENGINE **/
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = []; let score = 0;
@@ -260,16 +262,15 @@ function burst(x, y) {
         const intr = setInterval(() => {
             px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
             p.style.left = px+'px'; p.style.top = py+'px';
-            let currentOp = parseFloat(p.style.opacity);
-            p.style.opacity = currentOp - 0.05;
-            if (parseFloat(p.style.opacity) <= 0) { clearInterval(intr); p.remove(); }
+            let op = parseFloat(p.style.opacity) - 0.05;
+            p.style.opacity = op;
+            if (op <= 0) { clearInterval(intr); p.remove(); }
         }, 16);
     }
 }
 
 window.addEventListener('mousedown', (e) => {
-    // Only recoil on background or targets
-    if (e.target.tagName === 'CANVAS' || e.target.classList.contains('target')) {
+    if (e.target.tagName === 'CANVAS' || e.target.id === 'ui-start' || e.target.classList.contains('target')) {
         const activeUI = score < 5 ? document.getElementById('ui-start') : (document.querySelector('.overlay.active') || document.getElementById('home'));
         if(activeUI) { activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active'); }
         document.getElementById('main-body').classList.add('muzzle-flash');
@@ -298,7 +299,7 @@ function transition() {
     const scan = document.getElementById('scan-transition');
     scan.style.clipPath = "circle(150% at 50% 50%)";
     setTimeout(() => { 
-        document.body.classList.remove('gaming-mode'); // Switch to normal cursor
+        document.body.classList.remove('gaming-mode');
         document.getElementById('ui-start').style.display='none'; 
         document.getElementById('home').style.display='block';
         setTimeout(() => document.getElementById('home').classList.add('active'), 10);
