@@ -70,6 +70,9 @@
             cursor: pointer;
             transition: 0.3s;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
         .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
 
@@ -93,7 +96,7 @@
             max-width: 600px;
         }
 
-        /* ANIMATED RING PHOTO (BASE SECTION) */
+        /* BASE PHOTO WITH ANIMATED RING */
         .photo-container {
             position: absolute;
             right: 10%; top: 50%;
@@ -110,17 +113,7 @@
             border: 2px solid transparent;
             border-top-color: var(--primary);
             border-bottom-color: var(--primary);
-            animation: rotateRing 3s linear infinite;
-        }
-
-        .animated-ring::before {
-            content: '';
-            position: absolute;
-            inset: 10px;
-            border-radius: 50%;
-            border: 1px dashed var(--primary);
-            opacity: 0.5;
-            animation: rotateRing 6s linear reverse infinite;
+            animation: rotateRing 4s linear infinite;
         }
 
         .photo-circle {
@@ -177,7 +170,7 @@
             color: var(--primary);
         }
 
-        /* MISSIONS */
+        /* MISSIONS GRID */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
         .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; }
         .tag { font-size: 0.7rem; background: var(--accent); padding: 3px 10px; border-radius: 4px; float: right; font-weight: bold; }
@@ -214,7 +207,7 @@
     <div class="photo-container">
         <div class="animated-ring"></div>
         <div class="photo-circle">
-            <img src="pic1.jpg" alt="Jerin Johnson">
+            <img src="your-photo.png" alt="Jerin Johnson">
         </div>
     </div>
 </div>
@@ -239,7 +232,7 @@
 
     <div class="intel-content">
         <div class="intel-photo">
-            <img src="pic2.jpg" alt="Jerin Johnson">
+            <img src="your-photo.png" alt="Jerin Johnson">
         </div>
 
         <h2 style="color: var(--primary); font-size: 2rem; margin-bottom: 5px;">Technical Unity Developer</h2>
@@ -247,16 +240,16 @@
 
         <div class="intel-bio">
             <p>I am a Unity Game Developer specializing in C# and gameplay programming. I focus on creating the logic and physics that drive engaging player experiences.</p>
-            <p>I have 6 months of internship experience and a portfolio of personal projects. I focus on writing clean code and delivering responsive mechanics across 2D and 3D environments.</p>
+            <p>I have experience in building both 2D and 3D projects, focusing on writing clean code and delivering responsive mechanics. I am constantly learning and growing as a developer.</p>
         </div>
 
         <div class="capsule-row">
-            <div class="capsule">📧 jerin@email.com</div>
+            <div class="capsule">📧 jerinjohnson@email.com</div>
             <div class="capsule">📍 Trivandrum, Kerala</div>
             <div class="capsule">⏳ Available for Projects</div>
         </div>
 
-        <div class="btn" style="display:inline-block; margin-top:20px;">Download Resume</div>
+        <a href="Jerin_Johnson_Resume.pdf" class="btn" target="_blank" style="margin-top:20px;">Download Resume</a>
     </div>
 </div>
 
@@ -290,7 +283,7 @@ function animate() {
 }
 init(); animate();
 
-function shootParticles(x, y) {
+function createParticles(x, y) {
     for (let i = 0; i < 15; i++) {
         const p = document.createElement('div');
         p.className = 'p-shard';
@@ -302,7 +295,7 @@ function shootParticles(x, y) {
         const intr = setInterval(() => {
             px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
             p.style.left = px+'px'; p.style.top = py+'px';
-            p.style.opacity = (p.style.opacity || 1) - 0.06;
+            p.style.opacity = (p.style.opacity || 1) - 0.05;
             if (p.style.opacity <= 0) { clearInterval(intr); p.remove(); }
         }, 16);
     }
@@ -310,7 +303,11 @@ function shootParticles(x, y) {
 
 window.addEventListener('mousedown', (e) => {
     const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
-    activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active');
+    if (activeUI) {
+        activeUI.classList.remove('recoil-active');
+        void activeUI.offsetWidth; 
+        activeUI.classList.add('recoil-active');
+    }
     document.getElementById('main-body').classList.add('muzzle-flash');
     setTimeout(() => document.getElementById('main-body').classList.remove('muzzle-flash'), 80);
 });
@@ -326,7 +323,7 @@ function createTarget() {
     document.body.appendChild(t);
     t.onmousedown = (e) => {
         score++; document.getElementById('score').innerText = score;
-        shootParticles(e.clientX, e.clientY);
+        createParticles(e.clientX, e.clientY);
         t.remove(); if (score >= 5) transition();
     };
     setTimeout(() => { if(t) t.remove(); }, 2000);
