@@ -54,7 +54,6 @@
         #role { font-family: 'Courier New', monospace; font-size: clamp(1.2rem, 3vw, 2.2rem); color: var(--accent); margin-top: 15px; min-height: 1.5em; }
         #statement { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 20px; border-left: 2px solid var(--primary); padding-left: 15px; max-width: 600px; }
 
-        /* PHOTO CONTAINER */
         .photo-container {
             position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
             width: clamp(250px, 30vw, 400px); height: clamp(250px, 30vw, 400px);
@@ -69,7 +68,7 @@
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes rotateRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* OVERLAYS WITH TRANSITION */
+        /* OVERLAYS */
         .overlay { 
             display: none; position: fixed; inset: 0; background: rgba(1, 4, 9, 0.99); z-index: 150; padding: 80px 40px; overflow-y: auto; text-align: center;
             opacity: 0; transform: scale(1.05); transition: opacity 0.4s ease, transform 0.4s ease;
@@ -77,17 +76,17 @@
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
         
-        /* INTEL SECTION */
-        .intel-wrap { max-width: 800px; margin: 0 auto; text-align: left; }
-        .intel-photo-frame { width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
-        .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-
-        /* PROJECT CARDS */
+        /* PROJECTS */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; max-width: 1000px; margin-inline: auto; }
         .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; transition: 0.3s; text-decoration: none; color: white; display: block; text-align: left; }
         .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: var(--glow); }
         .card h3 { color: var(--primary); margin: 0; }
         .tag { font-size: 0.7rem; background: var(--accent); padding: 3px 10px; border-radius: 4px; float: right; font-weight: bold; }
+
+        /* ABOUT ME */
+        .intel-wrap { max-width: 800px; margin: 0 auto; text-align: left; }
+        .intel-photo-frame { width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
+        .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
         /* COMM-LINK / FORM */
         .comm-link-container { max-width: 700px; margin: 0 auto; text-align: center; }
@@ -98,7 +97,7 @@
         .form-group label { display: block; color: var(--primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; }
         .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 245, 255, 0.2); padding: 12px; color: white; border-radius: 5px; font-family: inherit; box-sizing: border-box; }
 
-        /* GAME ELEMENTS */
+        /* TARGETS */
         .target { position: absolute; width: 45px; height: 45px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: pointer; }
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
         .recoil-active { animation: recoil 0.12s ease-out; }
@@ -136,7 +135,8 @@
 
 <div id="missions" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Mission Logs</h1>
+    <h1 style="font-size: 3.5rem;">Mission Logs</h1>
+    <p style="color: var(--primary); letter-spacing: 3px; text-transform: uppercase;">Projects</p>
     <div class="project-grid">
         <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
             <span class="tag">PERSONAL</span>
@@ -153,7 +153,8 @@
 
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>System Intel</h1>
+    <h1 style="font-size: 3.5rem;">System Intel</h1>
+    <p style="color: var(--primary); letter-spacing: 3px; text-transform: uppercase;">About Me</p>
     <div class="intel-wrap">
         <div class="intel-photo-frame">
             <div class="animated-ring" style="width: 105%; height: 105%; top: -2.5%; left: -2.5%;"></div>
@@ -240,7 +241,6 @@ function burst(x, y) {
 }
 
 window.addEventListener('mousedown', (e) => {
-    // Only trigger recoil if not clicking a button or target
     if (e.target.tagName === 'CANVAS' || e.target.id === 'ui-start' || e.target.id === 'home') {
         const activeUI = score < 5 ? document.getElementById('ui-start') : (document.querySelector('.overlay.active') || document.getElementById('home'));
         if(activeUI) { activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active'); }
