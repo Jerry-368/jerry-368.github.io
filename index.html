@@ -30,23 +30,23 @@
         /* RECOIL ANIMATION */
         @keyframes screenShake {
             0% { transform: translate(0, 0); }
-            25% { transform: translate(5px, -5px); }
-            50% { transform: translate(-5px, 5px); }
-            75% { transform: translate(5px, 5px); }
+            25% { transform: translate(4px, -4px); }
+            50% { transform: translate(-4px, 4px); }
+            75% { transform: translate(4px, 4px); }
             100% { transform: translate(0, 0); }
         }
         .recoil-active #bgCanvas, .recoil-active #ui-start, .recoil-active #home { 
-            animation: screenShake 0.15s ease-in-out; 
+            animation: screenShake 0.12s ease-in-out; 
         }
 
-        .muzzle-flash canvas { filter: brightness(2.5) contrast(1.2); }
+        .muzzle-flash canvas { filter: brightness(2.2) contrast(1.2); }
 
         #scan-transition {
             position: fixed; inset: 0; background: var(--primary); z-index: 200;
             clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none;
         }
 
-        /* NAVIGATION - Re-arranged Order */
+        /* NAVIGATION */
         .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
         .btn {
             padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
@@ -95,7 +95,7 @@
         
         /* SKILLS */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 25px; max-width: 900px; margin: 50px auto; }
-        .skill-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.1); border-radius: 15px; padding: 30px 15px; display: flex; flex-direction: column; align-items: center; gap: 15px; transition: 0.3s; }
+        .skill-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.1); border-radius: 15px; padding: 30px 15px; display: flex; flex-direction: column; align-items: center; gap: 15px; transition: 0.3s; cursor: pointer; }
         .skill-card:hover { background: rgba(0, 245, 255, 0.1); border-color: var(--primary); box-shadow: var(--glow); transform: translateY(-5px); }
         .skill-card i { font-size: 2.5rem; color: var(--primary); }
 
@@ -105,7 +105,7 @@
         .card:hover { transform: translateY(-5px); box-shadow: var(--glow); }
         .personal-tag { background: #ff0000; color: white; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
 
-        /* INTEL / BIO */
+        /* INTEL / EXPANDED BIO */
         .intel-wrap { max-width: 750px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 35px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.1); }
         .intel-photo-frame { width: 160px; height: 160px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
         .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
@@ -164,6 +164,7 @@
             <p>I am a Unity Developer focused on the technical architecture of gameplay. I specialize in C# and creating efficient, scalable systems for 2D and 3D games.</p>
             <p>My journey in development is driven by a deep interest in mechanics and optimization. I enjoy the challenge of taking a complex idea and translating it into clean, high-performance code that feels responsive to the player.</p>
             <p>Beyond standard implementation, I focus on "Game Juice"—ensuring that every interaction, from a button click to a character movement, provides satisfying visual and physical feedback. I am always looking for ways to push the boundaries of what is possible in Unity through custom tools and modular programming.</p>
+            <p>I am a dedicated problem-solver who enjoys debugging complex logic and optimizing game code for various platforms, ensuring a seamless experience for every player.</p>
         </div>
     </div>
 </div>
@@ -204,7 +205,7 @@
     <p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://maps.google.com/?q=Thiruvananthapuram,Kerala" target="_blank" class="info-pill">📍 Thiruvananthapuram, Kerala</a>
+        <a href="https://www.google.com/maps?q=Thiruvananthapuram" target="_blank" class="info-pill">📍 Thiruvananthapuram, Kerala</a>
         <div class="info-pill">📞 +91-9633857368</div>
         <div class="social-row">
             <a href="https://jerininteractive.itch.io" target="_blank" class="btn">🎮 Itch.io</a>
@@ -248,11 +249,12 @@ function animate() {
 }
 init(); animate();
 
-function burst(x, y) {
-    // RECOIL TRIGGER
+function triggerHitEffects(x, y) {
+    // 1. RECOIL
     document.body.classList.add('recoil-active');
     setTimeout(() => document.body.classList.remove('recoil-active'), 150);
 
+    // 2. HIT PARTICLES
     for (let i = 0; i < 18; i++) {
         const p = document.createElement('div'); p.className = 'p-shard';
         p.style.width = Math.random()*12+'px'; p.style.left = x+'px'; p.style.top = y+'px'; p.style.opacity = '1';
@@ -262,8 +264,9 @@ function burst(x, y) {
         const intr = setInterval(() => {
             px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
             p.style.left = px+'px'; p.style.top = py+'px';
-            p.style.opacity = parseFloat(p.style.opacity) - 0.05;
-            if (parseFloat(p.style.opacity) <= 0) { clearInterval(intr); p.remove(); }
+            let op = parseFloat(p.style.opacity) - 0.05;
+            p.style.opacity = op;
+            if (op <= 0) { clearInterval(intr); p.remove(); }
         }, 16);
     }
 }
@@ -285,7 +288,8 @@ function spawn() {
     t.onmousedown = (e) => {
         e.stopPropagation();
         score++; document.getElementById('score').innerText = score;
-        burst(e.clientX, e.clientY); t.remove();
+        triggerHitEffects(e.clientX, e.clientY); // HIT EFFECT + RECOIL
+        t.remove();
         if (score >= 5) transition();
     };
     setTimeout(() => { if(t) t.remove(); }, 2000);
