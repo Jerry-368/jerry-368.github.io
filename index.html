@@ -161,17 +161,20 @@
         </div>
         <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left;">
             <h3 style="color: var(--primary); margin-top: 0;">Junior Unity Developer</h3>
-            <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
+            <p>I focus on technical gameplay programming, specializing in C# and scalable Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
+            <p>My journey in game development is driven by a passion for solving architectural challenges. I prioritize clean, maintainable code to ensure that every project I work on is not only functional but optimized for performance across different platforms.</p>
+            <p>I am constantly exploring new ways to enhance "Game Juice"—that perfect blend of visual feedback and physics-based interaction that makes a game feel truly alive. Currently, I am expanding my knowledge in advanced UI architecture and modular gameplay systems.</p>
         </div>
     </div>
 </div>
 
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Comm-Link</h1>
+    <div class="section-header"><h1>Comm-Link</h1><p>Contact Details</p></div>
+    
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala" target="_blank" style="text-decoration: none; color: white;">
+        <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala/" target="_blank" style="text-decoration: none; color: white;">
             <div class="info-pill">📍 Thiruvananthapuram, Kerala</div>
         </a>
         <div class="info-pill">📞 +91-9633857368</div>
@@ -272,15 +275,24 @@ function transition() {
 function glitch() {
     const roles = ["UNITY GAME DEVELOPER", "GAMEPLAY PROGRAMMER", "C# DEVELOPER (UNITY)", "GAME UI DEVELOPER (UNITY UI / CANVAS)"];
     const el = document.getElementById('role'); let rIdx = 0; let iter = 0; 
-    setInterval(() => {
+    
+    function run() {
         const txt = roles[rIdx];
-        el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
-        if (iter >= txt.length) { 
-            setTimeout(() => { iter = 0; rIdx = (rIdx+1)%roles.length; }, 3500); // 3.5 seconds pause per role
-        } else { 
-            iter += 0.2; // Very slow character reveal
-        }
-    }, 70); // Slow character cycle
+        const intr = setInterval(() => {
+            el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
+            if (iter >= txt.length) { 
+                clearInterval(intr);
+                iter = 0;
+                setTimeout(() => {
+                    rIdx = (rIdx + 1) % roles.length;
+                    run();
+                }, 3000); 
+            } else { 
+                iter += 0.2; 
+            }
+        }, 60);
+    }
+    run();
 }
 
 function openOverlay(id) { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); document.getElementById(id).style.display = 'block'; }
