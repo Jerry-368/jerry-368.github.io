@@ -8,95 +8,154 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;background:#030712;color:white;overflow:hidden}
+body{font-family:'Poppins',sans-serif;background:#030712;color:white;overflow:hidden;cursor:none}
 
-canvas{position:fixed;inset:0;z-index:-1}
+canvas{position:fixed;inset:0;z-index:-2}
 
-.home{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 80px}
-.left{max-width:620px}
+.scene{position:absolute;inset:0;display:none}
+.scene.active{display:flex}
 
-.name{font-size:3rem;font-weight:600}
+.fade{position:fixed;inset:0;background:#030712;opacity:0;transition:opacity .6s;pointer-events:none;z-index:10}
+.fade.show{opacity:1}
+
+/* START */
+.start{flex-direction:column;align-items:center;justify-content:center}
+.title{font-family:'Orbitron';font-size:3.5rem;text-shadow:0 0 20px #00f5ff}
+.score{color:#00f5ff;margin-top:10px}
+
+/* CURSOR */
+.cursor{position:fixed;width:30px;height:30px;border:2px solid #00f5ff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:999}
+.cursor::before,.cursor::after{content:"";position:absolute;background:#00f5ff}
+.cursor::before{width:2px;height:100%;left:50%}
+.cursor::after{height:2px;width:100%;top:50%}
+
+/* TARGET */
+.target{position:absolute;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#00f5ff,#0044ff);box-shadow:0 0 20px #00f5ff}
+.hit{position:absolute;width:40px;height:40px;border:2px solid #00f5ff;border-radius:50%;animation:explode .4s forwards}
+@keyframes explode{to{transform:scale(2);opacity:0}}
+
+/* HOME */
+.home{justify-content:space-between;align-items:center;padding:0 80px}
+.name{font-size:3rem}
 .highlight{color:#00f5ff}
+.typing{font-size:1.5rem;color:#00f5ff;margin:10px 0}
 
-/* TYPING */
-.typing{font-size:1.6rem;color:#00f5ff;margin:14px 0;min-height:34px;white-space:nowrap;overflow:hidden;border-right:2px solid #00f5ff;animation:blink .8s infinite}
-@keyframes blink{0%,100%{border-color:#00f5ff}50%{border-color:transparent}}
-
-/* GLITCH */
-.glitch{position:relative;display:inline-block}
-.glitch::before,.glitch::after{
-  content:attr(data-text);
-  position:absolute;left:0;top:0;overflow:hidden;clip-path:inset(0 0 0 0);
+/* LEVEL SELECT */
+.levels{flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.level-btn{
+padding:15px 30px;margin:10px;border:1px solid #00f5ff;border-radius:10px;cursor:pointer
 }
-.glitch::before{left:2px;text-shadow:-2px 0 #00f5ff;animation:glitch1 2s infinite linear alternate-reverse}
-.glitch::after{left:-2px;text-shadow:2px 0 #ff00c8;animation:glitch2 1.5s infinite linear alternate-reverse}
-@keyframes glitch1{0%{clip-path:inset(10% 0 80% 0)}20%{clip-path:inset(40% 0 30% 0)}40%{clip-path:inset(80% 0 5% 0)}60%{clip-path:inset(20% 0 60% 0)}80%{clip-path:inset(60% 0 20% 0)}100%{clip-path:inset(30% 0 40% 0)}}
-@keyframes glitch2{0%{clip-path:inset(60% 0 20% 0)}25%{clip-path:inset(20% 0 60% 0)}50%{clip-path:inset(80% 0 5% 0)}75%{clip-path:inset(40% 0 30% 0)}100%{clip-path:inset(10% 0 80% 0)}}
-
-.desc{color:#94a3b8;max-width:520px}
-
-.circle{width:280px;height:280px;border-radius:50%;border:5px solid #00f5ff;overflow:hidden;box-shadow:0 0 30px rgba(0,245,255,.4);transform:translateZ(0)}
-.circle img{width:100%;height:100%;object-fit:cover}
-
-/* MOUSE REACT */
-.react{transition:transform .15s ease}
+.level-btn:hover{background:#00f5ff;color:#030712}
 
 </style>
 </head>
+
 <body>
-
 <canvas id="bg"></canvas>
+<div class="cursor" id="cursor"></div>
+<div class="fade" id="fade"></div>
 
-<section class="home">
-  <div class="left">
-    <div class="name react">Jerin <span class="highlight">Johnson</span></div>
-    <div class="typing glitch react" id="typing" data-text=""></div>
-    <div class="desc react">I build gameplay systems: AI (FSM), shooting, physics, and procedural generation in Unity (C#).</div>
-  </div>
-  <div class="circle react"><img src="your-photo.jpg" alt="profile"></div>
+<!-- START -->
+<section id="start" class="scene start active">
+<div class="title">SHOOT TO LOAD</div>
+<div class="score">Loading: <span id="score">0</span>/5</div>
+</section>
+
+<!-- HOME -->
+<section id="home" class="scene home">
+<div>
+<div class="name">Jerin <span class="highlight">Johnson</span></div>
+<div class="typing" id="typing"></div>
+</div>
+</section>
+
+<!-- LEVEL SELECT -->
+<section id="levels" class="scene levels">
+<h2>Select Level</h2>
+<div class="level-btn">FPS Project</div>
+<div class="level-btn">Endless Runner</div>
+<div class="level-btn">Tower Stack</div>
 </section>
 
 <script>
-// PARTICLES
+// CURSOR
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{
+cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+
+// BACKGROUND
 const canvas=document.getElementById('bg');
 const ctx=canvas.getContext('2d');
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-resize();addEventListener('resize',resize);
-let ps=Array.from({length:110},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:1.4,dx:(Math.random()-0.5)*.6,dy:(Math.random()-0.5)*.6}));
-(function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#00f5ff';ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>canvas.width)p.dx*=-1;if(p.y<0||p.y>canvas.height)p.dy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});requestAnimationFrame(loop)})();
+canvas.width=innerWidth;canvas.height=innerHeight;
+let ps=[];
+for(let i=0;i<100;i++){ps.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,dx:(Math.random()-0.5),dy:(Math.random()-0.5)})}
+function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#00f5ff';ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;ctx.fillRect(p.x,p.y,2,2)});requestAnimationFrame(loop)}loop();
 
-// MULTI-ROLE TYPING
-const roles=[
-  'Unity Game Developer',
-  'Gameplay Systems Engineer',
-  'AI & Physics Programmer'
-];
-const el=document.getElementById('typing');
-let r=0,i=0,del=false;
-function type(){
-  const text=roles[r];
-  el.dataset.text=text; // for glitch layers
-  if(!del){
-    el.textContent=text.slice(0,i+1); i++;
-    if(i===text.length){del=true; return setTimeout(type,900)}
-  }else{
-    el.textContent=text.slice(0,i-1); i--;
-    if(i===0){del=false; r=(r+1)%roles.length}
-  }
-  setTimeout(type, del?40:80);
+// GAME
+let score=0;
+function spawn(){
+ const t=document.createElement('div');t.className='target';
+ t.style.left=Math.random()*innerWidth+'px';
+ t.style.top=Math.random()*innerHeight+'px';
+ document.body.appendChild(t);
+
+ let vx=(Math.random()-0.5)*3;
+ let vy=(Math.random()-0.5)*3;
+ const move=setInterval(()=>{
+  let x=parseFloat(t.style.left);
+  let y=parseFloat(t.style.top);
+  x+=vx;y+=vy;
+  if(x<0||x>innerWidth)vx*=-1;
+  if(y<0||y>innerHeight)vy*=-1;
+  t.style.left=x+'px';t.style.top=y+'px';
+ },16);
+
+ t.onclick=()=>{
+  const h=document.createElement('div');h.className='hit';h.style.left=t.style.left;h.style.top=t.style.top;document.body.appendChild(h);
+  setTimeout(()=>h.remove(),400);
+  clearInterval(move);t.remove();
+  score++;document.getElementById('score').innerText=score;
+  if(score>=5) enterHome();
+ };
+
+ setTimeout(()=>{clearInterval(move);t.remove()},2000);
 }
-setTimeout(type,400);
+setInterval(spawn,700);
 
-// MOUSE REACTION (parallax tilt)
-const reactEls=document.querySelectorAll('.react');
-document.addEventListener('mousemove',e=>{
-  const x=(e.clientX/window.innerWidth-0.5)*10;
-  const y=(e.clientY/window.innerHeight-0.5)*10;
-  reactEls.forEach(el=>{
-    el.style.transform=`translate(${x}px, ${y}px)`;
-  });
-});
+// TRANSITION FLOW
+function enterHome(){
+ const fade=document.getElementById('fade');
+ fade.classList.add('show');
+ setTimeout(()=>{
+  document.getElementById('start').classList.remove('active');
+  document.getElementById('home').classList.add('active');
+  fade.classList.remove('show');
+  setTimeout(()=>enterLevels(),1500);
+ },600);
+}
+
+function enterLevels(){
+ const fade=document.getElementById('fade');
+ fade.classList.add('show');
+ setTimeout(()=>{
+  document.getElementById('home').classList.remove('active');
+  document.getElementById('levels').classList.add('active');
+  fade.classList.remove('show');
+ },600);
+}
+
+// TYPING
+const roles=["Unity Game Developer","Gameplay Engineer","AI Programmer"];
+let i=0,j=0,del=false;
+function type(){
+ let txt=roles[j];
+ document.getElementById('typing').textContent=txt.substring(0,i);
+ if(!del){i++; if(i>txt.length){del=true;setTimeout(type,800);return}}
+ else{i--; if(i==0){del=false;j=(j+1)%roles.length}}
+ setTimeout(type,del?40:80);
+}
+setTimeout(type,500);
+
 </script>
-
 </body>
 </html>
