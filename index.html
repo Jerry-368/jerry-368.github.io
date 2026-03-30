@@ -30,14 +30,24 @@
             clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none;
         }
 
+        /* NAVIGATION */
+        .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
+        .btn {
+            padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
+            color: var(--primary); text-transform: uppercase; font-weight: bold; font-size: 0.85rem;
+            cursor: pointer; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            text-decoration: none; display: inline-block;
+        }
+        .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
+
         /* START UI */
         #ui-start { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
         .score-board { font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
         .hint { letter-spacing: 5px; opacity: 0.7; text-align: center; margin-top: 10px; text-transform: uppercase; font-size: 0.8rem; }
 
         /* HOME PAGE (BASE) */
-        #home { display: none; position: relative; z-index: 5; height: 100vh; padding: 150px 60px 60px; box-sizing: border-box; opacity: 0; transition: opacity 1s ease; }
-        .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
+        #home { display: none; position: relative; z-index: 5; height: 100vh; padding: 150px 60px 60px; box-sizing: border-box; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; transform: scale(0.95); }
+        #home.active { display: block; opacity: 1; transform: scale(1); }
         
         .name { font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 0.9; margin: 0; }
         .highlight { color: var(--primary); text-shadow: var(--glow); }
@@ -59,11 +69,15 @@
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes rotateRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* OVERLAYS */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(1, 4, 9, 0.99); z-index: 150; padding: 80px 40px; overflow-y: auto; text-align: center; }
+        /* OVERLAYS WITH TRANSITION */
+        .overlay { 
+            display: none; position: fixed; inset: 0; background: rgba(1, 4, 9, 0.99); z-index: 150; padding: 80px 40px; overflow-y: auto; text-align: center;
+            opacity: 0; transform: scale(1.05); transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
         
-        /* INTEL SECTION CONTENT */
+        /* INTEL SECTION */
         .intel-wrap { max-width: 800px; margin: 0 auto; text-align: left; }
         .intel-photo-frame { width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
         .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
@@ -75,31 +89,18 @@
         .card h3 { color: var(--primary); margin: 0; }
         .tag { font-size: 0.7rem; background: var(--accent); padding: 3px 10px; border-radius: 4px; float: right; font-weight: bold; }
 
-        /* COMM-LINK / CONTACT FORM */
+        /* COMM-LINK / FORM */
         .comm-link-container { max-width: 700px; margin: 0 auto; text-align: center; }
         .info-pill { background: rgba(255,255,255,0.02); border: 1px solid var(--primary); padding: 15px 25px; border-radius: 10px; margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
         .social-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0 30px; flex-wrap: wrap; }
-        
         .contact-form { text-align: left; background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; color: var(--primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; }
-        .form-group input, .form-group textarea {
-            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 245, 255, 0.2);
-            padding: 12px; color: white; border-radius: 5px; font-family: inherit; box-sizing: border-box;
-        }
+        .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 245, 255, 0.2); padding: 12px; color: white; border-radius: 5px; font-family: inherit; box-sizing: border-box; }
 
-        /* TARGETS & PARTICLES */
+        /* GAME ELEMENTS */
         .target { position: absolute; width: 45px; height: 45px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: pointer; }
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
-        
-        .btn {
-            padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
-            color: var(--primary); text-transform: uppercase; font-weight: bold; font-size: 0.85rem;
-            cursor: pointer; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            text-decoration: none; display: inline-block;
-        }
-        .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
-
         .recoil-active { animation: recoil 0.12s ease-out; }
         @keyframes recoil { 0% { transform: translateY(0); } 50% { transform: translateY(10px); } 100% { transform: translateY(0); } }
     </style>
@@ -161,9 +162,9 @@
         </div>
         <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left;">
             <h3 style="color: var(--primary); margin-top: 0;">Junior Unity Developer</h3>
-            <p>I focus on technical gameplay programming, specializing in C# and scalable Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
-            <p>My journey in game development is driven by a passion for solving architectural challenges. I prioritize clean, maintainable code to ensure that every project I work on is not only functional but optimized for performance across different platforms.</p>
-            <p>I am constantly exploring new ways to enhance "Game Juice"—that perfect blend of visual feedback and physics-based interaction that makes a game feel truly alive. Currently, I am expanding my knowledge in advanced UI architecture and modular gameplay systems.</p>
+            <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
+            <p>My journey is driven by solving architectural challenges, prioritizing clean, maintainable code optimized for performance across all platforms.</p>
+            <p>I am constantly exploring new ways to enhance "Game Juice"—the perfect blend of visual feedback and physics that makes games feel alive.</p>
         </div>
     </div>
 </div>
@@ -171,20 +172,17 @@
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <div class="section-header"><h1>Comm-Link</h1><p>Contact Details</p></div>
-    
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala/" target="_blank" style="text-decoration: none; color: white;">
+        <a href="https://www.google.com/maps/search/Thiruvananthapuram,+Kerala" target="_blank" style="text-decoration: none; color: white;">
             <div class="info-pill">📍 Thiruvananthapuram, Kerala</div>
         </a>
         <div class="info-pill">📞 +91-9633857368</div>
-        
         <div class="social-row">
             <a href="https://jerininteractive.itch.io" target="_blank" class="btn">🎮 Itch.io</a>
             <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
             <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
         </div>
-
         <div class="contact-form">
             <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
                 <div class="form-group"><label>Email Address</label><input type="email" name="email" required></div>
@@ -243,7 +241,7 @@ function burst(x, y) {
 }
 
 window.addEventListener('mousedown', () => {
-    const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
+    const activeUI = score < 5 ? document.getElementById('ui-start') : (document.querySelector('.overlay.active') || document.getElementById('home'));
     if(activeUI) { activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active'); }
     document.getElementById('main-body').classList.add('muzzle-flash');
     setTimeout(() => document.getElementById('main-body').classList.remove('muzzle-flash'), 80);
@@ -268,35 +266,39 @@ setInterval(spawn, 1000);
 function transition() {
     const scan = document.getElementById('scan-transition');
     scan.style.clipPath = "circle(150% at 50% 50%)";
-    setTimeout(() => { document.getElementById('ui-start').style.display='none'; document.getElementById('home').style.display='block'; }, 400);
-    setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; document.getElementById('home').style.opacity=1; glitch(); }, 800);
+    setTimeout(() => { 
+        document.getElementById('ui-start').style.display='none'; 
+        document.getElementById('home').style.display='block';
+        setTimeout(() => document.getElementById('home').classList.add('active'), 10);
+    }, 400);
+    setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; glitch(); }, 800);
 }
 
 function glitch() {
     const roles = ["UNITY GAME DEVELOPER", "GAMEPLAY PROGRAMMER", "C# DEVELOPER (UNITY)", "GAME UI DEVELOPER (UNITY UI / CANVAS)"];
     const el = document.getElementById('role'); let rIdx = 0; let iter = 0; 
-    
     function run() {
         const txt = roles[rIdx];
         const intr = setInterval(() => {
             el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
             if (iter >= txt.length) { 
-                clearInterval(intr);
-                iter = 0;
-                setTimeout(() => {
-                    rIdx = (rIdx + 1) % roles.length;
-                    run();
-                }, 3000); 
-            } else { 
-                iter += 0.2; 
-            }
+                clearInterval(intr); iter = 0;
+                setTimeout(() => { rIdx = (rIdx + 1) % roles.length; run(); }, 3000); 
+            } else { iter += 0.2; }
         }, 60);
     }
     run();
 }
 
-function openOverlay(id) { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); document.getElementById(id).style.display = 'block'; }
-function closeOverlays() { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); }
+function openOverlay(id) {
+    document.querySelectorAll('.overlay').forEach(o => { o.classList.remove('active'); setTimeout(() => o.style.display = 'none', 400); });
+    const target = document.getElementById(id);
+    target.style.display = 'block';
+    setTimeout(() => target.classList.add('active'), 10);
+}
+function closeOverlays() {
+    document.querySelectorAll('.overlay').forEach(o => { o.classList.remove('active'); setTimeout(() => o.style.display = 'none', 400); });
+}
 window.onresize = init;
 </script>
 </body>
