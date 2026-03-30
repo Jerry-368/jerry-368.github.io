@@ -14,131 +14,122 @@ body{
 background:#020617;
 color:white;
 overflow-x:hidden;
+cursor:none;
 }
+
+/* CUSTOM CURSOR */
+.cursor{
+position:fixed;
+width:20px;
+height:20px;
+border:2px solid #facc15;
+border-radius:50%;
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:9999;
+transition:transform 0.1s ease;
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+padding:20px 60px;
+z-index:1000;
+}
+
+.navbar h2{color:#facc15;}
+.navbar a{margin-left:25px;color:white;text-decoration:none;}
 
 /* HERO */
 .hero{
 height:100vh;
 display:flex;
-flex-direction:column;
-justify-content:center;
 align-items:center;
-text-align:center;
-background:radial-gradient(circle at top,#0f172a,#020617);
-animation:fadeIn 1.5s ease;
-}
-
-.hero h1{
-font-size:3rem;
-font-weight:700;
-margin-bottom:10px;
-animation:slideUp 1s ease;
-}
-
-.hero p{
-color:#94a3b8;
-margin-bottom:20px;
-animation:slideUp 1.5s ease;
-}
-
-.btn{
-padding:12px 25px;
-border:2px solid #4aa3ff;
-border-radius:8px;
-text-decoration:none;
-color:white;
-transition:0.3s;
-}
-
-.btn:hover{
-background:#4aa3ff;
-color:black;
-transform:scale(1.1);
-}
-
-/* PROJECTS */
-.projects{
-padding:80px 20px;
-text-align:center;
-}
-
-.projects h2{
-font-size:2rem;
-margin-bottom:30px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:30px;
-}
-
-.card{
-background:#0f172a;
-border-radius:15px;
-overflow:hidden;
-transition:0.4s;
+justify-content:space-between;
+padding:0 80px;
 position:relative;
 }
 
-.card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 15px 40px rgba(74,163,255,0.3);
+.left{
+max-width:600px;
 }
 
-.card video{
-width:100%;
-height:200px;
-object-fit:cover;
+.left h1{font-size:3.5rem;}
+.highlight{color:#facc15;}
+
+.left p{color:#94a3b8;margin:20px 0;}
+
+.btn{
+padding:12px 25px;
+border-radius:30px;
+text-decoration:none;
+font-weight:600;
+margin-right:10px;
 }
 
-.card-content{
-padding:20px;
-}
+.primary{background:#facc15;color:black;}
+.secondary{border:2px solid #facc15;color:#facc15;}
 
-.card h3{
-margin-bottom:10px;
-}
-
-.card p{
-color:#94a3b8;
-font-size:14px;
-}
-
-/* SKILLS */
-.skills{
-padding:60px;
-text-align:center;
-}
-
-.skill-list{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:15px;
-}
-
-.skill{
-padding:10px 20px;
-background:#0f172a;
+/* GAME PANEL */
+.panel{
+width:320px;
+height:400px;
+border:2px solid rgba(250,204,21,0.3);
 border-radius:20px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 40px rgba(250,204,21,0.2);
+display:flex;
+align-items:center;
+justify-content:center;
 transition:0.3s;
 }
 
-.skill:hover{
-background:#4aa3ff;
-color:black;
+.panel:hover{
+transform:rotateY(10deg) rotateX(10deg);
 }
 
-/* ANIMATIONS */
-@keyframes fadeIn{
-from{opacity:0}
-to{opacity:1}
+/* PARALLAX BACKGROUND */
+.parallax{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+background:radial-gradient(circle at center, rgba(250,204,21,0.1), transparent);
+z-index:-1;
 }
 
-@keyframes slideUp{
-from{transform:translateY(50px);opacity:0}
-to{transform:translateY(0);opacity:1}
+/* SCROLL SECTIONS */
+section{
+min-height:100vh;
+padding:100px;
+opacity:0;
+transform:translateY(80px);
+transition:1s;
+}
+
+section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* PROJECT CARD */
+.card{
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+margin:20px 0;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 30px rgba(250,204,21,0.3);
 }
 
 </style>
@@ -146,50 +137,66 @@ to{transform:translateY(0);opacity:1}
 
 <body>
 
+<div class="cursor" id="cursor"></div>
+<div class="parallax" id="parallax"></div>
+
+<!-- NAV -->
+<div class="navbar">
+<h2>Jerin</h2>
+<div>
+<a href="#">Home</a>
+<a href="#projects">Projects</a>
+</div>
+</div>
+
 <!-- HERO -->
 <section class="hero">
-<h1>I Build Gameplay Systems in Unity</h1>
-<p>AI • Physics • Shooting Mechanics • C#</p>
-<a href="#projects" class="btn">View Projects</a>
+<div class="left">
+<h1>Hello, I'm <span class="highlight">Jerin</span></h1>
+<p>I build gameplay systems in Unity including AI, shooting, physics and procedural systems.</p>
+<a href="#projects" class="btn primary">Start Experience</a>
+</div>
+
+<div class="panel">
+<p>GAME MODE</p>
+</div>
 </section>
 
 <!-- PROJECTS -->
-<section class="projects" id="projects">
-<h2>Featured Projects</h2>
-
-<div class="grid">
-
-<div class="card">
-<video src="videos/stacktower.mp4" autoplay muted loop></video>
-<div class="card-content">
-<h3>Stack Tower</h3>
-<p>Precision stacking system with combo scoring and difficulty scaling. Optimized using object pooling.</p>
-</div>
-</div>
-
-<div class="card">
-<video src="videos/switchrift.mp4" autoplay muted loop></video>
-<div class="card-content">
-<h3>Endless Runner</h3>
-<p>Procedural level generation with obstacle spawning and smooth lane switching system.</p>
-</div>
-</div>
-
-</div>
+<section id="projects">
+<h2>Projects</h2>
+<div class="card">FPS System - AI + Shooting + Camera</div>
+<div class="card">Endless Runner - Procedural + Pooling</div>
+<div class="card">Tower Stack - Precision + Scaling</div>
 </section>
 
-<!-- SKILLS -->
-<section class="skills">
-<h2>Technical Skills</h2>
-<div class="skill-list">
-<div class="skill">Unity</div>
-<div class="skill">C#</div>
-<div class="skill">FSM AI</div>
-<div class="skill">Object Pooling</div>
-<div class="skill">Physics Systems</div>
-<div class="skill">Procedural Generation</div>
-</div>
-</section>
+<script>
+
+/* CUSTOM CURSOR */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e=>{
+cursor.style.left = e.clientX+'px';
+cursor.style.top = e.clientY+'px';
+});
+
+/* PARALLAX */
+const parallax = document.getElementById('parallax');
+document.addEventListener('mousemove', e=>{
+parallax.style.background = `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(250,204,21,0.15), transparent)`;
+});
+
+/* SCROLL REVEAL */
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', ()=>{
+sections.forEach(sec=>{
+const top = sec.getBoundingClientRect().top;
+if(top < window.innerHeight - 100){
+sec.classList.add('show');
+}
+});
+});
+
+</script>
 
 </body>
 </html>
