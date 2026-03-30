@@ -40,6 +40,19 @@
         }
         .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
 
+        /* START UI - FIXED Z-INDEX */
+        #ui-start {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10; /* Ensure it stays above canvas */
+            pointer-events: none;
+        }
+        .score-board { font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); }
+        .hint { letter-spacing: 5px; opacity: 0.7; text-align: center; margin-top: 10px; text-transform: uppercase; font-size: 0.8rem; }
+
         /* HOME PAGE */
         #home { display: none; position: relative; z-index: 5; height: 100vh; padding: 150px 60px 60px; box-sizing: border-box; opacity: 0; transition: opacity 1s ease; }
         .name { font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 0.9; margin: 0; }
@@ -47,7 +60,6 @@
         #role { font-family: 'Courier New', monospace; font-size: clamp(1.2rem, 3vw, 2.2rem); color: var(--accent); margin-top: 15px; min-height: 1.5em; }
         #statement { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 20px; border-left: 2px solid var(--primary); padding-left: 15px; max-width: 600px; }
 
-        /* PHOTO */
         .photo-container {
             position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
             width: clamp(250px, 30vw, 400px); height: clamp(250px, 30vw, 400px);
@@ -68,29 +80,16 @@
         .section-header h1 { font-size: 3.5rem; margin-bottom: 5px; }
         .section-header p { color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 40px; }
 
-        /* CONTACT FORM */
-        .contact-container { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; color: var(--primary); font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; }
-        .form-group input, .form-group textarea {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(0, 245, 255, 0.3);
-            padding: 12px; color: white; border-radius: 5px; font-family: inherit;
-        }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: var(--glow); }
+        /* INTEL SECTION EXPANDED */
+        .intel-content { max-width: 850px; margin: 0 auto; text-align: left; background: rgba(255,255,255,0.02); padding: 40px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.1); }
+        .intel-content h2 { color: var(--primary); margin-top: 0; }
+        .intel-content ul { color: rgba(255,255,255,0.8); line-height: 1.8; }
 
-        .info-pill { background: rgba(255,255,255,0.03); border: 1px solid rgba(0, 245, 255, 0.1); padding: 15px 25px; border-radius: 10px; margin-bottom: 15px; font-size: 0.9rem; }
-        
         /* TARGETS & PARTICLES */
-        .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 10; cursor: pointer; }
+        .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: pointer; }
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
-        
-        /* RECOIL ANIMATION */
         .recoil-active { animation: recoil 0.12s ease-out; }
-        @keyframes recoil { 
-            0% { transform: translateY(0); } 
-            50% { transform: translateY(10px) scale(0.99); } 
-            100% { transform: translateY(0); } 
-        }
+        @keyframes recoil { 0% { transform: translateY(0); } 50% { transform: translateY(10px) scale(0.99); } 100% { transform: translateY(0); } }
     </style>
 </head>
 <body id="main-body">
@@ -99,9 +98,9 @@
 <canvas id="bgCanvas"></canvas>
 
 <div id="ui-start">
-    <div style="text-align: center; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
-        <div class="score-board" style="font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow);"><span id="score">0</span> / 5</div>
-        <p style="letter-spacing: 5px; opacity: 0.7;">NEUTRALIZE TARGETS TO OVERRIDE</p>
+    <div class="score-container">
+        <div class="score-board"><span id="score">0</span> / 5</div>
+        <p class="hint">NEUTRALIZE TARGETS TO OVERRIDE</p>
     </div>
 </div>
 
@@ -135,34 +134,39 @@
 
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header"><h1>System Intel</h1><p>Developer Profile</p></div>
-    <div style="max-width: 700px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem;">
-        <p>I am a Unity Developer focused on the technical core of gameplay. I specialize in C# and creating efficient, scalable systems.</p>
-        <div class="btn" onclick="openOverlay('comm-link')" style="margin-top: 30px;">⚡ Hire Me</div>
+    <div class="section-header"><h1>System Intel</h1><p>Developer Bio</p></div>
+    
+    <div class="intel-content">
+        <h2>Technical Summary</h2>
+        <p>I am a Technical Unity Developer specialized in bridging the gap between artistic vision and complex C# architecture. With a strong foundation in gameplay programming, I focus on building systems that are both scalable and performant.</p>
+        
+        <h2>Primary Skillset</h2>
+        <ul>
+            <li><strong>C# Development:</strong> Advanced scripting for gameplay loops and state machines.</li>
+            <li><strong>Physics Systems:</strong> Implementing custom gravity, collision, and raycasting logic.</li>
+            <li><strong>UI Architecture:</strong> Crafting responsive, data-driven interfaces for complex games.</li>
+            <li><strong>Optimization:</strong> Managing memory and draw calls to ensure fluid performance across platforms.</li>
+        </ul>
+        
+        <p style="margin-top: 30px; border-top: 1px solid rgba(0, 245, 255, 0.2); padding-top: 20px;">
+            My approach to development is rooted in problem-solving. Whether it's procedural generation in runners or card-shuffling algorithms, I prioritize clean, maintainable code that enhances the player's experience.
+        </p>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <div class="btn" onclick="openOverlay('comm-link')">⚡ Hire Me</div>
+        </div>
     </div>
 </div>
 
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header"><h1>Comm-Link</h1><p>Establish Connection</p></div>
-    <div class="contact-container">
-        <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0,245,255,0.1);">
-            <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
-                <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
-                <div class="form-group"><label>Email</label><input type="email" name="_replyto" required></div>
-                <div class="form-group"><label>Message</label><textarea name="message" rows="5" required></textarea></div>
-                <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
-            </form>
-        </div>
-        <div style="padding: 20px;">
-            <div class="info-pill">📧 jerinj368@gmail.com</div>
-            <div class="info-pill">📍 Thiruvananthapuram, Kerala</div>
-            <div class="info-pill">📞 +91-9633857368</div>
-            <div style="margin-top: 20px;">
-                <a href="https://github.com/Jerry-368" target="_blank" class="btn" style="margin-right:10px;">GitHub</a>
-                <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
-            </div>
-        </div>
+    <div class="section-header"><h1>Comm-Link</h1><p>Contact Details</p></div>
+    <div style="max-width: 600px; margin: auto;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--primary); padding: 20px; border-radius: 10px; margin-bottom: 10px;">📧 jerinj368@gmail.com</div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--primary); padding: 20px; border-radius: 10px; margin-bottom: 10px;">📍 Thiruvananthapuram, Kerala</div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--primary); padding: 20px; border-radius: 10px; margin-bottom: 20px;">📞 +91-9633857368</div>
+        <a href="https://github.com/Jerry-368" target="_blank" class="btn" style="margin-right:10px;">GitHub</a>
+        <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
     </div>
 </div>
 
@@ -194,7 +198,7 @@ function animate() {
 }
 init(); animate();
 
-/** GAME JUICE: PARTICLES **/
+/** HIT EFFECTS **/
 function burst(x, y) {
     for (let i = 0; i < 15; i++) {
         const p = document.createElement('div'); p.className = 'p-shard';
@@ -214,7 +218,6 @@ function burst(x, y) {
     }
 }
 
-/** SHOOT & RECOIL **/
 window.addEventListener('mousedown', (e) => {
     const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
     if(activeUI) {
@@ -235,7 +238,7 @@ function spawn() {
     document.body.appendChild(t);
     t.onmousedown = (e) => {
         score++; document.getElementById('score').innerText = score;
-        burst(e.clientX, e.clientY); // HIT EFFECT
+        burst(e.clientX, e.clientY);
         t.remove();
         if (score >= 5) transition();
     };
