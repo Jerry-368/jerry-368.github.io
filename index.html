@@ -1,110 +1,44 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jerin Johnson | Unity Gameplay Developer</title>
 
-<style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-html{scroll-behavior:smooth;}
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
 background:#020617;
 color:white;
-text-align:center;
 overflow-x:hidden;
 }
 
-/* 🔥 MANY STAR LAYERS (REAL DENSITY) */
-#stars, #stars2, #stars3{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:200%;
-z-index:-2;
-}
-
-/* SMALL STARS */
-#stars{
-background:
-radial-gradient(2px 2px at 20% 30%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 70% 80%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 40% 60%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 80% 20%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 10% 90%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 90% 10%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 50% 50%, #4aa3ff, transparent),
-radial-gradient(2px 2px at 30% 70%, #4aa3ff, transparent);
-animation:moveStars 25s linear infinite;
-}
-
-/* MEDIUM STARS */
-#stars2{
-background:
-radial-gradient(3px 3px at 25% 40%, #60a5fa, transparent),
-radial-gradient(3px 3px at 60% 75%, #60a5fa, transparent),
-radial-gradient(3px 3px at 80% 30%, #60a5fa, transparent),
-radial-gradient(3px 3px at 40% 20%, #60a5fa, transparent);
-animation:moveStars 40s linear infinite;
-}
-
-/* BIG STARS */
-#stars3{
-background:
-radial-gradient(4px 4px at 15% 50%, #93c5fd, transparent),
-radial-gradient(4px 4px at 85% 60%, #93c5fd, transparent);
-animation:moveStars 60s linear infinite;
-}
-
-@keyframes moveStars{
-0%{transform:translateY(0);}
-100%{transform:translateY(-300px);}
-}
-
-/* NAVBAR */
-.navbar{
-position:fixed;
-top:0;
-width:100%;
-background:#020617;
-padding:15px;
-display:flex;
-justify-content:center;
-gap:40px;
-z-index:1000;
-}
-
-.navbar a{
-color:white;
-text-decoration:none;
-font-size:18px;
-}
-
-.navbar a:hover{
-color:#4aa3ff;
-}
-
-/* HERO (BANNER SAFE) */
+/* HERO */
 .hero{
 height:100vh;
-background:url("banner.png") center/cover no-repeat;
 display:flex;
+flex-direction:column;
 justify-content:center;
-align-items:flex-end;
-padding-bottom:120px;
-position:relative;
-z-index:1;
+align-items:center;
+text-align:center;
+background:radial-gradient(circle at top,#0f172a,#020617);
+animation:fadeIn 1.5s ease;
 }
 
-/* BUTTONS */
-.buttons{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
+.hero h1{
+font-size:3rem;
+font-weight:700;
+margin-bottom:10px;
+animation:slideUp 1s ease;
+}
+
+.hero p{
+color:#94a3b8;
+margin-bottom:20px;
+animation:slideUp 1.5s ease;
 }
 
 .btn{
@@ -113,119 +47,98 @@ border:2px solid #4aa3ff;
 border-radius:8px;
 text-decoration:none;
 color:white;
-background:rgba(0,0,0,0.6);
-font-weight:bold;
 transition:0.3s;
 }
 
 .btn:hover{
 background:#4aa3ff;
 color:black;
-transform:scale(1.05);
-}
-
-/* SECTIONS */
-section{
-padding:70px 20px;
-}
-
-/* ABOUT */
-.about{
-max-width:800px;
-margin:auto;
-line-height:1.6;
-color:#d0d0d0;
+transform:scale(1.1);
 }
 
 /* PROJECTS */
 .projects{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:25px;
-margin-top:30px;
+padding:80px 20px;
+text-align:center;
+}
+
+.projects h2{
+font-size:2rem;
+margin-bottom:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
 }
 
 .card{
-position:relative;
-background:#111827;
-padding:20px;
-border-radius:10px;
-width:280px;
+background:#0f172a;
+border-radius:15px;
 overflow:hidden;
-transition:0.3s;
+transition:0.4s;
+position:relative;
 }
 
 .card:hover{
-transform:translateY(-8px);
-box-shadow:0 10px 25px rgba(74,163,255,0.3);
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 15px 40px rgba(74,163,255,0.3);
 }
 
-.card img{
+.card video{
 width:100%;
-height:180px;
+height:200px;
 object-fit:cover;
-border-radius:8px;
-display:block;
 }
 
-/* VIDEO PREVIEW */
-.preview{
-position:absolute;
-top:20px;
-left:20px;
-width:calc(100% - 40px);
-height:180px;
-object-fit:cover;
-border-radius:8px;
-opacity:0;
-transition:0.3s;
+.card-content{
+padding:20px;
 }
 
-.card:hover .preview{
-opacity:1;
+.card h3{
+margin-bottom:10px;
 }
 
-/* BUTTON GROUP */
-.project-buttons{
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:10px;
+.card p{
+color:#94a3b8;
+font-size:14px;
 }
 
 /* SKILLS */
 .skills{
-display:grid;
-grid-template-columns:repeat(3,auto);
+padding:60px;
+text-align:center;
+}
+
+.skill-list{
+display:flex;
+flex-wrap:wrap;
 justify-content:center;
-gap:20px;
-margin-top:20px;
+gap:15px;
 }
 
 .skill{
-background:#111827;
-padding:15px 25px;
-border-radius:8px;
+padding:10px 20px;
+background:#0f172a;
+border-radius:20px;
+transition:0.3s;
 }
 
-/* RESUME */
-.resume-btn{
-padding:15px 30px;
-border:2px solid #4aa3ff;
-border-radius:10px;
-background:#111827;
-color:white;
-text-decoration:none;
+.skill:hover{
+background:#4aa3ff;
+color:black;
 }
 
-/* CONTACT */
-.contact a{
-display:block;
-margin:10px;
-color:#4aa3ff;
-text-decoration:none;
+/* ANIMATIONS */
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+@keyframes slideUp{
+from{transform:translateY(50px);opacity:0}
+to{transform:translateY(0);opacity:1}
 }
 
 </style>
@@ -233,78 +146,32 @@ text-decoration:none;
 
 <body>
 
-<!-- STAR LAYERS -->
-<div id="stars"></div>
-<div id="stars2"></div>
-<div id="stars3"></div>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-<a href="#">Home</a>
-<a href="#about">About</a>
-<a href="#projects">Projects</a>
-<a href="#skills">Skills</a>
-<a href="#resume">Resume</a>
-<a href="#contact">Contact</a>
-</nav>
-
 <!-- HERO -->
-<div class="hero">
-<div class="buttons">
-<a href="https://github.com/jerry-368" class="btn">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev" class="btn">LinkedIn</a>
-<a href="Jerin_Johnson_Resume.pdf" class="btn">Resume</a>
-</div>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-<h2>About Me</h2>
-<p class="about">
-Unity Gameplay Developer focused on building engaging mechanics and systems using C# and Unity.
-Experienced in player controllers, enemy AI (FSM), shooting systems, and physics-based gameplay.
-Built multiple prototypes including FPS, endless runner, and platformer games.
-Currently focused on improving gameplay architecture and advanced mechanics.
-
-Built and published playable games with complete gameplay systems and deployment.
-</p>
+<section class="hero">
+<h1>I Build Gameplay Systems in Unity</h1>
+<p>AI • Physics • Shooting Mechanics • C#</p>
+<a href="#projects" class="btn">View Projects</a>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects">
+<section class="projects" id="projects">
 <h2>Featured Projects</h2>
 
-<div class="projects">
+<div class="grid">
 
 <div class="card">
-<img src="Screenshots/Menu.png">
-
-<video class="preview" muted loop>
-<source src="videos/stacktower.mp4" type="video/mp4">
-</video>
-
+<video src="videos/stacktower.mp4" autoplay muted loop></video>
+<div class="card-content">
 <h3>Stack Tower</h3>
-<p>Unity • C#</p>
-
-<div class="project-buttons">
-<a href="https://github.com/Jerry-368/Tower_Stack" class="btn">Code</a>
-<a href="https://jerininteractive.itch.io/stack-tower" class="btn">Play</a>
+<p>Precision stacking system with combo scoring and difficulty scaling. Optimized using object pooling.</p>
 </div>
 </div>
 
 <div class="card">
-<img src="Screenshots/switchrift.png">
-
-<video class="preview" muted loop>
-<source src="videos/switchrift.mp4" type="video/mp4">
-</video>
-
-<h3>Switch Rift</h3>
-<p>Unity • C#</p>
-
-<div class="project-buttons">
-<a href="https://github.com/Jerry-368/Switch-Rift---Endless-Runner-Unity-C-" class="btn">Code</a>
-<a href="https://jerininteractive.itch.io/switch-rift" class="btn">Play</a>
+<video src="videos/switchrift.mp4" autoplay muted loop></video>
+<div class="card-content">
+<h3>Endless Runner</h3>
+<p>Procedural level generation with obstacle spawning and smooth lane switching system.</p>
 </div>
 </div>
 
@@ -312,49 +179,17 @@ Built and published playable games with complete gameplay systems and deployment
 </section>
 
 <!-- SKILLS -->
-<section id="skills">
-<h2>Skills</h2>
-<div class="skills">
-<div class="skill">Unity Engine</div>
-<div class="skill">C# Programming</div>
-<div class="skill">Gameplay Systems</div>
-<div class="skill">Enemy AI (FSM)</div>
-<div class="skill">Game UI</div>
+<section class="skills">
+<h2>Technical Skills</h2>
+<div class="skill-list">
+<div class="skill">Unity</div>
+<div class="skill">C#</div>
+<div class="skill">FSM AI</div>
+<div class="skill">Object Pooling</div>
 <div class="skill">Physics Systems</div>
+<div class="skill">Procedural Generation</div>
 </div>
 </section>
-
-<!-- RESUME -->
-<section id="resume">
-<h2>Resume</h2>
-<a href="Jerin_Johnson_Resume.pdf" class="resume-btn">View Resume</a>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-<h2>Contact</h2>
-<div class="contact">
-<a href="mailto:jerinj368@gmail.com">Email</a>
-<a href="tel:+919633857368">Phone</a>
-<a href="https://github.com/jerry-368">GitHub</a>
-<a href="https://www.linkedin.com/in/jerinjohnson-gamedev">LinkedIn</a>
-</div>
-</section>
-
-<script>
-document.querySelectorAll(".card").forEach(card=>{
-const video = card.querySelector(".preview");
-
-card.addEventListener("mouseenter", ()=>{
-video.play();
-});
-
-card.addEventListener("mouseleave", ()=>{
-video.pause();
-video.currentTime = 0;
-});
-});
-</script>
 
 </body>
 </html>
