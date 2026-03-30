@@ -70,7 +70,7 @@
         #role { font-family: 'Courier New', monospace; font-size: clamp(1.2rem, 3vw, 2.2rem); color: var(--accent); margin-top: 15px; min-height: 1.5em; }
         #statement { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 20px; border-left: 2px solid var(--primary); padding-left: 15px; max-width: 600px; }
 
-        /* HERO PHOTO */
+        /* PHOTO */
         .photo-container {
             position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
             width: clamp(250px, 30vw, 400px); height: clamp(250px, 30vw, 400px);
@@ -105,20 +105,20 @@
         .card:hover { transform: translateY(-5px); box-shadow: var(--glow); }
         .personal-tag { background: #ff0000; color: white; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
 
-        /* INTEL / EXPANDED BIO */
+        /* INTEL */
         .intel-wrap { max-width: 750px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 35px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.1); }
         .intel-photo-frame { width: 160px; height: 160px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
         .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        /* CONTACT */
+        /* CONTACT PILLS */
         .comm-link-container { max-width: 600px; margin: 0 auto; text-align: center; }
         .info-pill { background: rgba(255,255,255,0.02); border: 1px solid var(--primary); padding: 12px 25px; border-radius: 10px; margin-bottom: 10px; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; color: white; min-width: 280px; transition: 0.3s; }
         .info-pill:hover { background: rgba(0, 245, 255, 0.1); box-shadow: var(--glow); }
         .social-row { display: flex; justify-content: center; gap: 12px; margin: 15px 0 25px; }
 
-        /* TARGETS & PARTICLES */
+        /* TARGETS & HIT PARTICLES */
         .target { position: absolute; width: 45px; height: 45px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: crosshair; }
-        .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
+        .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; transition: opacity 0.3s; }
     </style>
 </head>
 <body id="main-body" class="gaming-mode">
@@ -163,7 +163,7 @@
         <div style="line-height: 1.8;">
             <p>I am a Unity Developer focused on the technical architecture of gameplay. I specialize in C# and creating efficient, scalable systems for 2D and 3D games.</p>
             <p>My journey in development is driven by a deep interest in mechanics and optimization. I enjoy the challenge of taking a complex idea and translating it into clean, high-performance code that feels responsive to the player.</p>
-            <p>Beyond standard implementation, I focus on "Game Juice"—ensuring that every interaction, from a button click to a character movement, provides satisfying visual and physical feedback. I am always looking for ways to push the boundaries of what is possible in Unity through custom tools and modular programming.</p>
+            <p>Beyond standard implementation, I focus on "Game Juice"—ensuring that every interaction, from character movement to UI logic, provides satisfying visual and physical feedback. I am always looking for ways to push the boundaries of what is possible in Unity through custom tools and modular programming.</p>
             <p>I am a dedicated problem-solver who enjoys debugging complex logic and optimizing game code for various platforms, ensuring a seamless experience for every player.</p>
         </div>
     </div>
@@ -205,7 +205,7 @@
     <p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps?q=Thiruvananthapuram" target="_blank" class="info-pill">📍 Thiruvananthapuram, Kerala</a>
+        <a href="https://www.google.com/maps/search/Thiruvananthapuram,+Kerala" target="_blank" class="info-pill">📍 Thiruvananthapuram, Kerala</a>
         <div class="info-pill">📞 +91-9633857368</div>
         <div class="social-row">
             <a href="https://jerininteractive.itch.io" target="_blank" class="btn">🎮 Itch.io</a>
@@ -223,6 +223,7 @@
 </div>
 
 <script>
+/** ENGINE **/
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = []; let score = 0;
@@ -249,26 +250,48 @@ function animate() {
 }
 init(); animate();
 
+// FIXED PARTICLE HIT EFFECT
+function burst(x, y) {
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'p-shard';
+        const size = Math.random() * 8 + 4;
+        p.style.width = size + 'px';
+        p.style.height = '2px';
+        p.style.left = x + 'px';
+        p.style.top = y + 'px';
+        p.style.opacity = '1';
+        p.style.background = 'var(--primary)';
+        p.style.position = 'fixed';
+        p.style.zIndex = '300';
+        document.body.appendChild(p);
+
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 6 + 4;
+        let posX = x;
+        let posY = y;
+
+        const move = setInterval(() => {
+            posX += Math.cos(angle) * velocity;
+            posY += Math.sin(angle) * velocity;
+            p.style.left = posX + 'px';
+            p.style.top = posY + 'px';
+            let op = parseFloat(p.style.opacity) - 0.04;
+            p.style.opacity = op;
+            if (op <= 0) {
+                clearInterval(move);
+                p.remove();
+            }
+        }, 16);
+    }
+}
+
 function triggerHitEffects(x, y) {
     // 1. RECOIL
     document.body.classList.add('recoil-active');
     setTimeout(() => document.body.classList.remove('recoil-active'), 150);
-
-    // 2. HIT PARTICLES
-    for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div'); p.className = 'p-shard';
-        p.style.width = Math.random()*12+'px'; p.style.left = x+'px'; p.style.top = y+'px'; p.style.opacity = '1';
-        document.body.appendChild(p);
-        const angle = Math.random()*Math.PI*2; const speed = Math.random()*8+4;
-        let px = x, py = y;
-        const intr = setInterval(() => {
-            px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
-            p.style.left = px+'px'; p.style.top = py+'px';
-            let op = parseFloat(p.style.opacity) - 0.05;
-            p.style.opacity = op;
-            if (op <= 0) { clearInterval(intr); p.remove(); }
-        }, 16);
-    }
+    // 2. BURST
+    burst(x, y);
 }
 
 window.addEventListener('mousedown', (e) => {
@@ -288,7 +311,7 @@ function spawn() {
     t.onmousedown = (e) => {
         e.stopPropagation();
         score++; document.getElementById('score').innerText = score;
-        triggerHitEffects(e.clientX, e.clientY); // HIT EFFECT + RECOIL
+        triggerHitEffects(e.clientX, e.clientY); 
         t.remove();
         if (score >= 5) transition();
     };
