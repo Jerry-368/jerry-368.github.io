@@ -63,6 +63,11 @@
         .overlay { display: none; position: fixed; inset: 0; background: rgba(1, 4, 9, 0.99); z-index: 150; padding: 80px 40px; overflow-y: auto; text-align: center; }
         .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
         
+        /* INTEL SECTION CONTENT */
+        .intel-wrap { max-width: 800px; margin: 0 auto; text-align: left; }
+        .intel-photo-frame { width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative; }
+        .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
         /* PROJECT CARDS */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; max-width: 1000px; margin-inline: auto; }
         .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; transition: 0.3s; text-decoration: none; color: white; display: block; text-align: left; }
@@ -149,16 +154,21 @@
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1>System Intel</h1>
-    <div style="max-width: 800px; margin: 0 auto; text-align: left; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1);">
-        <h3 style="color: var(--primary);">Junior Unity Developer</h3>
-        <p>I focus on technical gameplay programming, specializing in C# and scalable Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
+    <div class="intel-wrap">
+        <div class="intel-photo-frame">
+            <div class="animated-ring" style="width: 105%; height: 105%; top: -2.5%; left: -2.5%;"></div>
+            <img src="intel-bio.png" alt="Jerin Johnson">
+        </div>
+        <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left;">
+            <h3 style="color: var(--primary); margin-top: 0;">Junior Unity Developer</h3>
+            <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
+        </div>
     </div>
 </div>
 
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header"><h1>Comm-Link</h1><p>Contact Details</p></div>
-    
+    <h1>Comm-Link</h1>
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
         <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala" target="_blank" style="text-decoration: none; color: white;">
@@ -229,7 +239,7 @@ function burst(x, y) {
     }
 }
 
-window.addEventListener('mousedown', (e) => {
+window.addEventListener('mousedown', () => {
     const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
     if(activeUI) { activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active'); }
     document.getElementById('main-body').classList.add('muzzle-flash');
@@ -260,17 +270,17 @@ function transition() {
 }
 
 function glitch() {
-    const roles = ["JR. UNITY DEVELOPER", "GAMEPLAY PROGRAMMER", "C# DEVELOPER", "C# SCRIPTING ENGINEER", "UNITY ENGINE SPECIALIST"];
+    const roles = ["UNITY GAME DEVELOPER", "GAMEPLAY PROGRAMMER", "C# DEVELOPER (UNITY)", "GAME UI DEVELOPER (UNITY UI / CANVAS)"];
     const el = document.getElementById('role'); let rIdx = 0; let iter = 0; 
     setInterval(() => {
         const txt = roles[rIdx];
         el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
         if (iter >= txt.length) { 
-            setTimeout(() => { iter = 0; rIdx = (rIdx+1)%roles.length; }, 2000); // Wait 2 seconds before next role
+            setTimeout(() => { iter = 0; rIdx = (rIdx+1)%roles.length; }, 3500); // 3.5 seconds pause per role
         } else { 
-            iter += 0.3; // Slower iteration speed
+            iter += 0.2; // Very slow character reveal
         }
-    }, 60); // Slower interval
+    }, 70); // Slow character cycle
 }
 
 function openOverlay(id) { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); document.getElementById(id).style.display = 'block'; }
