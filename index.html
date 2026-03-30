@@ -46,7 +46,7 @@
         .score-board { font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
         .hint { letter-spacing: 5px; opacity: 0.7; text-align: center; margin-top: 10px; text-transform: uppercase; font-size: 0.8rem; }
 
-        /* HOME PAGE (BASE) */
+        /* HOME PAGE */
         #home { display: none; position: relative; z-index: 5; height: 100vh; padding: 150px 60px 60px; box-sizing: border-box; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; transform: scale(0.95); }
         #home.active { display: block; opacity: 1; transform: scale(1); }
         
@@ -77,35 +77,33 @@
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
         
-        /* SKILLS GRID (SONIYA STYLE) */
-        .skills-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 25px; 
-            max-width: 900px; 
-            margin: 50px auto; 
-        }
-        .skill-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 245, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px 15px;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
+        /* SKILLS GRID */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 25px; max-width: 900px; margin: 50px auto; }
+        .skill-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.1); border-radius: 15px; padding: 30px 15px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .skill-card i { font-size: 2.5rem; color: var(--primary); }
-        .skill-card:hover { 
-            background: rgba(0, 245, 255, 0.05); 
-            border-color: var(--primary); 
-            transform: translateY(-5px);
-            box-shadow: var(--glow);
-        }
-        .skill-card span { font-weight: bold; letter-spacing: 1px; font-size: 0.9rem; }
 
-        /* TARGETS & PARTICLES */
+        /* MISSIONS / GAME CARDS */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1000px; margin: 40px auto; }
+        .card { border: 1px solid var(--primary); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; text-decoration: none; color: white; text-align: left; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--glow); }
+        .card h3 { color: white; margin: 0 0 10px 0; font-size: 1.5rem; }
+        .personal-tag { background: #ff0000; color: white; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
+
+        /* INTEL */
+        .intel-wrap { max-width: 700px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
+        .intel-photo-frame { width: 150px; height: 150px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 25px; padding: 5px; position: relative; }
+        .intel-photo-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+        /* COMM-LINK / FORM */
+        .comm-link-container { max-width: 600px; margin: 0 auto; text-align: center; }
+        .info-pill { background: rgba(255,255,255,0.02); border: 1px solid var(--primary); padding: 15px 25px; border-radius: 10px; margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+        .social-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0 30px; }
+        .contact-form { text-align: left; background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; color: var(--primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; }
+        .form-group input, .form-group textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 245, 255, 0.2); padding: 12px; color: white; border-radius: 5px; font-family: inherit; box-sizing: border-box; }
+
+        /* TARGETS */
         .target { position: absolute; width: 45px; height: 45px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 50; cursor: pointer; }
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
         .recoil-active { animation: recoil 0.12s ease-out; }
@@ -138,83 +136,78 @@
 
     <div class="photo-container">
         <div class="animated-ring"></div>
-        <div class="photo-circle"><img src="hero-profile.png" alt="Jerin Johnson"></div>
+        <div class="photo-circle"><img src="your-photo.png" alt="Jerin Johnson"></div>
     </div>
 </div>
 
 <div id="arsenal" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header">
-        <h1 style="font-size: 3.5rem;">Technical Arsenal</h1>
-        <p style="color: var(--primary); letter-spacing: 3px;">Skills</p>
-    </div>
-    
+    <h1 style="font-size: 3rem;">Technical Arsenal</h1>
+    <p style="color: var(--primary); letter-spacing: 3px;">Skills</p>
     <div class="skills-grid">
         <div class="skill-card"><i class="fab fa-unity"></i><span>Unity 3D/2D</span></div>
         <div class="skill-card"><i class="fas fa-code"></i><span>C# Scripting</span></div>
         <div class="skill-card"><i class="fas fa-layer-group"></i><span>Unity UI</span></div>
         <div class="skill-card"><i class="fas fa-cube"></i><span>Physics</span></div>
-        <div class="skill-card"><i class="fab fa-git-alt"></i><span>Git / Version Control</span></div>
-        <div class="skill-card"><i class="fas fa-bug"></i><span>Debugging</span></div>
-        <div class="skill-card"><i class="fas fa-project-diagram"></i><span>Algorithms</span></div>
-        <div class="skill-card"><i class="fas fa-bolt"></i><span>VFX Graph</span></div>
     </div>
 </div>
 
 <div id="missions" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header">
-        <h1>Mission Logs</h1>
-        <p style="color: var(--primary); letter-spacing: 3px;">Project</p>
-    </div>
-    
-    <div class="project-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 900px; margin: 40px auto; text-align: left;">
-        <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card" style="border: 1px solid var(--primary); padding: 20px; border-radius: 12px; text-decoration: none; color: white;">
+    <h1 style="font-size: 3rem;">Mission Logs</h1>
+    <p style="color: var(--primary); letter-spacing: 3px;">Project</p>
+    <div class="project-grid">
+        <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
             <h3>Stack Tower</h3>
-            <p>Personal Game</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">A physics-driven precision stacking game. Click to visit itch.io project page.</p>
+            <div class="personal-tag">Personal Game</div>
+            <p>A physics-driven precision stacking game. Click to visit itch.io project page.</p>
         </a>
-        <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card" style="border: 1px solid var(--primary); padding: 20px; border-radius: 12px; text-decoration: none; color: white;">
+        <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
             <h3>Switch Rift</h3>
-            <p>Personal Game</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">Fast-paced endless runner with dimension-shifting spawning logic.</p>
+            <div class="personal-tag">Personal Game</div>
+            <p>Fast-paced endless runner with dimension-shifting spawning logic.</p>
         </a>
     </div>
 </div>
 
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header">
-        <h1>System Intel</h1>
-        <p style="color: var(--primary); letter-spacing: 3px;">About Me</p>
-    </div>
-    
-    <div class="intel-wrap" style="max-width: 700px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px;">
-        <img src="intel-bio.png" style="width: 150px; border-radius: 50%; border: 2px solid var(--primary); display: block; margin: 0 auto 20px;">
+    <h1 style="font-size: 3rem;">System Intel</h1>
+    <p style="color: var(--primary); letter-spacing: 3px;">About Me</p>
+    <div class="intel-wrap">
+        <div class="intel-photo-frame">
+            <div class="animated-ring" style="width: 105%; height: 105%; top: -2.5%; left: -2.5%;"></div>
+            <img src="your-photo.png" alt="Jerin Johnson">
+        </div>
         <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
-        <p style="margin-top: 15px;">I am a problem-solver who enjoys debugging complex logic and optimizing game code for various platforms. Currently focused on expanding my skills in Unity UI architecture and shader graph development.</p>
     </div>
 </div>
 
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <div class="section-header">
-        <h1>Comm-Link</h1>
-        <p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
-    </div>
-    
-    <div style="max-width: 500px; margin: 30px auto;">
+    <h1 style="font-size: 3rem;">Comm-Link</h1>
+    <p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
+    <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
+        <a href="http://googleusercontent.com/maps.google.com/5" target="_blank" style="text-decoration: none; color: white;"><div class="info-pill">📍 Thiruvananthapuram, Kerala</div></a>
         <div class="info-pill">📞 +91-9633857368</div>
-        <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST" class="contact-form" style="margin-top: 20px;">
-            <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--primary); color: white;">
-            <textarea name="message" placeholder="Message" rows="4" required style="width: 100%; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--primary); color: white;"></textarea>
-            <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
-        </form>
+        <div class="social-row">
+            <a href="https://jerininteractive.itch.io" target="_blank" class="btn">🎮 Itch.io</a>
+            <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
+            <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
+        </div>
+        <div class="contact-form">
+            <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
+                <div class="form-group"><label>Email Address</label><input type="email" name="email" required></div>
+                <div class="form-group"><label>Transmission Message</label><textarea name="message" rows="4" required></textarea></div>
+                <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
+/** ENGINE **/
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = []; let score = 0;
@@ -280,7 +273,11 @@ setInterval(spawn, 1000);
 function transition() {
     const scan = document.getElementById('scan-transition');
     scan.style.clipPath = "circle(150% at 50% 50%)";
-    setTimeout(() => { document.getElementById('ui-start').style.display='none'; document.getElementById('home').style.display='block'; setTimeout(() => document.getElementById('home').classList.add('active'), 10); }, 400);
+    setTimeout(() => { 
+        document.getElementById('ui-start').style.display='none'; 
+        document.getElementById('home').style.display='block';
+        setTimeout(() => document.getElementById('home').classList.add('active'), 10);
+    }, 400);
     setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; glitch(); }, 800);
 }
 
@@ -291,8 +288,10 @@ function glitch() {
         const txt = roles[rIdx];
         const intr = setInterval(() => {
             el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
-            if (iter >= txt.length) { clearInterval(intr); iter = 0; setTimeout(() => { rIdx = (rIdx + 1) % roles.length; run(); }, 3000); } 
-            else { iter += 0.2; }
+            if (iter >= txt.length) { 
+                clearInterval(intr); iter = 0;
+                setTimeout(() => { rIdx = (rIdx + 1) % roles.length; run(); }, 3000); 
+            } else { iter += 0.2; }
         }, 60);
     }
     run();
