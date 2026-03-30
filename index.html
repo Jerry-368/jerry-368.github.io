@@ -80,11 +80,17 @@
 
         .info-pill { background: rgba(255,255,255,0.03); border: 1px solid rgba(0, 245, 255, 0.1); padding: 15px 25px; border-radius: 10px; margin-bottom: 15px; font-size: 0.9rem; }
         
-        /* TARGETS */
-        .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 2; }
+        /* TARGETS & PARTICLES */
+        .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 10; cursor: pointer; }
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
+        
+        /* RECOIL ANIMATION */
         .recoil-active { animation: recoil 0.12s ease-out; }
-        @keyframes recoil { 0% { transform: translateY(0); } 50% { transform: translateY(8px); } 100% { transform: translateY(0); } }
+        @keyframes recoil { 
+            0% { transform: translateY(0); } 
+            50% { transform: translateY(10px) scale(0.99); } 
+            100% { transform: translateY(0); } 
+        }
     </style>
 </head>
 <body id="main-body">
@@ -94,7 +100,7 @@
 
 <div id="ui-start">
     <div style="text-align: center; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
-        <div class="score-board" style="font-size: 6rem; font-weight: 900; color: var(--primary);"><span id="score">0</span> / 5</div>
+        <div class="score-board" style="font-size: 6rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow);"><span id="score">0</span> / 5</div>
         <p style="letter-spacing: 5px; opacity: 0.7;">NEUTRALIZE TARGETS TO OVERRIDE</p>
     </div>
 </div>
@@ -121,24 +127,148 @@
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <div class="section-header"><h1>Mission Logs</h1><p>Project Archives</p></div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: auto;">
-        <div class="card" style="border: 1px solid var(--primary); padding: 25px; border-radius: 12px; background: rgba(0,245,255,0.02);">
-            <h3>Stack Tower</h3><p>Unity physics-based stacking mechanics.</p>
-        </div>
-        <div class="card" style="border: 1px solid var(--primary); padding: 25px; border-radius: 12px; background: rgba(0,245,255,0.02);">
-            <h3>SwitchRift</h3><p>Procedural spawning in endless runner logic.</p>
-        </div>
-        <div class="card" style="border: 1px solid orange; padding: 25px; border-radius: 12px; background: rgba(255,165,0,0.02);">
-            <h3 style="color:orange;">Freecell</h3><p>Complex UI state management and card logic.</p>
-        </div>
+        <div class="card" style="border: 1px solid var(--primary); padding: 25px; border-radius: 12px;"><h3>Stack Tower</h3><p>Unity physics-based stacking mechanics.</p></div>
+        <div class="card" style="border: 1px solid var(--primary); padding: 25px; border-radius: 12px;"><h3>SwitchRift</h3><p>Procedural spawning in endless runner logic.</p></div>
+        <div class="card" style="border: 1px solid orange; padding: 25px; border-radius: 12px;"><h3 style="color:orange;">Freecell</h3><p>Professional card game architecture.</p></div>
     </div>
 </div>
 
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <div class="section-header"><h1>System Intel</h1><p>Developer Profile</p></div>
-    <div style="width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; overflow: hidden; padding: 5px;">
-        <img src="your-photo.png" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+    <div style="max-width: 700px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem;">
+        <p>I am a Unity Developer focused on the technical core of gameplay. I specialize in C# and creating efficient, scalable systems.</p>
+        <div class="btn" onclick="openOverlay('comm-link')" style="margin-top: 30px;">⚡ Hire Me</div>
     </div>
-    <div style="max-width: 700px; margin: 0 auto 40px; line-height: 1.8; font-size: 1.1rem; color: rgba(255,255,255,0.8);">
-        <p>I am a Unity Developer focused on the technical core of gameplay. I specialize in C# and creating efficient, scalable systems for 2D and 3D games.</p>
-        <p>My approach combines clean architecture with "Game Juice" to ensure every
+</div>
+
+<div id="comm-link" class="overlay">
+    <div class="close-btn" onclick="closeOverlays()">×</div>
+    <div class="section-header"><h1>Comm-Link</h1><p>Establish Connection</p></div>
+    <div class="contact-container">
+        <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0,245,255,0.1);">
+            <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
+                <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
+                <div class="form-group"><label>Email</label><input type="email" name="_replyto" required></div>
+                <div class="form-group"><label>Message</label><textarea name="message" rows="5" required></textarea></div>
+                <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
+            </form>
+        </div>
+        <div style="padding: 20px;">
+            <div class="info-pill">📧 jerinj368@gmail.com</div>
+            <div class="info-pill">📍 Thiruvananthapuram, Kerala</div>
+            <div class="info-pill">📞 +91-9633857368</div>
+            <div style="margin-top: 20px;">
+                <a href="https://github.com/Jerry-368" target="_blank" class="btn" style="margin-right:10px;">GitHub</a>
+                <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/** ENGINE **/
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let particles = []; let score = 0;
+
+function init() {
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    particles = [];
+    for (let i = 0; i < 60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, sx: Math.random()*0.4-0.2, sy: Math.random()*0.4-0.2 });
+}
+function animate() {
+    ctx.fillStyle = "#010409"; ctx.fillRect(0,0,canvas.width, canvas.height);
+    particles.forEach(p => {
+        p.x += p.sx; p.y += p.sy;
+        if(p.x<0||p.x>canvas.width) p.sx*=-1; if(p.y<0||p.y>canvas.height) p.sy*=-1;
+        ctx.fillStyle = "rgba(0, 245, 255, 0.25)"; ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2); ctx.fill();
+    });
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            let d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+            if (d < 140) { ctx.strokeStyle = `rgba(0, 245, 255, ${1 - d/140})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
+        }
+    }
+    requestAnimationFrame(animate);
+}
+init(); animate();
+
+/** GAME JUICE: PARTICLES **/
+function burst(x, y) {
+    for (let i = 0; i < 15; i++) {
+        const p = document.createElement('div'); p.className = 'p-shard';
+        p.style.width = Math.random()*10+'px'; p.style.height = '2px';
+        p.style.left = x+'px'; p.style.top = y+'px';
+        p.style.opacity = '1';
+        document.body.appendChild(p);
+        const angle = Math.random()*Math.PI*2; const speed = Math.random()*7+4;
+        let px = x, py = y;
+        const intr = setInterval(() => {
+            px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
+            p.style.left = px+'px'; p.style.top = py+'px';
+            let op = parseFloat(p.style.opacity) - 0.06;
+            p.style.opacity = op;
+            if (op <= 0) { clearInterval(intr); p.remove(); }
+        }, 16);
+    }
+}
+
+/** SHOOT & RECOIL **/
+window.addEventListener('mousedown', (e) => {
+    const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
+    if(activeUI) {
+        activeUI.classList.remove('recoil-active');
+        void activeUI.offsetWidth; 
+        activeUI.classList.add('recoil-active');
+    }
+    document.getElementById('main-body').classList.add('muzzle-flash');
+    setTimeout(() => document.getElementById('main-body').classList.remove('muzzle-flash'), 80);
+});
+
+function spawn() {
+    if (score >= 5) return;
+    const t = document.createElement('div'); t.className = 'target';
+    let x, y;
+    do { x = Math.random()*80+10; y = Math.random()*70+15; } while (x > 35 && x < 65 && y > 30 && y < 55); 
+    t.style.left = x + 'vw'; t.style.top = y + 'vh';
+    document.body.appendChild(t);
+    t.onmousedown = (e) => {
+        score++; document.getElementById('score').innerText = score;
+        burst(e.clientX, e.clientY); // HIT EFFECT
+        t.remove();
+        if (score >= 5) transition();
+    };
+    setTimeout(() => { if(t) t.remove(); }, 2000);
+}
+setInterval(spawn, 1000);
+
+/** TRANSITIONS **/
+const roles = ["UNITY DEVELOPER", "SYSTEMS ENGINEER", "C# PROGRAMMER"];
+let rIdx = 0;
+function transition() {
+    const scan = document.getElementById('scan-transition');
+    scan.style.clipPath = "circle(150% at 50% 50%)";
+    setTimeout(() => { document.getElementById('ui-start').style.display='none'; document.getElementById('home').style.display='block'; }, 400);
+    setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; document.getElementById('home').style.opacity=1; glitch(); }, 800);
+}
+function glitch() {
+    const el = document.getElementById('role'); let iter = 0; const txt = roles[rIdx];
+    const intr = setInterval(() => {
+        el.innerText = txt.split("").map((l, i) => i < iter ? txt[i] : "#$@&%*"[Math.floor(Math.random()*6)]).join("");
+        if (iter >= txt.length) { clearInterval(intr); setTimeout(() => { rIdx = (rIdx+1)%roles.length; glitch(); }, 2500); }
+        iter += 1/2;
+    }, 40);
+}
+
+function openOverlay(id) {
+    document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+}
+function closeOverlays() {
+    document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+}
+window.onresize = init;
+</script>
+</body>
+</html>
