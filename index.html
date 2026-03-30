@@ -25,12 +25,11 @@
         canvas { position: fixed; inset: 0; z-index: 1; transition: filter 0.1s ease; }
         .muzzle-flash canvas { filter: brightness(2.5) contrast(1.2); }
 
-        /* Transition Wipe */
         #scan-transition {
             position: fixed;
             inset: 0;
             background: var(--primary);
-            z-index: 100;
+            z-index: 200;
             clip-path: circle(0% at 50% 50%);
             transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1);
             pointer-events: none;
@@ -44,8 +43,7 @@
             text-align: center;
             z-index: 10;
         }
-
-        .score-board { font-size: 5rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; pointer-events: none; }
+        .score-board { font-size: 5rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
         .hint { letter-spacing: 4px; font-size: 0.8rem; opacity: 0.7; margin-top: 10px; }
 
         /* HOME PAGE UI */
@@ -60,7 +58,7 @@
             transition: opacity 1s ease;
         }
 
-        .nav { display: flex; gap: 15px; margin-bottom: 40px; }
+        .nav { display: flex; gap: 15px; margin-bottom: 40px; position: relative; z-index: 10; }
         .btn {
             padding: 10px 20px;
             border: 1px solid var(--primary);
@@ -86,7 +84,6 @@
             min-height: 1.5em;
         }
 
-        /* Single Sentence Statement */
         #statement {
             font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.7);
@@ -114,12 +111,9 @@
         }
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-        /* OVERLAYS (MISSIONS & INTEL) */
+        /* OVERLAYS */
         .overlay {
             display: none;
             position: fixed;
@@ -130,21 +124,51 @@
             overflow-y: auto;
         }
 
-        .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); }
+        .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
+
+        /* INTEL SECTION (ABOUT ME - Soniya Style) */
+        .intel-header { text-align: center; margin-top: 20px; }
+        .intel-header h1 { font-size: 3rem; color: #fff; margin-bottom: 0; }
+        .intel-header p { color: var(--primary); letter-spacing: 2px; font-weight: bold; }
+        
+        .intel-content { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            text-align: center; 
+        }
+
+        .intel-photo {
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 3px dashed var(--primary);
+            padding: 10px;
+            margin: 0 auto 30px;
+        }
+        .intel-photo img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+        .intel-bio { font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.8); margin-bottom: 40px; }
+
+        .capsule-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
+        .capsule {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        /* MISSIONS GRID */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
         .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; }
         .tag { font-size: 0.7rem; background: var(--accent); padding: 3px 10px; border-radius: 4px; float: right; font-weight: bold; }
 
-        /* TARGETS & PARTICLES */
+        /* GAME ELEMENTS */
         .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 2; }
-        .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 20; }
+        .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
         
         .recoil-active { animation: recoil 0.12s ease-out; }
-        @keyframes recoil {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(0px, 8px); }
-            100% { transform: translate(0, 0); }
-        }
+        @keyframes recoil { 0% { transform: translate(0, 0); } 50% { transform: translate(0px, 8px); } 100% { transform: translate(0, 0); } }
     </style>
 </head>
 <body id="main-body">
@@ -154,14 +178,14 @@
 
 <div id="ui-start">
     <div class="score-board"><span id="score">0</span> / 5</div>
-    <div class="hint">CLEAR TARGETS TO ACCESS SYSTEM</div>
+    <div class="hint">CLEAR TARGETS TO INITIALIZE</div>
 </div>
 
 <div id="home">
     <div class="nav">
-        <div class="btn" onclick="closeAllOverlays()">🏠 Base</div>
-        <div class="btn" onclick="openOverlay('missions-overlay')">🎯 Missions</div>
-        <div class="btn" onclick="openOverlay('intel-overlay')">💾 Intel</div>
+        <div class="btn" onclick="closeOverlays()">🏠 Base</div>
+        <div class="btn" onclick="openOverlay('missions')">🎯 Missions</div>
+        <div class="btn" onclick="openOverlay('intel')">💾 Intel</div>
     </div>
 
     <h1 class="name">JERIN<br><span class="highlight">JOHNSON</span></h1>
@@ -175,22 +199,44 @@
     </div>
 </div>
 
-<div id="missions-overlay" class="overlay">
-    <div class="close-btn" onclick="closeAllOverlays()">×</div>
+<div id="missions" class="overlay">
+    <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1 style="color: var(--primary); text-align: center; letter-spacing: 8px;">MISSION LOGS</h1>
     <div class="project-grid">
-        <div class="card"><span class="tag">PERSONAL</span><h3>Stack Tower</h3><p>Physics-based precision game built in Unity.</p></div>
-        <div class="card"><span class="tag">PERSONAL</span><h3>SwitchRift</h3><p>Endless runner with dimension-shifting mechanics.</p></div>
-        <div class="card"><span class="tag" style="background:orange">POLISHING</span><h3>Freecell Card Game</h3><p>Professional card game project with complex UI logic.</p></div>
+        <div class="card"><span class="tag">PERSONAL</span><h3>Stack Tower</h3><p>Physics-based precision stacking game built in Unity.</p></div>
+        <div class="card"><span class="tag">PERSONAL</span><h3>SwitchRift</h3><p>Fast-paced endless runner with dimension-shifting mechanics.</p></div>
+        <div class="card"><span class="tag" style="background:orange">POLISHING</span><h3>Freecell Card Game</h3><p>Professional card game project with complex state validation.</p></div>
     </div>
 </div>
 
-<div id="intel-overlay" class="overlay">
-    <div class="close-btn" onclick="closeAllOverlays()">×</div>
-    <h1 style="color: var(--primary); text-align: center; letter-spacing: 8px;">SYSTEM INTEL</h1>
-    <div style="max-width: 800px; margin: 50px auto; font-size: 1.2rem; line-height: 1.8;">
-        <p>I am a Unity Game Developer focused on the technical side of gameplay—building the code, physics, and systems that make games work.</p>
-        <p>Currently specializing in C# scripting and exploring advanced mechanics for FPS and Multiplayer environments.</p>
+<div id="intel" class="overlay">
+    <div class="close-btn" onclick="closeOverlays()">×</div>
+    
+    <div class="intel-header">
+        <h1>About Me</h1>
+        <p>Get to know me better</p>
+    </div>
+
+    <div class="intel-content">
+        <div class="intel-photo">
+            <img src="your-photo.png" alt="Jerin Johnson">
+        </div>
+
+        <h2 style="color: var(--primary); font-size: 2rem;">Technical Unity Developer</h2>
+        <p style="color: rgba(255,255,255,0.6); margin-bottom: 30px;">Building efficient, interactive game systems</p>
+
+        <div class="intel-bio">
+            <p>I'm a Unity Game Developer with a focus on C# scripting and gameplay mechanics. I love building systems that solve logic problems and create smooth player experiences.</p>
+            <p>With experience in building both 2D and 3D projects, I focus on writing clean code and delivering responsive mechanics. I am constantly learning and growing as a developer.</p>
+        </div>
+
+        <div class="capsule-row">
+            <div class="capsule">📧 jerinjohnson@email.com</div>
+            <div class="capsule">📍 Trivandrum, Kerala</div>
+            <div class="capsule">⏳ Available for Projects</div>
+        </div>
+
+        <div class="btn" style="display:inline-block; margin-top:20px;">Download Resume</div>
     </div>
 </div>
 
@@ -224,9 +270,8 @@ function animate() {
 }
 init(); animate();
 
-// HIT PARTICLES
-function shootBurst(x, y) {
-    for (let i = 0; i < 12; i++) {
+function createParticles(x, y) {
+    for (let i = 0; i < 15; i++) {
         const p = document.createElement('div');
         p.className = 'p-shard';
         p.style.width = Math.random()*10+'px'; p.style.height = '2px';
@@ -243,7 +288,7 @@ function shootBurst(x, y) {
     }
 }
 
-window.addEventListener('mousedown', () => {
+window.addEventListener('mousedown', (e) => {
     const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
     activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active');
     document.getElementById('main-body').classList.add('muzzle-flash');
@@ -255,14 +300,13 @@ function createTarget() {
     const t = document.createElement('div');
     t.className = 'target';
     let x, y;
-    do {
-        x = Math.random()*80+10; y = Math.random()*70+15;
-    } while (x > 35 && x < 65 && y > 30 && y < 55); 
+    do { x = Math.random()*80+10; y = Math.random()*70+15; } 
+    while (x > 35 && x < 65 && y > 30 && y < 55); 
     t.style.left = x + 'vw'; t.style.top = y + 'vh';
     document.body.appendChild(t);
     t.onmousedown = (e) => {
         score++; document.getElementById('score').innerText = score;
-        shootBurst(e.clientX, e.clientY);
+        createParticles(e.clientX, e.clientY);
         t.remove(); if (score >= 5) transition();
     };
     setTimeout(() => { if(t) t.remove(); }, 2000);
@@ -293,7 +337,7 @@ function openOverlay(id) {
     document.getElementById(id).style.display = 'block';
 }
 
-function closeAllOverlays() {
+function closeOverlays() {
     document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
 }
 window.onresize = init;
