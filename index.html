@@ -17,14 +17,15 @@
             width: 100%; height: 100%;
             background: var(--bg);
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             color: white;
             cursor: crosshair;
         }
 
         canvas { position: fixed; inset: 0; z-index: 1; transition: filter 0.1s ease; }
-        .muzzle-flash canvas { filter: brightness(2) contrast(1.5); }
+        .muzzle-flash canvas { filter: brightness(2.5) contrast(1.2); }
 
+        /* Transition Wipe */
         #scan-transition {
             position: fixed;
             inset: 0;
@@ -35,17 +36,19 @@
             pointer-events: none;
         }
 
+        /* START UI */
         #ui-start {
             position: absolute;
-            top: 45%; left: 50%;
+            top: 40%; left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
         }
 
-        .score-board { font-size: 5rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
+        .score-board { font-size: 5rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; pointer-events: none; }
         .hint { letter-spacing: 4px; font-size: 0.8rem; opacity: 0.7; margin-top: 10px; }
 
+        /* HOME PAGE UI */
         #home {
             display: none;
             position: relative;
@@ -57,14 +60,15 @@
             transition: opacity 1s ease;
         }
 
-        .nav { display: flex; gap: 20px; margin-bottom: 40px; }
+        .nav { display: flex; gap: 15px; margin-bottom: 40px; }
         .btn {
-            padding: 10px 25px;
+            padding: 10px 20px;
             border: 1px solid var(--primary);
             background: rgba(0, 245, 255, 0.05);
             color: var(--primary);
             text-transform: uppercase;
             font-weight: bold;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: 0.3s;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
@@ -82,21 +86,14 @@
             min-height: 1.5em;
         }
 
-        /* Catchy Recruiter-Focused Statement */
-        #description {
-            max-width: 600px;
+        /* Single Sentence Statement */
+        #statement {
             font-size: 1.1rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 25px;
-            border-left: 3px solid var(--primary);
-            padding-left: 20px;
-            animation: slideIn 1s ease forwards;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 20px;
+            border-left: 2px solid var(--primary);
+            padding-left: 15px;
+            max-width: 600px;
         }
 
         .photo-container {
@@ -118,35 +115,34 @@
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
 
         @keyframes breathe {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px var(--primary); }
-            50% { transform: scale(1.03); box-shadow: 0 0 40px var(--primary); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
-        #missions-overlay {
+        /* OVERLAYS (MISSIONS & INTEL) */
+        .overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(1, 4, 9, 0.97);
+            background: rgba(1, 4, 9, 0.98);
             z-index: 150;
             padding: 60px;
             overflow-y: auto;
         }
 
-        .close-missions { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); }
+        .close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; cursor: pointer; color: var(--primary); }
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
-        .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-8px); background: rgba(0, 245, 255, 0.08); }
-        .card h3 { color: var(--primary); margin-top: 0; font-size: 1.5rem; }
+        .card { border: 1px solid rgba(0, 245, 255, 0.2); background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; }
         .tag { font-size: 0.7rem; background: var(--accent); padding: 3px 10px; border-radius: 4px; float: right; font-weight: bold; }
 
-        .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 2; cursor: pointer; }
-        .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 3; animation: pFade 0.5s ease-out forwards; }
-        @keyframes pFade { from { opacity: 1; } to { opacity: 0; } }
+        /* TARGETS & PARTICLES */
+        .target { position: absolute; width: 40px; height: 40px; background: var(--primary); border-radius: 50%; box-shadow: var(--glow); z-index: 2; }
+        .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 20; }
         
         .recoil-active { animation: recoil 0.12s ease-out; }
         @keyframes recoil {
             0% { transform: translate(0, 0); }
-            50% { transform: translate(0px, 8px) scale(0.98); }
+            50% { transform: translate(0px, 8px); }
             100% { transform: translate(0, 0); }
         }
     </style>
@@ -163,19 +159,14 @@
 
 <div id="home">
     <div class="nav">
-        <div class="btn" onclick="toggleMissions(false)">🏠 Base</div>
-        <div class="btn" onclick="toggleMissions(true)">🎯 Missions</div>
+        <div class="btn" onclick="closeAllOverlays()">🏠 Base</div>
+        <div class="btn" onclick="openOverlay('missions-overlay')">🎯 Missions</div>
+        <div class="btn" onclick="openOverlay('intel-overlay')">💾 Intel</div>
     </div>
 
     <h1 class="name">JERIN<br><span class="highlight">JOHNSON</span></h1>
-    
     <div id="role"></div>
-    
-    <p id="description">
-        Unity Game Developer with 6 months of internship experience building interactive 3D/2D systems. 
-        Passionate about crafting polished gameplay mechanics, optimizing C# scripts, and 
-        transforming creative ideas into playable reality.
-    </p>
+    <p id="statement">Crafting high-performance gameplay systems and interactive logic in Unity.</p>
 
     <div class="photo-container">
         <div class="photo-circle">
@@ -184,31 +175,22 @@
     </div>
 </div>
 
-<div id="missions-overlay">
-    <div class="close-missions" onclick="toggleMissions(false)">×</div>
-    <h1 style="color: var(--primary); text-align: center; letter-spacing: 8px; font-weight: 900;">MISSION LOGS</h1>
-    
+<div id="missions-overlay" class="overlay">
+    <div class="close-btn" onclick="closeAllOverlays()">×</div>
+    <h1 style="color: var(--primary); text-align: center; letter-spacing: 8px;">MISSION LOGS</h1>
     <div class="project-grid">
-        <div class="card">
-            <span class="tag">INTERNSHIP PROJECT</span>
-            <h3>Stack Tower</h3>
-            <p>Developed a physics-based stacking mechanic. Focused on precise collision detection and dynamic UI feedback.</p>
-        </div>
-        <div class="card">
-            <span class="tag">INTERNSHIP PROJECT</span>
-            <h3>SwitchRift</h3>
-            <p>Engineered an endless runner with custom procedural generation and dimension-switching logic.</p>
-        </div>
-        <div class="card" style="opacity: 0.8;">
-            <span class="tag" style="background: #007bff;">UPCOMING</span>
-            <h3>FPS / TPS Systems</h3>
-            <p>Currently architecting modular weapon systems and responsive character movement controllers.</p>
-        </div>
-        <div class="card" style="opacity: 0.8;">
-            <span class="tag" style="background: #007bff;">UPCOMING</span>
-            <h3>Multiplayer Core</h3>
-            <p>Building a foundation for networked gameplay using server-authoritative logic.</p>
-        </div>
+        <div class="card"><span class="tag">PERSONAL</span><h3>Stack Tower</h3><p>Physics-based precision game built in Unity.</p></div>
+        <div class="card"><span class="tag">PERSONAL</span><h3>SwitchRift</h3><p>Endless runner with dimension-shifting mechanics.</p></div>
+        <div class="card"><span class="tag" style="background:orange">POLISHING</span><h3>Freecell Card Game</h3><p>Professional card game project with complex UI logic.</p></div>
+    </div>
+</div>
+
+<div id="intel-overlay" class="overlay">
+    <div class="close-btn" onclick="closeAllOverlays()">×</div>
+    <h1 style="color: var(--primary); text-align: center; letter-spacing: 8px;">SYSTEM INTEL</h1>
+    <div style="max-width: 800px; margin: 50px auto; font-size: 1.2rem; line-height: 1.8;">
+        <p>I am a Unity Game Developer focused on the technical side of gameplay—building the code, physics, and systems that make games work.</p>
+        <p>Currently specializing in C# scripting and exploring advanced mechanics for FPS and Multiplayer environments.</p>
     </div>
 </div>
 
@@ -216,11 +198,14 @@
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
+let score = 0;
+
 function init() {
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     particles = [];
     for (let i = 0; i < 60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, sx: Math.random()*0.4-0.2, sy: Math.random()*0.4-0.2 });
 }
+
 function animate() {
     ctx.fillStyle = "#010409"; ctx.fillRect(0,0,canvas.width, canvas.height);
     particles.forEach(p => {
@@ -231,67 +216,67 @@ function animate() {
     });
     for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-            let dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-            if (dist < 140) { ctx.strokeStyle = `rgba(0, 245, 255, ${1 - dist/140})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
+            let d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+            if (d < 140) { ctx.strokeStyle = `rgba(0, 245, 255, ${1 - d/140})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
         }
     }
     requestAnimationFrame(animate);
 }
 init(); animate();
 
-let score = 0;
-const body = document.getElementById('main-body');
-window.addEventListener('mousedown', (e) => {
-    const targetUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
-    if(targetUI) {
-        targetUI.classList.remove('recoil-active'); void targetUI.offsetWidth; targetUI.classList.add('recoil-active');
-    }
-    body.classList.add('muzzle-flash');
-    setTimeout(() => body.classList.remove('muzzle-flash'), 80);
-});
-
-function spawnParticles(x, y) {
+// HIT PARTICLES
+function shootBurst(x, y) {
     for (let i = 0; i < 12; i++) {
-        const p = document.createElement('div'); p.className = 'p-shard';
+        const p = document.createElement('div');
+        p.className = 'p-shard';
+        p.style.width = Math.random()*10+'px'; p.style.height = '2px';
         p.style.left = x+'px'; p.style.top = y+'px';
         document.body.appendChild(p);
-        const angle = Math.random()*Math.PI*2; const speed = Math.random()*5+4;
+        const angle = Math.random()*Math.PI*2; const speed = Math.random()*7+3;
         let px = x, py = y;
         const intr = setInterval(() => {
             px += Math.cos(angle)*speed; py += Math.sin(angle)*speed;
             p.style.left = px+'px'; p.style.top = py+'px';
-            if (p.style.opacity === "0") { clearInterval(intr); p.remove(); }
+            p.style.opacity = (p.style.opacity || 1) - 0.05;
+            if (p.style.opacity <= 0) { clearInterval(intr); p.remove(); }
         }, 16);
     }
 }
 
+window.addEventListener('mousedown', () => {
+    const activeUI = score < 5 ? document.getElementById('ui-start') : document.getElementById('home');
+    activeUI.classList.remove('recoil-active'); void activeUI.offsetWidth; activeUI.classList.add('recoil-active');
+    document.getElementById('main-body').classList.add('muzzle-flash');
+    setTimeout(() => document.getElementById('main-body').classList.remove('muzzle-flash'), 80);
+});
+
 function createTarget() {
     if (score >= 5) return;
-    const t = document.createElement('div'); t.className = 'target';
-    t.style.left = (Math.random()*80+10)+'vw'; t.style.top = (Math.random()*60+20)+'vh';
+    const t = document.createElement('div');
+    t.className = 'target';
+    let x, y;
+    do {
+        x = Math.random()*80+10; y = Math.random()*70+15;
+    } while (x > 35 && x < 65 && y > 30 && y < 55); 
+    t.style.left = x + 'vw'; t.style.top = y + 'vh';
     document.body.appendChild(t);
-    t.onmousedown = (e) => { score++; document.getElementById('score').innerText = score; spawnParticles(e.clientX, e.clientY); t.remove(); if (score >= 5) transition(); };
+    t.onmousedown = (e) => {
+        score++; document.getElementById('score').innerText = score;
+        shootBurst(e.clientX, e.clientY);
+        t.remove(); if (score >= 5) transition();
+    };
     setTimeout(() => { if(t) t.remove(); }, 2000);
 }
 setInterval(createTarget, 1000);
 
-// PROFESSIONAL ROLES
-const roles = ["UNITY GAME DEVELOPER", "GAMEPLAY SYSTEMS ENGINEER", "C# PROGRAMMER", "TECHNICAL MECHANICS DESIGNER"];
+const roles = ["UNITY GAME DEVELOPER", "GAMEPLAY SYSTEMS ENGINEER", "C# PROGRAMMER", "MECHANICS DESIGNER"];
 let rIdx = 0;
 
 function transition() {
     const scan = document.getElementById('scan-transition');
     scan.style.clipPath = "circle(150% at 50% 50%)";
-    setTimeout(() => {
-        document.getElementById('ui-start').style.display = 'none';
-        document.getElementById('home').style.display = 'block';
-        document.querySelectorAll('.target').forEach(el => el.remove());
-    }, 400);
-    setTimeout(() => {
-        scan.style.clipPath = "circle(0% at 50% 50%)";
-        document.getElementById('home').style.opacity = 1;
-        startGlitch();
-    }, 800);
+    setTimeout(() => { document.getElementById('ui-start').style.display='none'; document.getElementById('home').style.display='block'; }, 400);
+    setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; document.getElementById('home').style.opacity=1; startGlitch(); }, 800);
 }
 
 function startGlitch() {
@@ -303,8 +288,13 @@ function startGlitch() {
     }, 40);
 }
 
-function toggleMissions(show) {
-    document.getElementById('missions-overlay').style.display = show ? 'block' : 'none';
+function openOverlay(id) {
+    document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+}
+
+function closeAllOverlays() {
+    document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
 }
 window.onresize = init;
 </script>
