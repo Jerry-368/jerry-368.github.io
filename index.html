@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jerin Johnson | Unity Gameplay Developer</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -16,12 +17,27 @@ canvas{position:fixed;inset:0;z-index:-2}
 
 /* NAV */
 .nav{position:fixed;top:20px;left:20px;display:flex;gap:15px;z-index:20}
-.nav button{border:1px solid #00f5ff;background:transparent;color:#00f5ff;padding:8px 16px;border-radius:8px;cursor:pointer}
+.nav button{
+border:1px solid #00f5ff;
+background:transparent;
+color:#00f5ff;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+}
 .nav button:hover{background:#00f5ff;color:#030712}
 
 /* CURSOR */
-.cursor{position:fixed;width:30px;height:30px;border:2px solid #00f5ff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:999}
-.cursor::before,.cursor::after{content:"";position:absolute;background:#00f5ff}
+.cursor{
+position:fixed;width:30px;height:30px;
+border:2px solid #00f5ff;border-radius:50%;
+transform:translate(-50%,-50%);
+pointer-events:none;z-index:999
+}
+.cursor::before,.cursor::after{
+content:"";position:absolute;background:#00f5ff
+}
 .cursor::before{width:2px;height:100%;left:50%}
 .cursor::after{height:2px;width:100%;top:50%}
 
@@ -30,37 +46,72 @@ canvas{position:fixed;inset:0;z-index:-2}
 .title{font-family:'Orbitron';font-size:3rem;text-shadow:0 0 20px #00f5ff}
 .score{color:#00f5ff;margin-top:10px}
 
-.target{position:absolute;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#00f5ff,#0044ff);box-shadow:0 0 20px #00f5ff}
-.hit{position:absolute;width:40px;height:40px;border:2px solid #00f5ff;border-radius:50%;animation:explode .4s forwards}
+/* TARGET */
+.target{
+position:absolute;width:30px;height:30px;border-radius:50%;
+background:radial-gradient(circle,#00f5ff,#0044ff);
+box-shadow:0 0 20px #00f5ff
+}
+.hit{
+position:absolute;width:40px;height:40px;border:2px solid #00f5ff;
+border-radius:50%;animation:explode .4s forwards
+}
 @keyframes explode{to{transform:scale(2);opacity:0}}
-
-/* RECOIL */
-.recoil{animation:recoil .1s}
-@keyframes recoil{0%{transform:translate(0,0)}50%{transform:translate(0,-10px)}100%{transform:translate(0,0)}}
 
 /* HOME */
 .home{justify-content:space-between;align-items:center;padding:0 80px}
-.name{font-size:3rem}
+.name{font-size:4.5rem;font-weight:700}
 .highlight{color:#00f5ff}
+
+/* GLITCH + TYPING */
+.glitch{
+font-size:1.6rem;color:#00f5ff;position:relative
+}
+.glitch::before,.glitch::after{
+content:attr(data-text);position:absolute;left:0
+}
+.glitch::before{left:2px;color:#ff00c8;animation:glitch1 1s infinite}
+.glitch::after{left:-2px;color:#00ffff;animation:glitch2 1s infinite}
+
+@keyframes glitch1{
+0%{clip-path:inset(0 0 80% 0)}
+50%{clip-path:inset(30% 0 30% 0)}
+100%{clip-path:inset(80% 0 0 0)}
+}
+@keyframes glitch2{
+0%{clip-path:inset(80% 0 0 0)}
+50%{clip-path:inset(20% 0 50% 0)}
+100%{clip-path:inset(0 0 80% 0)}
+}
 
 /* LEVELS */
 .levels{flex-direction:column;align-items:center;justify-content:center}
-.level-btn{padding:15px 30px;margin:10px;border:1px solid #00f5ff;border-radius:10px;cursor:pointer}
+.level-btn{
+padding:18px 40px;margin:10px;
+border:1px solid #00f5ff;border-radius:12px;
+cursor:pointer;font-size:18px
+}
 .level-btn:hover{background:#00f5ff;color:#030712}
 
-/* PROJECT PAGE */
-.project{flex-direction:column;align-items:center;justify-content:center;text-align:center}
-
+/* PROJECT */
+.project{
+flex-direction:column;align-items:center;justify-content:center;
+text-align:center;padding:40px
+}
+.video{
+width:60%;
+border:2px solid #00f5ff;
+margin:20px 0
+}
 </style>
 </head>
 
 <body>
+
 <canvas id="bg"></canvas>
 <div class="cursor" id="cursor"></div>
 
-<!-- AUDIO -->
-<audio id="gunSound" src="gun.mp3"></audio>
-
+<!-- NAV -->
 <div class="nav" id="nav" style="display:none">
 <button onclick="showHome()">🏠 Base</button>
 <button onclick="showLevels()">🎮 Missions</button>
@@ -74,128 +125,198 @@ canvas{position:fixed;inset:0;z-index:-2}
 
 <!-- HOME -->
 <section id="home" class="scene home">
+<div>
 <div class="name">Jerin <span class="highlight">Johnson</span></div>
+<div class="glitch" id="typing" data-text=""></div>
+</div>
 </section>
 
 <!-- LEVELS -->
 <section id="levels" class="scene levels">
 <h2>Mission Select</h2>
-<div class="level-btn" onclick="openProject('fps')">🧠 Combat System</div>
-<div class="level-btn" onclick="openProject('runner')">🏃 Runner Engine</div>
-<div class="level-btn" onclick="openProject('stack')">🧱 Stack System</div>
+<div class="level-btn" onclick="openProject('stack')">🧱 Stack Tower</div>
+<div class="level-btn" onclick="openProject('runner')">🏃 Switch Rift</div>
 </section>
 
 <!-- PROJECT -->
 <section id="project" class="scene project">
 <h2 id="projectTitle"></h2>
+
+<video class="video" id="projectVideo" controls></video>
+
 <p id="projectDesc"></p>
+
 <button onclick="showLevels()">⬅ Back</button>
 </section>
 
 <script>
+
 // CURSOR
 const cursor=document.getElementById('cursor');
 document.addEventListener('mousemove',e=>{
-cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+cursor.style.left=e.clientX+'px';
+cursor.style.top=e.clientY+'px';
+});
 
 // BACKGROUND
 const canvas=document.getElementById('bg');
 const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;canvas.height=innerHeight;
-let ps=[];
-for(let i=0;i<100;i++){ps.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,dx:(Math.random()-0.5),dy:(Math.random()-0.5)})}
-function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#00f5ff';ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;ctx.fillRect(p.x,p.y,2,2)});requestAnimationFrame(loop)}loop();
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-// GAME
+let ps=[];
+for(let i=0;i<100;i++){
+ps.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+}
+
+function loop(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle='#00f5ff';
+ps.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+ctx.fillRect(p.x,p.y,2,2);
+});
+requestAnimationFrame(loop);
+}
+loop();
+
+// TYPING
+const roles=["Unity Game Developer","Gameplay Systems","AI & Physics"];
+let i=0,j=0,del=false;
+
+function type(){
+let txt=roles[j];
+const el=document.getElementById('typing');
+
+el.textContent=txt.substring(0,i);
+el.setAttribute('data-text',txt.substring(0,i));
+
+if(!del){
+i++;
+if(i>txt.length){
+del=true;
+setTimeout(type,900);
+return;
+}
+}else{
+i--;
+if(i==0){
+del=false;
+j=(j+1)%roles.length;
+}
+}
+
+setTimeout(type,del?40:80);
+}
+setTimeout(type,500);
+
+// SHOOT GAME
 let score=0;
-const gun=document.getElementById('gunSound');
 
 function spawn(){
- const t=document.createElement('div');
- t.className='target';
- t.style.left=Math.random()*innerWidth+'px';
- t.style.top=Math.random()*innerHeight+'px';
- document.body.appendChild(t);
+const t=document.createElement('div');
+t.className='target';
 
- let vx=(Math.random()-0.5)*4;
- let vy=(Math.random()-0.5)*4;
+t.style.left=Math.random()*innerWidth+'px';
+t.style.top=Math.random()*innerHeight+'px';
 
- const move=setInterval(()=>{
-  let x=parseFloat(t.style.left);
-  let y=parseFloat(t.style.top);
-  x+=vx;y+=vy;
-  if(x<0||x>innerWidth-30)vx*=-1;
-  if(y<0||y>innerHeight-30)vy*=-1;
-  t.style.left=x+'px';t.style.top=y+'px';
- },16);
+document.body.appendChild(t);
 
- t.onclick=()=>{
-  gun.currentTime=0;
-  gun.play().catch(()=>{});
+let vx=(Math.random()-0.5)*3;
+let vy=(Math.random()-0.5)*3;
 
-  document.body.classList.add('recoil');
-  setTimeout(()=>document.body.classList.remove('recoil'),100);
+const move=setInterval(()=>{
+let x=parseFloat(t.style.left);
+let y=parseFloat(t.style.top);
 
-  const hit=document.createElement('div');
-  hit.className='hit';
-  hit.style.left=t.style.left;
-  hit.style.top=t.style.top;
-  document.body.appendChild(hit);
-  setTimeout(()=>hit.remove(),400);
+x+=vx;
+y+=vy;
 
-  clearInterval(move);
-  t.remove();
+if(x<0||x>innerWidth-30)vx*=-1;
+if(y<0||y>innerHeight-30)vy*=-1;
 
-  score++;
-  document.getElementById('score').innerText=score;
+t.style.left=x+'px';
+t.style.top=y+'px';
 
-  if(score>=5){enterHome();}
- };
+},16);
 
- setTimeout(()=>{clearInterval(move);t.remove()},2000);
+t.onclick=()=>{
+const hit=document.createElement('div');
+hit.className='hit';
+hit.style.left=t.style.left;
+hit.style.top=t.style.top;
+document.body.appendChild(hit);
+
+setTimeout(()=>hit.remove(),400);
+
+clearInterval(move);
+t.remove();
+
+score++;
+document.getElementById('score').innerText=score;
+
+if(score>=5){
+enterHome();
+}
+};
+
+setTimeout(()=>{
+clearInterval(move);
+t.remove();
+},2000);
 }
 
 setInterval(()=>{
- if(document.getElementById('start').classList.contains('active')) spawn();
-},700);
+if(document.getElementById('start').classList.contains('active')){
+spawn();
+}
+},1200);
 
 // NAVIGATION
 function enterHome(){
- document.getElementById('start').classList.remove('active');
- document.getElementById('home').classList.add('active');
- document.getElementById('nav').style.display='flex';
+document.getElementById('start').classList.remove('active');
+document.getElementById('home').classList.add('active');
+document.getElementById('nav').style.display='flex';
 }
 
 function showLevels(){
- document.getElementById('home').classList.remove('active');
- document.getElementById('project').classList.remove('active');
- document.getElementById('levels').classList.add('active');
+document.getElementById('home').classList.remove('active');
+document.getElementById('project').classList.remove('active');
+document.getElementById('levels').classList.add('active');
 }
 
 function showHome(){
- document.getElementById('levels').classList.remove('active');
- document.getElementById('project').classList.remove('active');
- document.getElementById('home').classList.add('active');
+document.getElementById('levels').classList.remove('active');
+document.getElementById('project').classList.remove('active');
+document.getElementById('home').classList.add('active');
 }
 
+// PROJECTS
 function openProject(type){
- document.getElementById('levels').classList.remove('active');
- document.getElementById('project').classList.add('active');
 
- if(type==='fps'){
-  document.getElementById('projectTitle').innerText='Combat System (FPS)';
-  document.getElementById('projectDesc').innerText='Includes shooting, recoil, AI enemies.';
- }
- if(type==='runner'){
-  document.getElementById('projectTitle').innerText='Runner Engine';
-  document.getElementById('projectDesc').innerText='Procedural generation and obstacle system.';
- }
- if(type==='stack'){
-  document.getElementById('projectTitle').innerText='Stack System';
-  document.getElementById('projectDesc').innerText='Precision stacking with difficulty scaling.';
- }
+document.getElementById('levels').classList.remove('active');
+document.getElementById('project').classList.add('active');
+
+if(type==='stack'){
+document.getElementById('projectTitle').innerText='Stack Tower';
+document.getElementById('projectDesc').innerText='Precision stacking game with increasing difficulty.';
+document.getElementById('projectVideo').src='videos/stacktower.mp4';
 }
 
+if(type==='runner'){
+document.getElementById('projectTitle').innerText='Switch Rift';
+document.getElementById('projectDesc').innerText='Endless runner with lane switching and procedural generation.';
+document.getElementById('projectVideo').src='videos/switchrift.mp4';
+}
+
+}
 </script>
+
 </body>
 </html>
