@@ -2,36 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jerin Johnson</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
 body{
-font-family:'Poppins',sans-serif;
+margin:0;
 background:#020617;
-color:white;
 overflow:hidden;
 cursor:none;
+font-family:sans-serif;
 }
 
-/* BACKGROUND */
-canvas{position:fixed;inset:0;z-index:-1}
+/* canvas */
+canvas{position:fixed;inset:0}
 
-/* SCENE */
-.scene{
-position:absolute;
-inset:0;
-display:none;
-justify-content:center;
-align-items:center;
-}
-.scene.active{display:flex}
-
-/* CURSOR */
+/* cursor */
 .cursor{
 position:fixed;
 width:25px;height:25px;
@@ -39,90 +24,85 @@ border:2px solid #00f5ff;
 border-radius:50%;
 transform:translate(-50%,-50%);
 pointer-events:none;
-z-index:999;
+z-index:10;
 }
 
-/* SHAKE */
-@keyframes shake{
-0%{transform:translate(0)}
-25%{transform:translate(4px,-4px)}
-50%{transform:translate(-4px,4px)}
-75%{transform:translate(2px,2px)}
-100%{transform:translate(0)}
-}
-.shake{animation:shake 0.2s}
-
-/* START */
-.start{
-flex-direction:column;
+/* center text */
+.center{
+position:absolute;
+top:50%;left:50%;
+transform:translate(-50%,-50%);
+color:white;
+font-size:40px;
 text-align:center;
+z-index:5;
 }
-.title{
-font-family:'Orbitron';
-font-size:3rem;
-}
-.score{color:#00f5ff;margin-top:10px}
 
-/* COMET */
+/* comet */
 .target{
 position:absolute;
-width:14px;
-height:14px;
+width:24px;height:24px;
 border-radius:50%;
 background:#00f5ff;
-box-shadow:0 0 20px #00f5ff, 0 0 40px #00f5ff;
+box-shadow:0 0 30px #00f5ff;
+padding:20px;
 }
 
 .target::after{
 content:"";
 position:absolute;
-width:80px;
-height:3px;
+width:100px;height:3px;
 background:linear-gradient(to right,#00f5ff,transparent);
 top:50%;
-left:-80px;
+left:-100px;
 transform:translateY(-50%);
-opacity:0.7;
 }
 
-/* PARTICLES */
+/* particles */
 .particle{
 position:absolute;
-width:4px;height:4px;
+width:5px;height:5px;
 background:#00f5ff;
 border-radius:50%;
 box-shadow:0 0 10px #00f5ff;
 }
 
+/* TRANSITION */
+#transition{
+position:fixed;
+inset:0;
+background:#00f5ff;
+opacity:0;
+z-index:100;
+transition:0.5s;
+}
+
 /* HOME */
-.home{
-justify-content:space-between;
-padding:0 80px;
-width:100%;
-height:100vh;
+#home{
+display:none;
+position:absolute;
+inset:0;
+color:white;
+padding:80px;
 }
 
-.left{width:50%}
 .name{
-font-size:4rem;
-font-weight:700;
+font-size:60px;
 }
-.name span{color:#00f5ff}
+.highlight{color:#00f5ff}
 
-/* PHOTO */
-.right{
-width:40%;
-display:flex;
-justify-content:center;
-align-items:center;
-}
 .photo{
-width:300px;height:300px;
+position:absolute;
+right:100px;
+top:50%;
+transform:translateY(-50%);
+width:250px;height:250px;
 border-radius:50%;
 overflow:hidden;
 border:3px solid #00f5ff;
 box-shadow:0 0 40px #00f5ff;
 }
+
 .photo img{
 width:100%;
 height:100%;
@@ -136,42 +116,40 @@ object-fit:cover;
 <canvas id="bg"></canvas>
 <div class="cursor" id="cursor"></div>
 
-<!-- START -->
-<section id="start" class="scene start active">
-<div class="title">SHOOT TO START</div>
-<div class="score">Hits: <span id="score">0</span>/5</div>
-</section>
+<div id="transition"></div>
 
-<!-- HOME -->
-<section id="home" class="scene home">
-<div class="left">
-<div class="name">Jerin <span>Johnson</span></div>
+<div class="center" id="startText">
+SHOOT TO START<br>
+<span id="score">0</span>/5
 </div>
 
-<div class="right">
-<div class="photo" id="photo">
+<!-- HOME PAGE -->
+<div id="home">
+<div class="name">Jerin <span class="highlight">Johnson</span></div>
+<p>Unity Game Developer</p>
+
+<div class="photo">
 <img src="your-photo.png">
 </div>
 </div>
-</section>
 
 <script>
 
-/* CURSOR */
+/* cursor */
 document.addEventListener('mousemove',e=>{
 cursor.style.left=e.clientX+'px';
 cursor.style.top=e.clientY+'px';
 });
 
-/* NIGHT SKY */
+/* background */
 const canvas=document.getElementById('bg');
 const ctx=canvas.getContext('2d');
 canvas.width=innerWidth;
 canvas.height=innerHeight;
 
 let stars=[];
-for(let i=0;i<150;i++){
-stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,z:Math.random()*2});
+for(let i=0;i<120;i++){
+stars.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight});
 }
 
 function draw(){
@@ -179,11 +157,6 @@ ctx.fillStyle="#020617";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
 stars.forEach(s=>{
-s.y+=s.z;
-if(s.y>canvas.height){
-s.y=0;
-s.x=Math.random()*canvas.width;
-}
 ctx.fillStyle="#00f5ff";
 ctx.fillRect(s.x,s.y,2,2);
 });
@@ -208,72 +181,48 @@ t.style.top=y+'px';
 
 document.body.appendChild(t);
 
-let angle=Math.random()*Math.PI*2;
-let speed=3;
-
-let vx=Math.cos(angle)*speed;
-let vy=Math.sin(angle)*speed;
-
-t.style.transform=`rotate(${angle}rad)`;
+/* slow movement */
+let vx=(Math.random()-0.5)*1.5;
+let vy=(Math.random()-0.5)*1.5;
 
 const move=setInterval(()=>{
 x+=vx;
 y+=vy;
 
-if(x<0||x>innerWidth){
-vx*=-1;
-angle=Math.atan2(vy,vx);
-t.style.transform=`rotate(${angle}rad)`;
-}
-if(y<0||y>innerHeight){
-vy*=-1;
-angle=Math.atan2(vy,vx);
-t.style.transform=`rotate(${angle}rad)`;
-}
+if(x<0||x>innerWidth)vx*=-1;
+if(y<0||y>innerHeight)vy*=-1;
 
 t.style.left=x+'px';
 t.style.top=y+'px';
 
-},16);
+},20);
 
-/* HIT */
-t.onclick=(e)=>{
-e.stopPropagation();
+/* AIM ASSIST HIT */
+document.addEventListener('click',function hit(e){
 
-/* shake */
-document.body.classList.add("shake");
-setTimeout(()=>document.body.classList.remove("shake"),150);
+let dx=e.clientX - x;
+let dy=e.clientY - y;
+let dist=Math.sqrt(dx*dx+dy*dy);
+
+if(dist < 80){
 
 /* particles */
-for(let i=0;i<15;i++){
+for(let i=0;i<12;i++){
 let p=document.createElement('div');
 p.className='particle';
-
 p.style.left=x+'px';
 p.style.top=y+'px';
-
 document.body.appendChild(p);
 
-let a=Math.random()*Math.PI*2;
-let s=2+Math.random()*3;
-
-let vx=Math.cos(a)*s;
-let vy=Math.sin(a)*s;
+let vx=(Math.random()-0.5)*6;
+let vy=(Math.random()-0.5)*6;
 
 let life=0;
 
-const pm=setInterval(()=>{
+let pm=setInterval(()=>{
 life++;
-
-let px=parseFloat(p.style.left);
-let py=parseFloat(p.style.top);
-
-px+=vx;
-py+=vy;
-
-p.style.left=px+'px';
-p.style.top=py+'px';
-
+p.style.left=(parseFloat(p.style.left)+vx)+'px';
+p.style.top=(parseFloat(p.style.top)+vy)+'px';
 p.style.opacity=1-life/30;
 
 if(life>30){
@@ -292,32 +241,47 @@ document.getElementById('score').innerText=score;
 if(score>=5){
 enterHome();
 }
-};
+
+document.removeEventListener('click',hit);
+}
+});
 
 setTimeout(()=>{
 clearInterval(move);
 t.remove();
 },5000);
+
 }
 
-setInterval(()=>{
-if(document.getElementById('start').classList.contains('active')){
-spawn();
-}
-},1500);
+setInterval(spawn,2000);
 
-/* TRANSITION */
+/* CINEMATIC TRANSITION */
 function enterHome(){
-document.getElementById('start').classList.remove('active');
-document.getElementById('home').classList.add('active');
-}
 
-/* PARALLAX */
-document.addEventListener('mousemove',(e)=>{
-let x=(e.clientX/window.innerWidth-0.5)*30;
-let y=(e.clientY/window.innerHeight-0.5)*30;
-photo.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
-});
+const t=document.getElementById('transition');
+const start=document.getElementById('startText');
+const home=document.getElementById('home');
+
+/* flash */
+t.style.opacity=1;
+
+/* zoom effect */
+document.body.style.transform="scale(1.2)";
+document.body.style.transition="0.5s";
+
+/* switch */
+setTimeout(()=>{
+start.style.display="none";
+home.style.display="block";
+},400);
+
+/* fade out */
+setTimeout(()=>{
+t.style.opacity=0;
+document.body.style.transform="scale(1)";
+},700);
+
+}
 
 </script>
 
