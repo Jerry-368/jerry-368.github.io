@@ -146,7 +146,7 @@
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <div class="section-header">
         <h1 style="font-size: 3.5rem;">Technical Arsenal</h1>
-        <p style="color: var(--primary); letter-spacing: 3px;">Proficiency in game technologies</p>
+        <p style="color: var(--primary); letter-spacing: 3px;">Skills</p>
     </div>
     
     <div class="skills-grid">
@@ -163,59 +163,58 @@
 
 <div id="missions" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Mission Logs</h1>
+    <div class="section-header">
+        <h1>Mission Logs</h1>
+        <p style="color: var(--primary); letter-spacing: 3px;">Project</p>
+    </div>
+    
     <div class="project-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 900px; margin: 40px auto; text-align: left;">
         <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card" style="border: 1px solid var(--primary); padding: 20px; border-radius: 12px; text-decoration: none; color: white;">
-            <h3>Stack Tower</h3><p>Physics-driven precision game.</p>
+            <h3>Stack Tower</h3>
+            <p>Personal Game</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">A physics-driven precision stacking game. Click to visit itch.io project page.</p>
         </a>
         <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card" style="border: 1px solid var(--primary); padding: 20px; border-radius: 12px; text-decoration: none; color: white;">
-            <h3>Switch Rift</h3><p>Endless runner dimension logic.</p>
+            <h3>Switch Rift</h3>
+            <p>Personal Game</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Fast-paced endless runner with dimension-shifting spawning logic.</p>
         </a>
     </div>
 </div>
 
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>System Intel</h1>
-    <div class="intel-wrap">
-        <div class="intel-photo-frame" style="width: 180px; height: 180px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 30px; padding: 5px; position: relative;">
-            <div class="animated-ring" style="width: 105%; height: 105%; top: -2.5%; left: -2.5%;"></div>
-            <img src="intel-bio.png" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-        </div>
-        <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); text-align: left; max-width: 800px; margin: 0 auto;">
-            <h3 style="color: var(--primary); margin-top: 0;">Junior Unity Developer</h3>
-            <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
-            <p>My journey is driven by solving architectural challenges, prioritizing clean, maintainable code optimized for performance across all platforms.</p>
-        </div>
+    <div class="section-header">
+        <h1>System Intel</h1>
+        <p style="color: var(--primary); letter-spacing: 3px;">About Me</p>
+    </div>
+    
+    <div class="intel-wrap" style="max-width: 700px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 15px;">
+        <img src="intel-bio.png" style="width: 150px; border-radius: 50%; border: 2px solid var(--primary); display: block; margin: 0 auto 20px;">
+        <p>I focus on technical gameplay programming, specializing in C# and Unity systems. I enjoy creating responsive mechanics that bridge the gap between complex logic and fluid player experiences.</p>
+        <p style="margin-top: 15px;">I am a problem-solver who enjoys debugging complex logic and optimizing game code for various platforms. Currently focused on expanding my skills in Unity UI architecture and shader graph development.</p>
     </div>
 </div>
 
 <div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Comm-Link</h1>
-    <div class="comm-link-container">
+    <div class="section-header">
+        <h1>Comm-Link</h1>
+        <p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
+    </div>
+    
+    <div style="max-width: 500px; margin: 30px auto;">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps/search/Thiruvananthapuram,+Kerala" target="_blank" style="text-decoration: none; color: white;">
-            <div class="info-pill">📍 Thiruvananthapuram, Kerala</div>
-        </a>
         <div class="info-pill">📞 +91-9633857368</div>
-        <div class="social-row">
-            <a href="https://jerininteractive.itch.io" target="_blank" class="btn">🎮 Itch.io</a>
-            <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
-            <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
-        </div>
-        <div class="contact-form">
-            <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
-                <div class="form-group"><label>Email Address</label><input type="email" name="email" required></div>
-                <div class="form-group"><label>Transmission Message</label><textarea name="message" rows="4" required></textarea></div>
-                <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
-            </form>
-        </div>
+        <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST" class="contact-form" style="margin-top: 20px;">
+            <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--primary); color: white;">
+            <textarea name="message" placeholder="Message" rows="4" required style="width: 100%; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--primary); color: white;"></textarea>
+            <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
+        </form>
     </div>
 </div>
 
 <script>
-/** ENGINE **/
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = []; let score = 0;
