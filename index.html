@@ -8,123 +8,144 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;background:#020617;color:white;overflow:hidden}
+body{font-family:'Poppins',sans-serif;background:#030712;color:white;overflow:hidden;cursor:none}
 
-canvas{position:fixed;inset:0;z-index:-1}
+canvas{position:fixed;inset:0;z-index:-2}
 
-.scene{position:absolute;inset:0;display:none}
-.scene.active{display:flex}
-
-/* START GAME */
-.start{
-flex-direction:column;align-items:center;justify-content:center;text-align:center
+/* FPS HUD */
+.hud{position:fixed;inset:0;pointer-events:none}
+.hud::before,.hud::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(0,245,255,.06),rgba(0,245,255,.06)) 0 0/100% 2px no-repeat,
+    linear-gradient(rgba(0,245,255,.06),rgba(0,245,255,.06)) 0 100%/100% 2px no-repeat,
+    linear-gradient(rgba(0,245,255,.06),rgba(0,245,255,.06)) 0 0/2px 100% no-repeat,
+    linear-gradient(rgba(0,245,255,.06),rgba(0,245,255,.06)) 100% 0/2px 100% no-repeat;
 }
-.start h1{font-family:'Orbitron';font-size:3.5rem;margin-bottom:10px}
-.score{margin:10px;color:#22d3ee}
+.hud .scan{position:absolute;inset:0;background:repeating-linear-gradient(transparent 0 3px, rgba(0,245,255,.03) 3px 6px);mix-blend-mode:screen}
 
-/* TARGET GAME */
-.target{
-position:absolute;
-width:25px;height:25px;
-border-radius:50%;
-background:#22d3ee;
-box-shadow:0 0 15px #22d3ee;
-cursor:pointer;
-}
+/* CROSSHAIR */
+.cursor{position:fixed;width:34px;height:34px;border:2px solid #00f5ff;border-radius:50%;transform:translate(-50%,-50%);z-index:999;pointer-events:none}
+.cursor::before,.cursor::after{content:"";position:absolute;background:#00f5ff}
+.cursor::before{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%)}
+.cursor::after{height:2px;width:100%;top:50%;left:0;transform:translateY(-50%)}
 
-/* BUTTON */
-.start button{
-padding:12px 25px;border:none;border-radius:10px;background:#22d3ee;color:#020617;font-weight:600;cursor:pointer;margin-top:15px
-}
+/* START */
+.start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.title{font-family:'Orbitron';font-size:3.6rem;letter-spacing:3px;text-shadow:0 0 18px #00f5ff;animation:flicker 2s infinite}
+@keyframes flicker{0%,100%{opacity:1}50%{opacity:.65}}
+.sub{color:#9ca3af;margin:10px 0}
+.score{margin:8px 0;color:#00f5ff}
+.btn{margin-top:12px;padding:10px 20px;border:none;border-radius:10px;background:#00f5ff;color:#030712;font-weight:600;cursor:pointer;pointer-events:auto}
+
+/* TARGET */
+.target{position:absolute;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#00f5ff,#0057ff);box-shadow:0 0 20px #00f5ff;animation:pop .15s ease}
+@keyframes pop{from{transform:scale(.4)}to{transform:scale(1)}}
+.hit{position:absolute;width:40px;height:40px;border-radius:50%;border:2px solid #00f5ff;animation:explode .35s ease forwards}
+@keyframes explode{0%{transform:scale(.2);opacity:1}100%{transform:scale(2.2);opacity:0}}
+
+/* TRANSITION */
+.fade{position:fixed;inset:0;background:#030712;opacity:0;pointer-events:none;transition:opacity .6s}
+.fade.on{opacity:1}
 
 /* HOME */
-.home{
-justify-content:space-between;align-items:center;padding:0 80px;height:100vh
-}
-.left{max-width:600px}
+.home{position:absolute;inset:0;display:none;align-items:center;justify-content:space-between;padding:0 80px}
+.home.show{display:flex}
+.left{max-width:560px}
 .left h1{font-size:3rem}
-.highlight{color:#22d3ee}
+.highlight{color:#00f5ff}
 .left h2{color:#94a3b8;margin:10px 0}
-
-.circle{width:280px;height:280px;border-radius:50%;border:5px solid #22d3ee;overflow:hidden}
+.circle{width:280px;height:280px;border-radius:50%;border:5px solid #00f5ff;overflow:hidden;box-shadow:0 0 30px rgba(0,245,255,.35)}
 .circle img{width:100%;height:100%;object-fit:cover}
-
 </style>
 </head>
-
 <body>
-<canvas id="bg"></canvas>
 
-<!-- START GAME SCREEN -->
-<section id="start" class="scene start active">
-<h1>SHOOT TO START</h1>
-<p>Hit targets to unlock portfolio</p>
-<div class="score">Hits: <span id="score">0</span>/5</div>
-<button onclick="enterGame()">Skip</button>
+<canvas id="bg"></canvas>
+<div class="hud"><div class="scan"></div></div>
+<div class="cursor" id="cursor"></div>
+<div class="fade" id="fade"></div>
+
+<!-- AUDIO -->
+<audio id="gun" src="gun.mp3" preload="auto"></audio>
+<audio id="hitS" src="hit.mp3" preload="auto"></audio>
+
+<!-- START GAME -->
+<section class="start" id="start">
+  <div class="title">SHOOT TO START</div>
+  <div class="sub">Hit moving targets to unlock</div>
+  <div class="score">Hits: <span id="score">0</span>/5</div>
+  <button class="btn" onclick="enterGame(true)">Skip</button>
 </section>
 
 <!-- HOME -->
-<section id="home" class="scene home">
-<div class="left">
-<h1>Hello, I'm <span class="highlight">Jerin Johnson</span></h1>
-<h2>Unity Game Developer</h2>
-<p>I build gameplay systems including AI, shooting mechanics and physics systems.</p>
-</div>
-<div class="circle"><img src="your-photo.jpg"></div>
+<section class="home" id="home">
+  <div class="left">
+    <h1>Hello, I'm <span class="highlight">Jerin Johnson</span></h1>
+    <h2>Unity Game Developer</h2>
+    <p>I build gameplay systems: AI (FSM), shooting, physics, and procedural generation in Unity (C#).</p>
+  </div>
+  <div class="circle"><img src="your-photo.jpg" alt="profile"></div>
 </section>
 
 <script>
-// PARTICLES BACKGROUND
+// cursor
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+
+// particles
 const canvas=document.getElementById('bg');
 const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;canvas.height=innerHeight;
-let particles=[];
-for(let i=0;i<80;i++){
- particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:2,dx:(Math.random()-0.5),dy:(Math.random()-0.5)});
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();window.addEventListener('resize',resize);
+let ps=Array.from({length:120},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:1.5,dx:(Math.random()-0.5)*.6,dy:(Math.random()-0.5)*.6}));
+function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#00f5ff';ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>canvas.width)p.dx*=-1;if(p.y<0||p.y>canvas.height)p.dy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});requestAnimationFrame(loop)}
+loop();
+
+// game
+let score=0, playing=true;
+const gun=document.getElementById('gun');
+const hitS=document.getElementById('hitS');
+
+function spawn(){
+  if(!playing) return;
+  const t=document.createElement('div');t.className='target';
+  let x=Math.random()*innerWidth, y=Math.random()*innerHeight;
+  let vx=(Math.random()-.5)*3, vy=(Math.random()-.5)*3;
+  t.style.left=x+'px';t.style.top=y+'px';document.body.appendChild(t);
+
+  const move=setInterval(()=>{
+    x+=vx; y+=vy;
+    if(x<0||x>innerWidth-30) vx*=-1;
+    if(y<0||y>innerHeight-30) vy*=-1;
+    t.style.left=x+'px'; t.style.top=y+'px';
+  },16);
+
+  t.onclick=()=>{
+    gun.currentTime=0; gun.play().catch(()=>{});
+    const h=document.createElement('div');h.className='hit';h.style.left=t.style.left;h.style.top=t.style.top;document.body.appendChild(h);
+    setTimeout(()=>h.remove(),350);
+    clearInterval(move); t.remove();
+    hitS.currentTime=0; hitS.play().catch(()=>{});
+    score++; document.getElementById('score').innerText=score;
+    if(score>=5) enterGame();
+  };
+
+  setTimeout(()=>{clearInterval(move); t.remove();},2200);
 }
-function animate(){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- ctx.fillStyle='#22d3ee';
- particles.forEach(p=>{
-  p.x+=p.dx;p.y+=p.dy;
-  if(p.x<0||p.x>canvas.width)p.dx*=-1;
-  if(p.y<0||p.y>canvas.height)p.dy*=-1;
-  ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
- });
- requestAnimationFrame(animate);
-}
-animate();
+setInterval(spawn,600);
 
-// MINI GAME
-let score=0;
-function spawnTarget(){
- const t=document.createElement('div');
- t.className='target';
- t.style.left=Math.random()*window.innerWidth+'px';
- t.style.top=Math.random()*window.innerHeight+'px';
- document.body.appendChild(t);
-
- t.onclick=()=>{
-  t.remove();
-  score++;
-  document.getElementById('score').innerText=score;
-  if(score>=5) enterGame();
- };
-
- setTimeout(()=>t.remove(),2000);
-}
-
-setInterval(()=>{
- if(document.getElementById('start').classList.contains('active')){
-  spawnTarget();
- }
-},800);
-
-function enterGame(){
- document.getElementById('start').classList.remove('active');
- document.getElementById('home').classList.add('active');
+// transition
+function enterGame(skip){
+  playing=false;
+  const f=document.getElementById('fade');
+  f.classList.add('on');
+  setTimeout(()=>{
+    document.getElementById('start').style.display='none';
+    document.getElementById('home').classList.add('show');
+    f.classList.remove('on');
+  },600);
 }
 </script>
-
 </body>
 </html>
