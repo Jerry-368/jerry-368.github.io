@@ -23,14 +23,12 @@
             cursor: default; 
         }
 
-        /* START SCREEN CROSSHAIR */
         body.gaming-mode { 
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="%2300f5ff" stroke-width="1"/><line x1="16" y1="0" x2="16" y2="32" stroke="%2300f5ff" stroke-width="1"/><line x1="0" y1="16" x2="32" y2="16" stroke="%2300f5ff" stroke-width="1"/><circle cx="16" cy="16" r="2" fill="%23ff0055"/></svg>') 16 16, crosshair;
         }
 
         canvas#bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         
-        /* RECOIL ENGINE */
         @keyframes screenShake {
             0% { transform: translate(0, 0); }
             25% { transform: translate(4px, -4px); }
@@ -49,7 +47,6 @@
             clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none;
         }
 
-        /* NAVIGATION */
         .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
         .btn {
             padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
@@ -59,7 +56,6 @@
         }
         .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
 
-        /* START UI */
         #ui-start { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
         .score-board { font-size: 8rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
         .bubble {
@@ -70,7 +66,6 @@
             z-index: 50; cursor: pointer; backdrop-filter: blur(2px);
         }
 
-        /* HOME PAGE HUB */
         #home { 
             display: none; position: relative; z-index: 5; height: 100vh; padding: 160px 80px 80px; 
             box-sizing: border-box; opacity: 0; transition: 0.5s ease;
@@ -103,7 +98,7 @@
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 30px; right: 50px; font-size: 50px; cursor: pointer; color: var(--primary); z-index: 160; }
 
-        /* CONTENT GRIDS + HOVER EFFECTS */
+        /* GRIDS & HOVER EFFECTS */
         .services-grid, .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; }
         .service-card, .skill-card { 
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 245, 255, 0.1); 
@@ -117,7 +112,7 @@
         }
         .service-card i, .skill-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block; }
 
-        /* MISSIONS LOG */
+        /* MISSIONS - FIXED FOLDER PATH */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1000px; margin: 40px auto; }
         .card { border: 1px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px; text-decoration: none; color: white; text-align: left; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
         .card:hover { border-color: var(--primary); box-shadow: var(--glow); transform: translateY(-5px); }
@@ -176,7 +171,7 @@
     <h1>Mission Logs</h1><p style="color: var(--primary); letter-spacing: 3px;">Project</p>
     <div class="project-grid">
         <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
-            <div class="card-image"><img src="stack-tower.jpg" alt="Stack Tower Preview"></div>
+            <div class="card-image"><img src="Screenshots/stack-tower.jpg" alt="Stack Tower Preview"></div>
             <div class="card-body">
                 <h3>Stack Tower</h3>
                 <p>Physics-driven precision game focusing on stability and balance.<br>Implemented custom collision logic for smooth interactions.<br>Built using Unity 3D with satisfying physics feedback.</p>
@@ -184,7 +179,7 @@
             </div>
         </a>
         <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
-            <div class="card-image"><img src="switch-rift.jpg" alt="Switch Rift Preview"></div>
+            <div class="card-image"><img src="Screenshots/switch-rift.jpg" alt="Switch Rift Preview"></div>
             <div class="card-body">
                 <h3>Switch Rift</h3>
                 <p>Fast-paced endless runner featuring dimension-shifting mechanics.<br>Optimized spawning system to maintain performance at high speeds.<br>Polished UI designed for mobile responsiveness.</p>
@@ -239,7 +234,7 @@
     <h1>Comm-Link</h1><p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps/search/Trivandrum,+Kerala,+India" target="_blank" class="info-pill">📍 Trivandrum, Kerala, India</a>
+        <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala0" target="_blank" class="info-pill">📍 Trivandrum, Kerala, India</a>
         <div class="info-pill">📞 +91-9633857368</div>
         <div class="social-row">
             <a href="https://jerininteractive.itch.io" target="_blank" class="btn">Itch.io</a>
