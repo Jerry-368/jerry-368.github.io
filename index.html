@@ -23,12 +23,14 @@
             cursor: default; 
         }
 
+        /* START SCREEN CROSSHAIR */
         body.gaming-mode { 
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="%2300f5ff" stroke-width="1"/><line x1="16" y1="0" x2="16" y2="32" stroke="%2300f5ff" stroke-width="1"/><line x1="0" y1="16" x2="32" y2="16" stroke="%2300f5ff" stroke-width="1"/><circle cx="16" cy="16" r="2" fill="%23ff0055"/></svg>') 16 16, crosshair;
         }
 
         canvas#bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         
+        /* RECOIL ENGINE */
         @keyframes screenShake {
             0% { transform: translate(0, 0); }
             25% { transform: translate(4px, -4px); }
@@ -47,6 +49,7 @@
             clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none;
         }
 
+        /* NAVIGATION */
         .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
         .btn {
             padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
@@ -56,6 +59,7 @@
         }
         .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
 
+        /* START UI */
         #ui-start { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
         .score-board { font-size: 8rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
         .bubble {
@@ -66,6 +70,7 @@
             z-index: 50; cursor: pointer; backdrop-filter: blur(2px);
         }
 
+        /* HOME PAGE HUB */
         #home { 
             display: none; position: relative; z-index: 5; height: 100vh; padding: 160px 80px 80px; 
             box-sizing: border-box; opacity: 0; transition: 0.5s ease;
@@ -98,7 +103,7 @@
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
         .close-btn { position: absolute; top: 30px; right: 50px; font-size: 50px; cursor: pointer; color: var(--primary); z-index: 160; }
 
-        /* GRIDS & HOVER EFFECTS */
+        /* CONTENT GRIDS + HOVER EFFECTS */
         .services-grid, .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; }
         .service-card, .skill-card { 
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 245, 255, 0.1); 
@@ -112,11 +117,15 @@
         }
         .service-card i, .skill-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block; }
 
-        /* MISSIONS */
+        /* MISSIONS LOG */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1000px; margin: 40px auto; }
         .card { border: 1px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px; text-decoration: none; color: white; text-align: left; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
         .card:hover { border-color: var(--primary); box-shadow: var(--glow); transform: translateY(-5px); }
-        .card-img-placeholder { width: 100%; height: 160px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.4; }
+        
+        .card-image { width: 100%; height: 180px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(0, 245, 255, 0.1); overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-image img { transform: scale(1.1); }
+        
         .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         .card h3 { margin: 0 0 10px 0; font-size: 1.4rem; }
         .card p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; color: rgba(255,255,255,0.8); }
@@ -158,7 +167,30 @@
     <p id="statement">Crafting high-performance gameplay systems and interactive logic in Unity.</p>
     <div class="photo-container">
         <div class="animated-ring"></div>
-        <div class="photo-circle"><img src="hero-profile.png" alt="Jerin Johnson"></div>
+        <div class="photo-circle"><img src="hero-profile.png" alt="Jerin Johnson Profile"></div>
+    </div>
+</div>
+
+<div id="missions" class="overlay">
+    <div class="close-btn" onclick="closeOverlays()">×</div>
+    <h1>Mission Logs</h1><p style="color: var(--primary); letter-spacing: 3px;">Project</p>
+    <div class="project-grid">
+        <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
+            <div class="card-image"><img src="stack-tower.jpg" alt="Stack Tower Preview"></div>
+            <div class="card-body">
+                <h3>Stack Tower</h3>
+                <p>Physics-driven precision game focusing on stability and balance.<br>Implemented custom collision logic for smooth interactions.<br>Built using Unity 3D with satisfying physics feedback.</p>
+                <div class="complete-tag">Mission Complete</div>
+            </div>
+        </a>
+        <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
+            <div class="card-image"><img src="switch-rift.jpg" alt="Switch Rift Preview"></div>
+            <div class="card-body">
+                <h3>Switch Rift</h3>
+                <p>Fast-paced endless runner featuring dimension-shifting mechanics.<br>Optimized spawning system to maintain performance at high speeds.<br>Polished UI designed for mobile responsiveness.</p>
+                <div class="complete-tag">Mission Complete</div>
+            </div>
+        </a>
     </div>
 </div>
 
@@ -176,28 +208,6 @@
     </div>
 </div>
 
-<div id="comm-link" class="overlay">
-    <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Comm-Link</h1><p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
-    <div class="comm-link-container">
-        <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala/" target="_blank" class="info-pill">📍 Trivandrum, Kerala, India</a>
-        <div class="info-pill">📞 +91-9633857368</div>
-        <div class="social-row">
-            <a href="https://jerininteractive.itch.io" target="_blank" class="btn">Itch.io</a>
-            <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
-            <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
-        </div>
-        <div class="contact-form">
-            <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
-                <input type="email" name="email" placeholder="EMAIL ADDRESS" required>
-                <textarea name="message" rows="4" placeholder="TRANSMISSION MESSAGE" required></textarea>
-                <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
-            </form>
-        </div>
-    </div>
-</div>
-
 <div id="arsenal" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1>Technical Arsenal</h1><p style="color: var(--primary); letter-spacing: 3px;">Skills</p>
@@ -206,7 +216,7 @@
         <div class="skill-card"><i class="fas fa-code"></i><span>C# Scripting</span></div>
         <div class="skill-card"><i class="fas fa-layer-group"></i><span>Unity UI</span></div>
         <div class="skill-card"><i class="fas fa-cube"></i><span>Physics</span></div>
-        <div class="skill-card"><i class="fab fa-git-alt"></i><span>Git / Control</span></div>
+        <div class="skill-card"><i class="fab fa-git-alt"></i><span>Git / Version Control</span></div>
         <div class="skill-card"><i class="fas fa-bug"></i><span>Debugging</span></div>
         <div class="skill-card"><i class="fas fa-project-diagram"></i><span>Algorithms</span></div>
         <div class="skill-card"><i class="fas fa-bolt"></i><span>VFX Graph</span></div>
@@ -217,33 +227,32 @@
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1>Game Tactics</h1><p style="color: var(--primary); letter-spacing: 3px;">Technical Services</p>
     <div class="services-grid">
-        <div class="service-card"><i class="fas fa-gamepad"></i><h3>Gameplay Systems</h3><p>Developing character controllers and inventory systems in Unity.</p></div>
+        <div class="service-card"><i class="fas fa-gamepad"></i><h3>Gameplay Systems</h3><p>Developing character controllers, inventory, and combat systems in Unity.</p></div>
         <div class="service-card"><i class="fas fa-microchip"></i><h3>C# Optimization</h3><p>High-performance code refactoring and memory management.</p></div>
         <div class="service-card"><i class="fas fa-window-restore"></i><h3>Unity UI</h3><p>Scalable Canvas systems and responsive interface architecture.</p></div>
         <div class="service-card"><i class="fas fa-vial"></i><h3>Prototype Engineering</h3><p>Rapidly turning concepts into playable mechanics.</p></div>
     </div>
 </div>
 
-<div id="missions" class="overlay">
+<div id="comm-link" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Mission Logs</h1><p style="color: var(--primary); letter-spacing: 3px;">Project</p>
-    <div class="project-grid">
-        <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
-            <div class="card-img-placeholder">[ GAMEPLAY PREVIEW ]</div>
-            <div class="card-body">
-                <h3>Stack Tower</h3>
-                <p>Physics-driven precision game focusing on stability and balance.<br>Implemented custom collision logic for smooth interactions.<br>Built using Unity 3D with satisfying physics feedback.</p>
-                <div class="complete-tag">Mission Complete</div>
-            </div>
-        </a>
-        <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
-            <div class="card-img-placeholder">[ GAMEPLAY PREVIEW ]</div>
-            <div class="card-body">
-                <h3>Switch Rift</h3>
-                <p>Fast-paced endless runner featuring dimension-shifting mechanics.<br>Optimized spawning system to maintain performance at high speeds.<br>Polished UI designed for mobile responsiveness.</p>
-                <div class="complete-tag">Mission Complete</div>
-            </div>
-        </a>
+    <h1>Comm-Link</h1><p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
+    <div class="comm-link-container">
+        <div class="info-pill">📧 jerinj368@gmail.com</div>
+        <a href="https://www.google.com/maps/search/Trivandrum,+Kerala,+India" target="_blank" class="info-pill">📍 Trivandrum, Kerala, India</a>
+        <div class="info-pill">📞 +91-9633857368</div>
+        <div class="social-row">
+            <a href="https://jerininteractive.itch.io" target="_blank" class="btn">Itch.io</a>
+            <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
+            <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
+        </div>
+        <div class="contact-form">
+            <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
+                <input type="email" name="email" placeholder="YOUR EMAIL ADDRESS" required>
+                <textarea name="message" rows="4" placeholder="TRANSMISSION MESSAGE" required></textarea>
+                <button type="submit" class="btn" style="width: 100%;">Transmit Signal</button>
+            </form>
+        </div>
     </div>
 </div>
 
