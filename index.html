@@ -17,10 +17,9 @@
             margin: 0; padding: 0;
             width: 100%; height: 100%;
             background: var(--bg);
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             font-family: 'Segoe UI', sans-serif;
             color: white;
-            cursor: default; 
         }
 
         body.gaming-mode { 
@@ -47,17 +46,28 @@
             clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none;
         }
 
-        .nav { position: fixed; top: 40px; left: 40px; display: flex; gap: 15px; z-index: 100; }
-        .btn {
-            padding: 10px 20px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
-            color: var(--primary); text-transform: uppercase; font-weight: bold; font-size: 0.85rem;
-            cursor: pointer; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            text-decoration: none; display: inline-block;
+        /* --- RESPONSIVE NAVIGATION --- */
+        .nav { 
+            position: fixed; top: 20px; left: 10px; right: 10px; 
+            display: flex; gap: 8px; z-index: 100; flex-wrap: wrap; 
+            justify-content: center;
         }
+        @media (min-width: 1024px) {
+            .nav { top: 40px; left: 40px; right: auto; justify-content: flex-start; gap: 15px; }
+        }
+
+        .btn {
+            padding: 8px 12px; border: 1px solid var(--primary); background: rgba(0, 245, 255, 0.05);
+            color: var(--primary); text-transform: uppercase; font-weight: bold; font-size: 0.7rem;
+            cursor: pointer; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            text-decoration: none; white-space: nowrap;
+        }
+        @media (min-width: 768px) { .btn { padding: 10px 20px; font-size: 0.85rem; } }
         .btn:hover { background: var(--primary); color: var(--bg); box-shadow: var(--glow); }
 
         #ui-start { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
-        .score-board { font-size: 8rem; font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
+        .score-board { font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; color: var(--primary); text-shadow: var(--glow); line-height: 1; }
+        
         .bubble {
             position: absolute; width: 60px; height: 60px;
             background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(0, 245, 255, 0.2));
@@ -66,21 +76,42 @@
             z-index: 50; cursor: pointer; backdrop-filter: blur(2px);
         }
 
+        /* --- ADAPTIVE HOME PAGE HUB --- */
         #home { 
-            display: none; position: relative; z-index: 5; height: 100vh; padding: 160px 80px 80px; 
-            box-sizing: border-box; opacity: 0; transition: 0.5s ease;
+            display: none; position: relative; z-index: 5; min-height: 100vh;
+            padding: 140px 20px 60px; box-sizing: border-box; 
+            opacity: 0; transition: 0.5s ease;
         }
-        #home.active { display: block; opacity: 1; transform: scale(1); }
-        .name-hero { font-size: clamp(3.5rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.9; margin: 0; text-transform: uppercase; }
-        .highlight { color: var(--primary); text-shadow: var(--glow); }
-        #role { font-family: 'Courier New', monospace; font-size: clamp(1.2rem, 3vw, 2.2rem); color: var(--accent); margin-top: 15px; min-height: 1.5em; }
-        #statement { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 20px; border-left: 2px solid var(--primary); padding-left: 15px; max-width: 600px; }
+        #home.active { 
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            opacity: 1; transform: scale(1); 
+        }
+        
+        @media (min-width: 1024px) {
+            #home.active { 
+                flex-direction: row; align-items: center; justify-content: space-between; 
+                text-align: left; padding: 160px 80px 80px; overflow: hidden;
+            }
+        }
 
-        .photo-container {
-            position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
-            width: clamp(250px, 30vw, 450px); height: clamp(250px, 30vw, 450px);
-            display: flex; align-items: center; justify-content: center;
+        .hero-text { max-width: 800px; z-index: 10; }
+        .name-hero { font-size: clamp(2.8rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.9; margin: 0; text-transform: uppercase; }
+        .highlight { color: var(--primary); text-shadow: var(--glow); }
+        #role { font-family: 'Courier New', monospace; font-size: clamp(1rem, 3vw, 2.2rem); color: var(--accent); margin-top: 15px; min-height: 1.5em; }
+        #statement { 
+            font-size: clamp(0.9rem, 2vw, 1.1rem); color: rgba(255, 255, 255, 0.7); 
+            margin: 20px auto 0; border-left: 2px solid var(--primary); padding-left: 15px; max-width: 500px; 
         }
+        @media (min-width: 1024px) { #statement { margin-left: 0; } }
+
+        /* ADAPTIVE PHOTO CONTAINER */
+        .photo-container {
+            position: relative; margin-top: 50px;
+            width: clamp(250px, 40vw, 450px); height: clamp(250px, 40vw, 450px);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        @media (min-width: 1024px) { .photo-container { margin-top: 0; } }
+
         .animated-ring {
             position: absolute; width: 100%; height: 100%; border-radius: 50%;
             border: 2px solid transparent; border-top-color: var(--primary); border-bottom-color: var(--primary);
@@ -92,50 +123,42 @@
 
         /* OVERLAYS */
         .overlay { 
-            display: none; position: fixed; inset: 0; background: rgba(1, 4, 9, 0.99); z-index: 150; padding: 100px 40px; overflow-y: auto; text-align: center;
+            display: none; position: fixed; inset: 0; background: rgba(1, 4, 9, 0.99); z-index: 150; padding: 80px 20px; overflow-y: auto; text-align: center;
             opacity: 0; transform: scale(1.05); transition: opacity 0.4s ease, transform 0.4s ease;
         }
         .overlay.active { display: block; opacity: 1; transform: scale(1); }
-        .close-btn { position: absolute; top: 30px; right: 50px; font-size: 50px; cursor: pointer; color: var(--primary); z-index: 160; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 40px; cursor: pointer; color: var(--primary); z-index: 160; }
 
-        /* GRIDS & HOVER EFFECTS */
-        .services-grid, .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; }
-        .service-card, .skill-card { 
+        /* GRIDS FOR ALL DEVICES */
+        .services-grid, .skills-grid, .project-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; max-width: 1100px; margin: 40px auto; 
+        }
+        
+        .service-card, .skill-card, .card { 
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 245, 255, 0.1); 
             border-radius: 12px; padding: 25px; text-align: left; transition: 0.3s; cursor: pointer;
         }
-        .service-card:hover, .skill-card:hover { 
-            border-color: var(--primary); 
-            background: rgba(0, 245, 255, 0.05);
-            box-shadow: var(--glow); 
-            transform: translateY(-5px); 
-        }
-        .service-card i, .skill-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block; }
+        .service-card:hover, .skill-card:hover, .card:hover { border-color: var(--primary); background: rgba(0, 245, 255, 0.05); box-shadow: var(--glow); transform: translateY(-5px); }
+        .service-card i, .skill-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; display: block; }
 
-        /* MISSIONS */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1000px; margin: 40px auto; }
-        .card { border: 1px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px; text-decoration: none; color: white; text-align: left; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
-        .card:hover { border-color: var(--primary); box-shadow: var(--glow); transform: translateY(-5px); }
+        /* MISSIONS LOG */
+        .card { padding: 0; text-decoration: none; color: white; display: flex; flex-direction: column; overflow: hidden; }
         .card-image { width: 100%; height: 180px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(0, 245, 255, 0.1); overflow: hidden; }
         .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         .card h3 { margin: 0 0 10px 0; font-size: 1.4rem; }
-        .card p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; color: rgba(255,255,255,0.8); }
-        .complete-tag { background: #ff0000; color: white; padding: 4px 10px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; align-self: flex-start; text-transform: uppercase; margin-top: auto; }
+        .card p { font-size: 0.95rem; line-height: 1.5; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+        .complete-tag { background: #ff0000; color: white; padding: 5px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; align-self: flex-start; text-transform: uppercase; margin-top: auto; }
 
         /* COMM-LINK */
-        .comm-link-container { max-width: 700px; margin: 0 auto; text-align: center; }
-        .info-pill { background: rgba(255,255,255,0.02); border: 1px solid var(--primary); padding: 12px 25px; border-radius: 10px; margin-bottom: 10px; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; color: white; min-width: 300px; transition: 0.3s; }
-        .info-pill:hover { background: rgba(0, 245, 255, 0.1); box-shadow: var(--glow); }
-        .social-row { display: flex; justify-content: center; gap: 12px; margin: 15px 0 25px; }
-        .contact-form { margin-top: 30px; text-align: left; background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
+        .comm-link-container { max-width: 600px; margin: 0 auto; text-align: center; }
+        .info-pill { background: rgba(255,255,255,0.02); border: 1px solid var(--primary); padding: 12px 20px; border-radius: 10px; margin-bottom: 10px; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; color: white; width: 100%; max-width: 350px; transition: 0.3s; }
+        .social-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0; flex-wrap: wrap; }
+        .contact-form { margin-top: 30px; text-align: left; background: rgba(255,255,255,0.03); padding: 25px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, 0.1); }
         .contact-form input, .contact-form textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--primary); padding: 15px; color: white; margin-bottom: 15px; border-radius: 5px; box-sizing: border-box; }
 
         .p-shard { position: absolute; background: var(--primary); border-radius: 2px; pointer-events: none; z-index: 300; }
-
-        /* ARCHIVES (RESUME) SPECIFIC */
-        .resume-container { max-width: 600px; margin: 40px auto; padding: 40px; background: rgba(255,255,255,0.02); border: 1px solid rgba(0, 245, 255, 0.1); border-radius: 15px; }
-        .resume-icon { font-size: 4rem; color: var(--primary); margin-bottom: 20px; }
     </style>
 </head>
 <body id="main-body" class="gaming-mode">
@@ -146,7 +169,7 @@
 <div id="ui-start">
     <div style="text-align: center;">
         <div class="score-board"><span id="score">0</span> / 5</div>
-        <p class="hint">POP BUBBLES TO INITIALIZE</p>
+        <p style="letter-spacing: 5px; opacity: 0.5; font-size: 0.7rem;">POP BUBBLES TO INITIALIZE</p>
     </div>
 </div>
 
@@ -159,9 +182,13 @@
         <div class="btn" onclick="openOverlay('archives')">📂 Archives</div>
         <div class="btn" onclick="openOverlay('comm-link')">📡 Comm-Link</div>
     </div>
-    <h1 class="name-hero">JERIN<br><span class="highlight">JOHNSON</span></h1>
-    <div id="role"></div>
-    <p id="statement">Crafting high-performance gameplay systems and interactive logic in Unity.</p>
+    
+    <div class="hero-text">
+        <h1 class="name-hero">JERIN<br><span class="highlight">JOHNSON</span></h1>
+        <div id="role"></div>
+        <p id="statement">Crafting high-performance gameplay systems and interactive logic in Unity.</p>
+    </div>
+
     <div class="photo-container">
         <div class="animated-ring"></div>
         <div class="photo-circle"><img src="hero-profile.png" alt="Jerin Johnson"></div>
@@ -171,10 +198,9 @@
 <div id="archives" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1>System Archives</h1><p style="color: var(--primary); letter-spacing: 3px;">Personal Dossier</p>
-    <div class="resume-container">
-        <div class="resume-icon"><i class="fas fa-file-pdf"></i></div>
-        <h3 style="margin-bottom: 25px;">Download Technical Resume</h3>
-        <p style="margin-bottom: 30px; opacity: 0.7;">Access full professional history, project breakdowns, and technical certifications.</p>
+    <div style="max-width: 500px; margin: 40px auto; padding: 40px; background: rgba(255,255,255,0.02); border: 1px solid rgba(0, 245, 255, 0.1); border-radius: 15px;">
+        <div style="font-size: 4rem; color: var(--primary); margin-bottom: 20px;"><i class="fas fa-file-pdf"></i></div>
+        <h3 style="margin-bottom: 25px;">Technical Resume</h3>
         <a href="Jerin_Johnson_Resume.pdf" target="_blank" class="btn" style="padding: 15px 40px; font-size: 1rem;">OPEN RESUME</a>
     </div>
 </div>
@@ -182,12 +208,12 @@
 <div id="intel" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1>System Intel</h1><p style="color: var(--primary); letter-spacing: 3px;">About Me</p>
-    <div style="max-width: 800px; margin: 40px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 40px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.1);">
-        <center><img src="intel-bio.png" style="width: 180px; border-radius: 50%; border: 2px solid var(--primary); margin-bottom: 30px;"></center>
-        <div style="line-height: 1.8;">
+    <div style="max-width: 800px; margin: 30px auto; text-align: left; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.1);">
+        <center><img src="intel-bio.png" style="width: 160px; border-radius: 50%; border: 2px solid var(--primary); margin-bottom: 25px;"></center>
+        <div style="line-height: 1.7; font-size: 1rem;">
             <p>I am a Unity Developer focused on the technical architecture of gameplay. I specialize in C# and creating efficient, scalable systems for 2D and 3D games.</p>
             <p>My journey in development is driven by a deep interest in mechanics and optimization. I enjoy the challenge of taking a complex idea and translating it into clean, high-performance code that feels responsive to the player.</p>
-            <p>Beyond standard implementation, I focus on "Game Juice"—ensuring that every interaction provides satisfying visual and physical feedback. I am always looking for ways to push the boundaries of what is possible in Unity through custom tools and modular programming.</p>
+            <p>Beyond standard implementation, I focus on "Game Juice"—ensuring that every interaction provides satisfying visual and physical feedback.</p>
             <p>I am a dedicated problem-solver who enjoys debugging complex logic and optimizing game code for various platforms.</p>
         </div>
     </div>
@@ -195,15 +221,15 @@
 
 <div id="missions" class="overlay">
     <div class="close-btn" onclick="closeOverlays()">×</div>
-    <h1>Mission Logs</h1><p style="color: var(--primary); letter-spacing: 3px;">Project</p>
+    <h1>Mission Logs</h1><p style="color: var(--primary); letter-spacing: 3px;">Projects</p>
     <div class="project-grid">
         <a href="https://jerininteractive.itch.io/stack-tower" target="_blank" class="card">
             <div class="card-image"><img src="Screenshots/stack-tower.jpg" alt="Stack Tower"></div>
-            <div class="card-body"><h3>Stack Tower</h3><p>Physics-driven precision game focusing on stability and balance.<br>Implemented custom collision logic for smooth interactions.<br>Built using Unity 3D with satisfying physics feedback.</p><div class="complete-tag">Mission Complete</div></div>
+            <div class="card-body"><h3>Stack Tower</h3><p>Physics-driven precision game focusing on stability and balance.<br>Implemented custom collision logic.<br>Built using Unity 3D.</p><div class="complete-tag">Mission Complete</div></div>
         </a>
         <a href="https://jerininteractive.itch.io/switch-rift" target="_blank" class="card">
             <div class="card-image"><img src="Screenshots/switch-rift.jpg" alt="Switch Rift"></div>
-            <div class="card-body"><h3>Switch Rift</h3><p>Fast-paced endless runner featuring dimension-shifting mechanics.<br>Optimized spawning system to maintain performance at high speeds.<br>Polished UI designed for mobile responsiveness.</p><div class="complete-tag">Mission Complete</div></div>
+            <div class="card-body"><h3>Switch Rift</h3><p>Fast-paced endless runner featuring dimension-shifting mechanics.<br>Optimized spawning system.<br>Polished UI design.</p><div class="complete-tag">Mission Complete</div></div>
         </a>
     </div>
 </div>
@@ -227,10 +253,10 @@
     <div class="close-btn" onclick="closeOverlays()">×</div>
     <h1>Game Tactics</h1><p style="color: var(--primary); letter-spacing: 3px;">Technical Services</p>
     <div class="services-grid">
-        <div class="service-card"><i class="fas fa-gamepad"></i><h3>Gameplay Systems</h3><p>Developing character controllers and inventory systems.</p></div>
-        <div class="service-card"><i class="fas fa-microchip"></i><h3>C# Optimization</h3><p>High-performance code refactoring.</p></div>
-        <div class="service-card"><i class="fas fa-window-restore"></i><h3>Unity UI</h3><p>Scalable interface architecture.</p></div>
-        <div class="service-card"><i class="fas fa-vial"></i><h3>Prototype Engineering</h3><p>Turning concepts into playable mechanics.</p></div>
+        <div class="service-card"><i class="fas fa-gamepad"></i><h3>Gameplay Systems</h3><p>Developing character controllers, inventory, and combat systems in Unity.</p></div>
+        <div class="service-card"><i class="fas fa-microchip"></i><h3>C# Optimization</h3><p>High-performance code refactoring and memory management.</p></div>
+        <div class="service-card"><i class="fas fa-window-restore"></i><h3>Unity UI</h3><p>Scalable Canvas systems and responsive interface architecture.</p></div>
+        <div class="service-card"><i class="fas fa-vial"></i><h3>Prototype Engineering</h3><p>Rapidly turning concepts into playable mechanics.</p></div>
     </div>
 </div>
 
@@ -239,9 +265,13 @@
     <h1>Comm-Link</h1><p style="color: var(--primary); letter-spacing: 3px;">Contact Me</p>
     <div class="comm-link-container">
         <div class="info-pill">📧 jerinj368@gmail.com</div>
-        <a href="https://www.google.com/maps/place/Thiruvananthapuram,+Kerala0" target="_blank" class="info-pill">📍 Trivandrum, Kerala, India</a>
+        <a href="https://maps.google.com/?q=Trivandrum,Kerala,India" target="_blank" class="info-pill">📍 Trivandrum, Kerala, India</a>
         <div class="info-pill">📞 +91-9633857368</div>
-        <div class="social-row"><a href="https://jerininteractive.itch.io" target="_blank" class="btn">Itch.io</a><a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a><a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a></div>
+        <div class="social-row">
+            <a href="https://jerininteractive.itch.io" target="_blank" class="btn">Itch.io</a>
+            <a href="https://github.com/Jerry-368" target="_blank" class="btn">GitHub</a>
+            <a href="https://www.linkedin.com/in/jerinjohnson-gamedev" target="_blank" class="btn">LinkedIn</a>
+        </div>
         <div class="contact-form">
             <form action="https://formspree.io/f/jerinj368@gmail.com" method="POST">
                 <input type="email" name="email" placeholder="YOUR EMAIL ADDRESS" required>
@@ -320,7 +350,7 @@ function transition() {
         document.body.classList.remove('gaming-mode');
         document.getElementById('ui-start').style.display='none'; 
         bubbles.forEach(b => b.el.remove());
-        document.getElementById('home').style.display='block';
+        document.getElementById('home').style.display='flex';
         setTimeout(() => { document.getElementById('home').classList.add('active'); glitch(); }, 10);
     }, 400);
     setTimeout(() => { scan.style.clipPath = "circle(0% at 50% 50%)"; }, 800);
